@@ -7,15 +7,17 @@
 
 // Include GLFW
 #include <glfw3.h>
-GLFWwindow* window;
 
-// Include GLM
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-using namespace glm;
+#include <common/shader.hpp>
+
+GLFWwindow* window;
 
 // GPU缓冲
 GLuint vertexbuffer;
+GLuint VertexArrayID;
+
+// shader
+GLuint programID;
 
 // 定义顶点数据
 static const GLfloat g_vertex_buffer_data[] = {
@@ -29,6 +31,7 @@ static const GLfloat g_vertex_buffer_data[] = {
  */
 static void renderScene()
 {
+    glUseProgram(programID);
     
     glClear( GL_COLOR_BUFFER_BIT );
     glEnableVertexAttribArray(0);
@@ -47,6 +50,8 @@ static void renderScene()
 static void clear() {
     
     glDeleteBuffers(1, &vertexbuffer);
+    glDeleteVertexArrays(1, &VertexArrayID);
+    glDeleteProgram(programID);
 }
 
 /**
@@ -54,6 +59,12 @@ static void clear() {
  */
 static void createVertexBuffer()
 {
+    
+    glGenVertexArrays(1, &VertexArrayID);
+    glBindVertexArray(VertexArrayID);
+    
+    programID = LoadShaders( "SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader" );
+    
     glGenBuffers(1, &vertexbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
@@ -68,6 +79,7 @@ int main( void )
     if( !glfwInit() )
     {
         fprintf( stderr, "Failed to initialize GLFW\n" );
+        getchar();
         return -1;
     }
     
@@ -84,15 +96,15 @@ int main( void )
     
     if (window == NULL)
     {
-        fprintf( stderr, "Failed to open GLFW window\n" );
+        fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
         getchar();
         glfwTerminate();
         return -1;
     }
     
     glfwMakeContextCurrent(window);
-    glewExperimental=true;
     
+    glewExperimental = true;
     if (glewInit() != GLEW_OK) {
         fprintf(stderr, "Failed to initialize GLEW\n");
         getchar();
@@ -105,9 +117,10 @@ int main( void )
     /**
      *  渲染
      */
-    glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     
     createVertexBuffer();
+    
     do{
         
         renderScene();
