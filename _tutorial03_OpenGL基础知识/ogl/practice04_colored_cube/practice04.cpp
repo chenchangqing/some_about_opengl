@@ -115,7 +115,7 @@ static int createWindow() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     
-    window = glfwCreateWindow(1024, 768, "Practice 03", NULL, NULL);
+    window = glfwCreateWindow(1024, 768, "Practice 04", NULL, NULL);
     
     if (window == NULL)
     {
