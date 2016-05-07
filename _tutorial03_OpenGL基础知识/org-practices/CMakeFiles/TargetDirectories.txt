@@ -1,7 +1,11 @@
+/Users/green/some_about_opengl/_tutorial03_OpenGL基础知识/org-practices/CMakeFiles/practice02_red_triangle.dir
+/Users/green/some_about_opengl/_tutorial03_OpenGL基础知识/org-practices/CMakeFiles/practice01_first_window.dir
 /Users/green/some_about_opengl/_tutorial03_OpenGL基础知识/org-practices/CMakeFiles/tutorial14_render_to_texture.dir
+/Users/green/some_about_opengl/_tutorial03_OpenGL基础知识/org-practices/CMakeFiles/practice03_matrices.dir
 /Users/green/some_about_opengl/_tutorial03_OpenGL基础知识/org-practices/CMakeFiles/install.dir
 /Users/green/some_about_opengl/_tutorial03_OpenGL基础知识/org-practices/CMakeFiles/tutorial16_shadowmaps.dir
 /Users/green/some_about_opengl/_tutorial03_OpenGL基础知识/org-practices/CMakeFiles/tutorial09_vbo_indexing.dir
+/Users/green/some_about_opengl/_tutorial03_OpenGL基础知识/org-practices/CMakeFiles/practice04_colored_cube.dir
 /Users/green/some_about_opengl/_tutorial03_OpenGL基础知识/org-practices/CMakeFiles/tutorial18_billboards.dir
 /Users/green/some_about_opengl/_tutorial03_OpenGL基础知识/org-practices/CMakeFiles/tutorial07_model_loading.dir
 /Users/green/some_about_opengl/_tutorial03_OpenGL基础知识/org-practices/CMakeFiles/tutorial12_extensions.dir
@@ -21,6 +25,7 @@
 /Users/green/some_about_opengl/_tutorial03_OpenGL基础知识/org-practices/CMakeFiles/tutorial08_basic_shading.dir
 /Users/green/some_about_opengl/_tutorial03_OpenGL基础知识/org-practices/CMakeFiles/tutorial09_AssImp.dir
 /Users/green/some_about_opengl/_tutorial03_OpenGL基础知识/org-practices/CMakeFiles/misc05_picking_slow_easy.dir
+/Users/green/some_about_opengl/_tutorial03_OpenGL基础知识/org-practices/CMakeFiles/practice05_textured_cube.dir
 /Users/green/some_about_opengl/_tutorial03_OpenGL基础知识/org-practices/CMakeFiles/tutorial04_colored_cube.dir
 /Users/green/some_about_opengl/_tutorial03_OpenGL基础知识/org-practices/CMakeFiles/tutorial09_several_objects.dir
 /Users/green/some_about_opengl/_tutorial03_OpenGL基础知识/org-practices/CMakeFiles/tutorial11_2d_fonts.dir

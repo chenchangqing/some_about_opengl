@@ -67,6 +67,17 @@ target_link_libraries(tutorial01_first_window
 set_target_properties(tutorial01_first_window PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tutorial01_first_window/")
 create_target_launcher(tutorial01_first_window WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/tutorial01_first_window/")
 
+# Practice 1
+add_executable(practice01_first_window 
+	practice01_first_window/practice01.cpp
+)
+target_link_libraries(practice01_first_window
+	${ALL_LIBS}
+)
+# Xcode and Visual working directories
+set_target_properties(practice01_first_window PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/practice01_first_window/")
+create_target_launcher(practice01_first_window WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/practice01_first_window/")
+
 # Tutorial 2
 add_executable(tutorial02_red_triangle 
 	tutorial02_red_triangle/tutorial02.cpp
@@ -83,6 +94,23 @@ target_link_libraries(tutorial02_red_triangle
 set_target_properties(tutorial02_red_triangle PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tutorial02_red_triangle/")
 create_target_launcher(tutorial02_red_triangle WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/tutorial02_red_triangle/")
 create_default_target_launcher(tutorial02_red_triangle WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/tutorial02_red_triangle/") # tut 1 is not the default or people would complain that tut 2 doesn't work
+
+# Practice 2
+add_executable(practice02_red_triangle 
+	practice02_red_triangle/practice02.cpp
+	common/shader.cpp
+	common/shader.hpp
+	
+	practice02_red_triangle/SimpleFragmentShader.fragmentshader
+	practice02_red_triangle/SimpleVertexShader.vertexshader
+)
+target_link_libraries(practice02_red_triangle
+	${ALL_LIBS}
+)
+# Xcode and Visual working directories
+set_target_properties(practice02_red_triangle PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/practice02_red_triangle/")
+create_target_launcher(practice02_red_triangle WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/practice02_red_triangle/")
+create_default_target_launcher(practice02_red_triangle WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/tutorial02_red_triangle/") # tut 1 is not the default or people would complain that tut 2 doesn't work
 
 # Tutorial 3
 add_executable(tutorial03_matrices 
@@ -101,6 +129,23 @@ target_link_libraries(tutorial03_matrices
 set_target_properties(tutorial03_matrices PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tutorial03_matrices/")
 create_target_launcher(tutorial03_matrices WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/tutorial03_matrices/") # Visual
 
+# Practice 3
+add_executable(practice03_matrices 
+	practice03_matrices/practice03.cpp
+	common/shader.cpp
+	common/shader.hpp
+
+	practice03_matrices/SimpleTransform.vertexshader
+	practice03_matrices/SingleColor.fragmentshader
+)
+#set_target_properties(practice03_matrices PROPERTIES RUNTIME_OUTPUT_DIRECTORY /test1)
+target_link_libraries(practice03_matrices
+	${ALL_LIBS}
+)
+# Xcode and Visual working directories
+set_target_properties(practice03_matrices PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/practice03_matrices/")
+create_target_launcher(practice03_matrices WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/practice03_matrices/") # Visual
+
 # Tutorial 4
 add_executable(tutorial04_colored_cube
 	tutorial04_colored_cube/tutorial04.cpp
@@ -116,6 +161,22 @@ target_link_libraries(tutorial04_colored_cube
 # Xcode and Visual working directories
 set_target_properties(tutorial04_colored_cube PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tutorial04_colored_cube/")
 create_target_launcher(tutorial04_colored_cube WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/tutorial04_colored_cube/")
+
+# Practice 4
+add_executable(practice04_colored_cube
+	practice04_colored_cube/practice04.cpp
+	common/shader.cpp
+	common/shader.hpp
+	
+	practice04_colored_cube/TransformVertexShader.vertexshader
+	practice04_colored_cube/ColorFragmentShader.fragmentshader
+)
+target_link_libraries(practice04_colored_cube
+	${ALL_LIBS}
+)
+# Xcode and Visual working directories
+set_target_properties(practice04_colored_cube PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/practice04_colored_cube/")
+create_target_launcher(practice04_colored_cube WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/practice04_colored_cube/")
 
 # Tutorial 5
 add_executable(tutorial05_textured_cube
@@ -134,6 +195,24 @@ target_link_libraries(tutorial05_textured_cube
 # Xcode and Visual working directories
 set_target_properties(tutorial05_textured_cube PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tutorial05_textured_cube/")
 create_target_launcher(tutorial05_textured_cube WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/tutorial05_textured_cube/")
+
+# Practice 5
+add_executable(practice05_textured_cube
+	practice05_textured_cube/practice05.cpp
+	common/shader.cpp
+	common/shader.hpp
+	common/texture.cpp
+	common/texture.hpp
+	
+	practice05_textured_cube/TransformVertexShader.vertexshader
+	practice05_textured_cube/TextureFragmentShader.fragmentshader
+)
+target_link_libraries(practice05_textured_cube
+	${ALL_LIBS}
+)
+# Xcode and Visual working directories
+set_target_properties(practice05_textured_cube PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/practice05_textured_cube/")
+create_target_launcher(practice05_textured_cube WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/practice05_textured_cube/")
 
 # Tutorial 6
 add_executable(tutorial06_keyboard_and_mouse
@@ -669,20 +748,40 @@ add_custom_command(
    COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/tutorial01_first_window${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/tutorial01_first_window/"
 )
 add_custom_command(
+   TARGET practice01_first_window POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/practice01_first_window${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/practice01_first_window/"
+)
+add_custom_command(
    TARGET tutorial02_red_triangle POST_BUILD
    COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/tutorial02_red_triangle${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/tutorial02_red_triangle/"
+)
+add_custom_command(
+   TARGET practice02_red_triangle POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/practice02_red_triangle${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/practice02_red_triangle/"
 )
 add_custom_command(
    TARGET tutorial03_matrices POST_BUILD
    COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/tutorial03_matrices${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/tutorial03_matrices/"
 )
 add_custom_command(
+   TARGET practice03_matrices POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/practice03_matrices${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/practice03_matrices/"
+)
+add_custom_command(
    TARGET tutorial04_colored_cube POST_BUILD
    COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/tutorial04_colored_cube${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/tutorial04_colored_cube/"
 )
 add_custom_command(
+   TARGET practice04_colored_cube POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/practice04_colored_cube${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/practice04_colored_cube/"
+)
+add_custom_command(
    TARGET tutorial05_textured_cube POST_BUILD
    COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/tutorial05_textured_cube${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/tutorial05_textured_cube/"
+)
+add_custom_command(
+   TARGET practice05_textured_cube POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/practice05_textured_cube${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/practice05_textured_cube/"
 )
 add_custom_command(
    TARGET tutorial06_keyboard_and_mouse POST_BUILD
