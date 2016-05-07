@@ -374,6 +374,166 @@ target_link_libraries(tutorial10_transparency
 set_target_properties(tutorial10_transparency PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tutorial10_transparency/")
 create_target_launcher(tutorial10_transparency WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/tutorial10_transparency/")
 
+# Practice 6
+add_executable(practice06_keyboard_and_mouse
+	practice06_keyboard_and_mouse/practice06.cpp
+	common/shader.cpp
+	common/shader.hpp
+	common/controls.cpp
+	common/controls.hpp
+	common/texture.cpp
+	common/texture.hpp
+	
+	practice06_keyboard_and_mouse/TransformVertexShader.vertexshader
+	practice06_keyboard_and_mouse/TextureFragmentShader.fragmentshader
+)
+target_link_libraries(practice06_keyboard_and_mouse
+	${ALL_LIBS}
+)
+# Xcode and Visual working directories
+set_target_properties(practice06_keyboard_and_mouse PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/practice06_keyboard_and_mouse/")
+create_target_launcher(practice06_keyboard_and_mouse WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/practice06_keyboard_and_mouse/")
+
+# Practice 7
+add_executable(practice07_model_loading
+	practice07_model_loading/practice07.cpp
+	common/shader.cpp
+	common/shader.hpp
+	common/controls.cpp
+	common/controls.hpp
+	common/texture.cpp
+	common/texture.hpp
+	common/objloader.cpp
+	common/objloader.hpp
+
+	practice07_model_loading/TransformVertexShader.vertexshader
+	practice07_model_loading/TextureFragmentShader.fragmentshader
+)
+target_link_libraries(practice07_model_loading
+	${ALL_LIBS}
+)
+# Xcode and Visual working directories
+set_target_properties(practice07_model_loading PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/practice07_model_loading/")
+create_target_launcher(practice07_model_loading WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/practice07_model_loading/")
+
+# Practice 8
+add_executable(practice08_basic_shading
+	practice08_basic_shading/practice08.cpp
+	common/shader.cpp
+	common/shader.hpp
+	common/controls.cpp
+	common/controls.hpp
+	common/texture.cpp
+	common/texture.hpp
+	common/objloader.cpp
+	common/objloader.hpp
+	
+	practice08_basic_shading/StandardShading.vertexshader
+	practice08_basic_shading/StandardShading.fragmentshader
+)
+target_link_libraries(practice08_basic_shading
+	${ALL_LIBS}
+)
+# Xcode and Visual working directories
+set_target_properties(practice08_basic_shading PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/practice08_basic_shading/")
+create_target_launcher(practice08_basic_shading WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/practice08_basic_shading/")
+
+# Practice 9
+add_executable(practice09_vbo_indexing
+	practice09_vbo_indexing/practice09.cpp
+	common/shader.cpp
+	common/shader.hpp
+	common/controls.cpp
+	common/controls.hpp
+	common/texture.cpp
+	common/texture.hpp
+	common/objloader.cpp
+	common/objloader.hpp
+	common/vboindexer.cpp
+	common/vboindexer.hpp
+	
+	practice09_vbo_indexing/StandardShading.vertexshader
+	practice09_vbo_indexing/StandardShading.fragmentshader
+)
+target_link_libraries(practice09_vbo_indexing
+	${ALL_LIBS}
+)
+# Xcode and Visual working directories
+set_target_properties(practice09_vbo_indexing PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/practice09_vbo_indexing/")
+create_target_launcher(practice09_vbo_indexing WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/practice09_vbo_indexing/")
+
+# Practice 9 - AssImp model loading
+add_executable(practice09_AssImp
+	practice09_vbo_indexing/practice09_AssImp.cpp
+	common/shader.cpp
+	common/shader.hpp
+	common/controls.cpp
+	common/controls.hpp
+	common/texture.cpp
+	common/texture.hpp
+	common/objloader.cpp
+	common/objloader.hpp
+	
+	practice09_vbo_indexing/StandardShading.vertexshader
+	practice09_vbo_indexing/StandardShading.fragmentshader
+)
+target_link_libraries(practice09_AssImp
+	${ALL_LIBS}
+	assimp
+)
+set_target_properties(practice09_AssImp PROPERTIES COMPILE_DEFINITIONS "USE_ASSIMP")
+# Xcode and Visual working directories
+set_target_properties(practice09_AssImp PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/practice09_vbo_indexing/")
+create_target_launcher(practice09_AssImp WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/practice09_vbo_indexing/")
+
+# Practice 9 - several objects
+add_executable(practice09_several_objects
+	practice09_vbo_indexing/practice09_several_objects.cpp
+	common/shader.cpp
+	common/shader.hpp
+	common/controls.cpp
+	common/controls.hpp
+	common/texture.cpp
+	common/texture.hpp
+	common/objloader.cpp
+	common/objloader.hpp
+	common/vboindexer.cpp
+	common/vboindexer.hpp
+	
+	practice09_vbo_indexing/StandardShading.vertexshader
+	practice09_vbo_indexing/StandardShading.fragmentshader
+)
+target_link_libraries(practice09_several_objects
+	${ALL_LIBS}
+)
+# Xcode and Visual working directories
+set_target_properties(practice09_several_objects PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/practice09_vbo_indexing/")
+create_target_launcher(practice09_several_objects WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/practice09_vbo_indexing/")
+
+# Practice 10
+add_executable(practice10_transparency
+	practice10_transparency/practice10.cpp
+	common/shader.cpp
+	common/shader.hpp
+	common/controls.cpp
+	common/controls.hpp
+	common/texture.cpp
+	common/texture.hpp
+	common/objloader.cpp
+	common/objloader.hpp
+	common/vboindexer.cpp
+	common/vboindexer.hpp
+	
+	practice10_transparency/StandardShading.vertexshader
+	practice10_transparency/StandardTransparentShading.fragmentshader
+)
+target_link_libraries(practice10_transparency
+	${ALL_LIBS}
+)
+# Xcode and Visual working directories
+set_target_properties(practice10_transparency PROPERTIES XCODE_ATTRIBUTE_CONFIGURATION_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/practice10_transparency/")
+create_target_launcher(practice10_transparency WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/practice10_transparency/")
+
 # Tutorial 11
 add_executable(tutorial11_2d_fonts
 	tutorial11_2d_fonts/tutorial11.cpp
@@ -810,6 +970,35 @@ add_custom_command(
 add_custom_command(
    TARGET tutorial10_transparency POST_BUILD
    COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/tutorial10_transparency${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/tutorial10_transparency/"
+)
+
+add_custom_command(
+   TARGET practice06_keyboard_and_mouse POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/practice06_keyboard_and_mouse${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/practice06_keyboard_and_mouse/"
+)
+add_custom_command(
+   TARGET practice07_model_loading POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/practice07_model_loading${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/practice07_model_loading/"
+)
+add_custom_command(
+   TARGET practice08_basic_shading POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/practice08_basic_shading${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/practice08_basic_shading/"
+)
+add_custom_command(
+   TARGET practice09_vbo_indexing POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/practice09_vbo_indexing${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/practice09_vbo_indexing/"
+)
+add_custom_command(
+   TARGET practice09_AssImp POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/practice09_AssImp${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/practice09_vbo_indexing/"
+)
+add_custom_command(
+   TARGET practice09_several_objects POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/practice09_several_objects${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/practice09_vbo_indexing/"
+)
+add_custom_command(
+   TARGET practice10_transparency POST_BUILD
+   COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/practice10_transparency${CMAKE_EXECUTABLE_SUFFIX}" "${CMAKE_CURRENT_SOURCE_DIR}/practice10_transparency/"
 )
 add_custom_command(
    TARGET tutorial11_2d_fonts POST_BUILD
