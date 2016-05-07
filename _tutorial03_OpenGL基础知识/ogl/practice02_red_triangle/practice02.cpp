@@ -68,7 +68,7 @@ static int createWindow() {
 /**
  *  创建顶点数组缓冲
  */
-static void createVBO()
+static void createBuffers()
 {
     
     glGenVertexArrays(1, &VAO);
@@ -126,7 +126,7 @@ int main( void )
         return -1;
     }
     
-    createVBO();
+    createBuffers();
     
     renderScene();
     

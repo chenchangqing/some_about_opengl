@@ -73,6 +73,22 @@ static int createWindow() {
 }
 
 /**
+ *  创建顶点数组缓冲
+ */
+static void createBuffers()
+{
+    
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
+    
+    programID = LoadShaders( "SimpleTransform.vertexshader", "SingleColor.fragmentshader" );
+    
+    glGenBuffers(1, &VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+}
+
+/**
  *  创建矩阵
  */
 static void createMatrix() {
@@ -95,22 +111,6 @@ static void createMatrix() {
     glm::mat4 Model      = glm::mat4(1.0f);
     // Our ModelViewProjection : multiplication of our 3 matrices
     MVP = Projection * View * Model; // Remember, matrix multiplication is the other way around
-}
-
-/**
- *  创建顶点数组缓冲
- */
-static void createVBO()
-{
-    
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
-    
-    programID = LoadShaders( "SimpleTransform.vertexshader", "SingleColor.fragmentshader" );
-    
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 }
 
 /**
@@ -157,7 +157,7 @@ int main( void )
         return -1;
     }
     
-    createVBO();
+    createBuffers();
     
     createMatrix();
     
