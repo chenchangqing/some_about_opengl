@@ -12,11 +12,11 @@ using namespace glm;
  *  变量
  */
 GLFWwindow* window;
-GLuint VAO;
+GLuint vertexarray;
 GLuint vertexbuffer;
 GLuint colorbuffer;
 GLuint programID;
-GLuint MatrixID;
+GLuint matrixID;
 glm::mat4 MVP;
 
 static const GLfloat g_vertex_buffer_data[] = {
@@ -143,6 +143,28 @@ static int createWindow() {
 }
 
 /**
+ *  加载着色器
+ */
+static void loadShaders() {
+    
+    programID = LoadShaders( "TransformVertexShader.vertexshader", "ColorFragmentShader.fragmentshader" );
+}
+
+/**
+ *  创建矩阵
+ */
+static void createMatrix() {
+    
+    matrixID = glGetUniformLocation(programID, "MVP");
+    
+    glm::mat4 Projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
+    glm::mat4 View       = glm::lookAt(glm::vec3(4,3,-3),glm::vec3(0,0,0),glm::vec3(0,1,0));
+    glm::mat4 Model      = glm::mat4(1.0f);
+    
+    MVP = Projection * View * Model;
+}
+
+/**
  *  创建CPU缓冲
  */
 static void createBuffers()
@@ -151,10 +173,8 @@ static void createBuffers()
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
   
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
-    
-    programID = LoadShaders( "TransformVertexShader.vertexshader", "ColorFragmentShader.fragmentshader" );
+    glGenVertexArrays(1, &vertexarray);
+    glBindVertexArray(vertexarray);
     
     glGenBuffers(1, &vertexbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
@@ -163,33 +183,9 @@ static void createBuffers()
     glGenBuffers(1, &colorbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
+    
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 }
-
-/**
- *  创建矩阵
- */
-static void createMatrix() {
-    
-    // Get a handle for our "MVP" uniform
-    MatrixID = glGetUniformLocation(programID, "MVP");
-    
-    // Projection matrix : 45∞ Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
-    glm::mat4 Projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
-    // Or, for an ortho camera :
-    //glm::mat4 Projection = glm::ortho(-10.0f,10.0f,-10.0f,10.0f,0.0f,100.0f); // In world coordinates
-    
-    // Camera matrix
-    glm::mat4 View       = glm::lookAt(
-                                       glm::vec3(4,3,-3), // Camera is at (4,3,3), in World Space
-                                       glm::vec3(0,0,0), // and looks at the origin
-                                       glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
-                                       );
-    // Model matrix : an identity matrix (model will be at the origin)
-    glm::mat4 Model      = glm::mat4(1.0f);
-    // Our ModelViewProjection : multiplication of our 3 matrices
-    MVP = Projection * View * Model; // Remember, matrix multiplication is the other way around
-}
-
 
 /**
  *  渲染
@@ -200,7 +196,7 @@ static void renderScene()
     do{
         
         glUseProgram(programID);
-        glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+        glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
@@ -229,7 +225,7 @@ static void renderScene()
  */
 static void clear() {
     
-    glDeleteVertexArrays(1, &VAO);
+    glDeleteVertexArrays(1, &vertexarray);
     glDeleteBuffers(1, &vertexbuffer);
     glDeleteBuffers(1, &colorbuffer);
     glDeleteProgram(programID);
@@ -246,9 +242,11 @@ int main( void )
         return -1;
     }
     
-    createBuffers();
+    loadShaders()
     
     createMatrix();
+    
+    createBuffers();
     
     renderScene();
     

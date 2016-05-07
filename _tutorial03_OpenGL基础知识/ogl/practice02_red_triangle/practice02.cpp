@@ -9,8 +9,8 @@
  *  变量
  */
 GLFWwindow* window;
-GLuint VAO;
-GLuint VBO;
+GLuint vertexarray;
+GLuint vertexbuffer;
 GLuint programID;
 
 /**
@@ -66,19 +66,27 @@ static int createWindow() {
 }
 
 /**
+ *  加载着色器
+ */
+static void loadShaders() {
+    
+    programID = LoadShaders( "SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader" );
+}
+
+/**
  *  创建顶点数组缓冲
  */
 static void createBuffers()
 {
     
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
+    glGenVertexArrays(1, &vertexarray);
+    glBindVertexArray(vertexarray);
     
-    programID = LoadShaders( "SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader" );
-    
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glGenBuffers(1, &vertexbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+    
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 /**
@@ -87,17 +95,19 @@ static void createBuffers()
 static void renderScene()
 {
     
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    
     do{
         glUseProgram(programID);
         
         glClear( GL_COLOR_BUFFER_BIT );
+        
         glEnableVertexAttribArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        
         glDrawArrays(GL_TRIANGLES, 0, 3);
+        
         glDisableVertexAttribArray(0);
+        
         glfwSwapBuffers(window);
         glfwPollEvents();
         
@@ -110,7 +120,7 @@ static void renderScene()
  */
 static void clear() {
     
-    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &vertexbuffer);
     glDeleteVertexArrays(1, &VAO);
     glDeleteProgram(programID);
     glfwTerminate();
@@ -125,6 +135,8 @@ int main( void )
         
         return -1;
     }
+    
+    loadShaders()
     
     createBuffers();
     
