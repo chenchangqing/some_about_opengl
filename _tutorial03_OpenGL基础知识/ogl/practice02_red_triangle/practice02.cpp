@@ -1,25 +1,21 @@
-// Include standard headers
+
 #include <stdio.h>
 #include <stdlib.h>
-
-// Include GLEW
 #include <GL/glew.h>
-
-// Include GLFW
 #include <glfw3.h>
-
 #include <common/shader.hpp>
 
+/**
+ *  变量
+ */
 GLFWwindow* window;
-
-// GPU缓冲
-GLuint vertexbuffer;
-GLuint VertexArrayID;
-
-// shader
+GLuint VAO;
+GLuint VBO;
 GLuint programID;
 
-// 定义顶点数据
+/**
+ *  顶点数据
+ */
 static const GLfloat g_vertex_buffer_data[] = {
     -1.0f, -1.0f, 0.0f,
     1.0f, -1.0f, 0.0f,
@@ -27,55 +23,10 @@ static const GLfloat g_vertex_buffer_data[] = {
 };
 
 /**
- *  渲染
+ *  创建OpenGL窗口
  */
-static void renderScene()
-{
-    glUseProgram(programID);
+static int createWindow() {
     
-    glClear( GL_COLOR_BUFFER_BIT );
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-    glDisableVertexAttribArray(0);
-    glfwSwapBuffers(window);
-    glfwPollEvents();
-    
-}
-
-/**
- *  清除缓冲
- */
-static void clear() {
-    
-    glDeleteBuffers(1, &vertexbuffer);
-    glDeleteVertexArrays(1, &VertexArrayID);
-    glDeleteProgram(programID);
-}
-
-/**
- *  创建顶点数组缓冲
- */
-static void createVertexBuffer()
-{
-    
-    glGenVertexArrays(1, &VertexArrayID);
-    glBindVertexArray(VertexArrayID);
-    
-    programID = LoadShaders( "SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader" );
-    
-    glGenBuffers(1, &vertexbuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-}
-
-int main( void )
-{
-    
-    /**
-     *  初始化GLFW
-     */
     if( !glfwInit() )
     {
         fprintf( stderr, "Failed to initialize GLFW\n" );
@@ -83,9 +34,6 @@ int main( void )
         return -1;
     }
     
-    /**
-     *  创建OpenGL窗口
-     */
     glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -114,22 +62,76 @@ int main( void )
     
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     
-    /**
-     *  渲染
-     */
+    return 0;
+}
+
+/**
+ *  创建顶点数组缓冲
+ */
+static void createVBO()
+{
+    
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
+    
+    programID = LoadShaders( "SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader" );
+    
+    glGenBuffers(1, &VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+}
+
+/**
+ *  渲染
+ */
+static void renderScene()
+{
+    
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     
-    createVertexBuffer();
-    
     do{
+        glUseProgram(programID);
         
-        renderScene();
+        glClear( GL_COLOR_BUFFER_BIT );
+        glEnableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDisableVertexAttribArray(0);
+        glfwSwapBuffers(window);
+        glfwPollEvents();
         
     } while(glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS
             && glfwWindowShouldClose(window) == 0 );
     
+}
+
+/**
+ *  释放
+ */
+static void clear() {
+    
+    glDeleteBuffers(1, &VBO);
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteProgram(programID);
+    glfwTerminate();
+}
+
+/**
+ *  主函数
+ */
+int main( void )
+{
+    if (createWindow() != 0 ) {
+        
+        return -1;
+    }
+    
+    createVBO();
+    
+    renderScene();
+    
     clear();
     
-    glfwTerminate();
     return 0;
 }
