@@ -1,0 +1,539 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E6628A541CDF963300B9353A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E6628A531CDF963300B9353A /* main.m */; };
+		E6628A571CDF963300B9353A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E6628A561CDF963300B9353A /* AppDelegate.m */; };
+		E6628A5A1CDF963300B9353A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6628A591CDF963300B9353A /* ViewController.m */; };
+		E6628A5D1CDF963300B9353A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6628A5B1CDF963300B9353A /* Main.storyboard */; };
+		E6628A5F1CDF963300B9353A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6628A5E1CDF963300B9353A /* Assets.xcassets */; };
+		E6628A621CDF963300B9353A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6628A601CDF963300B9353A /* LaunchScreen.storyboard */; };
+		E6628A6D1CDF963300B9353A /* HelloGLKitPracticeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6628A6C1CDF963300B9353A /* HelloGLKitPracticeTests.m */; };
+		E6628A781CDF963300B9353A /* HelloGLKitPracticeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6628A771CDF963300B9353A /* HelloGLKitPracticeUITests.m */; };
+		E6628A861CDF977600B9353A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6628A851CDF977600B9353A /* GLKit.framework */; };
+		E6628A881CDF977D00B9353A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6628A871CDF977D00B9353A /* OpenGLES.framework */; };
+		E6628A8B1CDF9B0D00B9353A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6628A8A1CDF9B0D00B9353A /* QuartzCore.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E6628A691CDF963300B9353A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E6628A471CDF963300B9353A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E6628A4E1CDF963300B9353A;
+			remoteInfo = HelloGLKitPractice;
+		};
+		E6628A741CDF963300B9353A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E6628A471CDF963300B9353A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E6628A4E1CDF963300B9353A;
+			remoteInfo = HelloGLKitPractice;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E6628A4F1CDF963300B9353A /* HelloGLKitPractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloGLKitPractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6628A531CDF963300B9353A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E6628A551CDF963300B9353A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E6628A561CDF963300B9353A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E6628A581CDF963300B9353A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		E6628A591CDF963300B9353A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		E6628A5C1CDF963300B9353A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E6628A5E1CDF963300B9353A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E6628A611CDF963300B9353A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E6628A631CDF963300B9353A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E6628A681CDF963300B9353A /* HelloGLKitPracticeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HelloGLKitPracticeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6628A6C1CDF963300B9353A /* HelloGLKitPracticeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloGLKitPracticeTests.m; sourceTree = "<group>"; };
+		E6628A6E1CDF963300B9353A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E6628A731CDF963300B9353A /* HelloGLKitPracticeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HelloGLKitPracticeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6628A771CDF963300B9353A /* HelloGLKitPracticeUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloGLKitPracticeUITests.m; sourceTree = "<group>"; };
+		E6628A791CDF963300B9353A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E6628A851CDF977600B9353A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		E6628A871CDF977D00B9353A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		E6628A8A1CDF9B0D00B9353A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E6628A4C1CDF963300B9353A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E6628A8B1CDF9B0D00B9353A /* QuartzCore.framework in Frameworks */,
+				E6628A881CDF977D00B9353A /* OpenGLES.framework in Frameworks */,
+				E6628A861CDF977600B9353A /* GLKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E6628A651CDF963300B9353A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E6628A701CDF963300B9353A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E6628A461CDF963300B9353A = {
+			isa = PBXGroup;
+			children = (
+				E6628A891CDF978800B9353A /* Frameworks */,
+				E6628A511CDF963300B9353A /* HelloGLKitPractice */,
+				E6628A6B1CDF963300B9353A /* HelloGLKitPracticeTests */,
+				E6628A761CDF963300B9353A /* HelloGLKitPracticeUITests */,
+				E6628A501CDF963300B9353A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E6628A501CDF963300B9353A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E6628A4F1CDF963300B9353A /* HelloGLKitPractice.app */,
+				E6628A681CDF963300B9353A /* HelloGLKitPracticeTests.xctest */,
+				E6628A731CDF963300B9353A /* HelloGLKitPracticeUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E6628A511CDF963300B9353A /* HelloGLKitPractice */ = {
+			isa = PBXGroup;
+			children = (
+				E6628A551CDF963300B9353A /* AppDelegate.h */,
+				E6628A561CDF963300B9353A /* AppDelegate.m */,
+				E6628A581CDF963300B9353A /* ViewController.h */,
+				E6628A591CDF963300B9353A /* ViewController.m */,
+				E6628A5B1CDF963300B9353A /* Main.storyboard */,
+				E6628A5E1CDF963300B9353A /* Assets.xcassets */,
+				E6628A601CDF963300B9353A /* LaunchScreen.storyboard */,
+				E6628A631CDF963300B9353A /* Info.plist */,
+				E6628A521CDF963300B9353A /* Supporting Files */,
+			);
+			path = HelloGLKitPractice;
+			sourceTree = "<group>";
+		};
+		E6628A521CDF963300B9353A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E6628A531CDF963300B9353A /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E6628A6B1CDF963300B9353A /* HelloGLKitPracticeTests */ = {
+			isa = PBXGroup;
+			children = (
+				E6628A6C1CDF963300B9353A /* HelloGLKitPracticeTests.m */,
+				E6628A6E1CDF963300B9353A /* Info.plist */,
+			);
+			path = HelloGLKitPracticeTests;
+			sourceTree = "<group>";
+		};
+		E6628A761CDF963300B9353A /* HelloGLKitPracticeUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E6628A771CDF963300B9353A /* HelloGLKitPracticeUITests.m */,
+				E6628A791CDF963300B9353A /* Info.plist */,
+			);
+			path = HelloGLKitPracticeUITests;
+			sourceTree = "<group>";
+		};
+		E6628A891CDF978800B9353A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E6628A8A1CDF9B0D00B9353A /* QuartzCore.framework */,
+				E6628A871CDF977D00B9353A /* OpenGLES.framework */,
+				E6628A851CDF977600B9353A /* GLKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E6628A4E1CDF963300B9353A /* HelloGLKitPractice */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E6628A7C1CDF963300B9353A /* Build configuration list for PBXNativeTarget "HelloGLKitPractice" */;
+			buildPhases = (
+				E6628A4B1CDF963300B9353A /* Sources */,
+				E6628A4C1CDF963300B9353A /* Frameworks */,
+				E6628A4D1CDF963300B9353A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HelloGLKitPractice;
+			productName = HelloGLKitPractice;
+			productReference = E6628A4F1CDF963300B9353A /* HelloGLKitPractice.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E6628A671CDF963300B9353A /* HelloGLKitPracticeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E6628A7F1CDF963300B9353A /* Build configuration list for PBXNativeTarget "HelloGLKitPracticeTests" */;
+			buildPhases = (
+				E6628A641CDF963300B9353A /* Sources */,
+				E6628A651CDF963300B9353A /* Frameworks */,
+				E6628A661CDF963300B9353A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E6628A6A1CDF963300B9353A /* PBXTargetDependency */,
+			);
+			name = HelloGLKitPracticeTests;
+			productName = HelloGLKitPracticeTests;
+			productReference = E6628A681CDF963300B9353A /* HelloGLKitPracticeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E6628A721CDF963300B9353A /* HelloGLKitPracticeUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E6628A821CDF963300B9353A /* Build configuration list for PBXNativeTarget "HelloGLKitPracticeUITests" */;
+			buildPhases = (
+				E6628A6F1CDF963300B9353A /* Sources */,
+				E6628A701CDF963300B9353A /* Frameworks */,
+				E6628A711CDF963300B9353A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E6628A751CDF963300B9353A /* PBXTargetDependency */,
+			);
+			name = HelloGLKitPracticeUITests;
+			productName = HelloGLKitPracticeUITests;
+			productReference = E6628A731CDF963300B9353A /* HelloGLKitPracticeUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E6628A471CDF963300B9353A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = xyz.chenchangqing;
+				TargetAttributes = {
+					E6628A4E1CDF963300B9353A = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					E6628A671CDF963300B9353A = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = E6628A4E1CDF963300B9353A;
+					};
+					E6628A721CDF963300B9353A = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = E6628A4E1CDF963300B9353A;
+					};
+				};
+			};
+			buildConfigurationList = E6628A4A1CDF963300B9353A /* Build configuration list for PBXProject "HelloGLKitPractice" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E6628A461CDF963300B9353A;
+			productRefGroup = E6628A501CDF963300B9353A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E6628A4E1CDF963300B9353A /* HelloGLKitPractice */,
+				E6628A671CDF963300B9353A /* HelloGLKitPracticeTests */,
+				E6628A721CDF963300B9353A /* HelloGLKitPracticeUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E6628A4D1CDF963300B9353A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E6628A621CDF963300B9353A /* LaunchScreen.storyboard in Resources */,
+				E6628A5F1CDF963300B9353A /* Assets.xcassets in Resources */,
+				E6628A5D1CDF963300B9353A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E6628A661CDF963300B9353A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E6628A711CDF963300B9353A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E6628A4B1CDF963300B9353A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E6628A5A1CDF963300B9353A /* ViewController.m in Sources */,
+				E6628A571CDF963300B9353A /* AppDelegate.m in Sources */,
+				E6628A541CDF963300B9353A /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E6628A641CDF963300B9353A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E6628A6D1CDF963300B9353A /* HelloGLKitPracticeTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E6628A6F1CDF963300B9353A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E6628A781CDF963300B9353A /* HelloGLKitPracticeUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E6628A6A1CDF963300B9353A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E6628A4E1CDF963300B9353A /* HelloGLKitPractice */;
+			targetProxy = E6628A691CDF963300B9353A /* PBXContainerItemProxy */;
+		};
+		E6628A751CDF963300B9353A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E6628A4E1CDF963300B9353A /* HelloGLKitPractice */;
+			targetProxy = E6628A741CDF963300B9353A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E6628A5B1CDF963300B9353A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E6628A5C1CDF963300B9353A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E6628A601CDF963300B9353A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E6628A611CDF963300B9353A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E6628A7A1CDF963300B9353A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E6628A7B1CDF963300B9353A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E6628A7D1CDF963300B9353A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = HelloGLKitPractice/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.chenchangqing.HelloGLKitPractice;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E6628A7E1CDF963300B9353A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = HelloGLKitPractice/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.chenchangqing.HelloGLKitPractice;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		E6628A801CDF963300B9353A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = HelloGLKitPracticeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.chenchangqing.HelloGLKitPracticeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HelloGLKitPractice.app/HelloGLKitPractice";
+			};
+			name = Debug;
+		};
+		E6628A811CDF963300B9353A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = HelloGLKitPracticeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.chenchangqing.HelloGLKitPracticeTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HelloGLKitPractice.app/HelloGLKitPractice";
+			};
+			name = Release;
+		};
+		E6628A831CDF963300B9353A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = HelloGLKitPracticeUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.chenchangqing.HelloGLKitPracticeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = HelloGLKitPractice;
+			};
+			name = Debug;
+		};
+		E6628A841CDF963300B9353A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = HelloGLKitPracticeUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.chenchangqing.HelloGLKitPracticeUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = HelloGLKitPractice;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E6628A4A1CDF963300B9353A /* Build configuration list for PBXProject "HelloGLKitPractice" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E6628A7A1CDF963300B9353A /* Debug */,
+				E6628A7B1CDF963300B9353A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E6628A7C1CDF963300B9353A /* Build configuration list for PBXNativeTarget "HelloGLKitPractice" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E6628A7D1CDF963300B9353A /* Debug */,
+				E6628A7E1CDF963300B9353A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		E6628A7F1CDF963300B9353A /* Build configuration list for PBXNativeTarget "HelloGLKitPracticeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E6628A801CDF963300B9353A /* Debug */,
+				E6628A811CDF963300B9353A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		E6628A821CDF963300B9353A /* Build configuration list for PBXNativeTarget "HelloGLKitPracticeUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E6628A831CDF963300B9353A /* Debug */,
+				E6628A841CDF963300B9353A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E6628A471CDF963300B9353A /* Project object */;
+}
