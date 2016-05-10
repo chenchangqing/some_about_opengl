@@ -121,7 +121,7 @@ static void renderScene()
 static void clear() {
     
     glDeleteBuffers(1, &vertexbuffer);
-    glDeleteVertexArrays(1, &VAO);
+    glDeleteVertexArrays(1, &vertexarray);
     glDeleteProgram(programID);
     glfwTerminate();
 }
@@ -136,7 +136,7 @@ int main( void )
         return -1;
     }
     
-    loadShaders()
+    loadShaders();
     
     createBuffers();
     
