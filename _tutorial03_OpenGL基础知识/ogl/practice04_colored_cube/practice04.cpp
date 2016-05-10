@@ -240,7 +240,7 @@ int main( void )
         return -1;
     }
     
-    loadShaders()
+    loadShaders();
     
     createMatrix();
     
