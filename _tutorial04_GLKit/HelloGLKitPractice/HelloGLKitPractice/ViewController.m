@@ -8,18 +8,43 @@
 
 #import "ViewController.h"
 #import <GLKit/GLKit.h>
+#import <OpenGLES/ES2/glext.h>
 
-@interface ViewController ()<GLKViewDelegate>
 
-@property (weak, nonatomic) IBOutlet GLKView *glkView;
+/**
+ *  顶点数据
+ */
+static const GLfloat g_vertex_buffer_data[] = {
+    -1.0f, -1.0f, 0.0f,
+    1.0f, -1.0f, 0.0f,
+    0.0f,  1.0f, 0.0f,
+};
 
-@end
+/**
+ *  颜色数据
+ */
+static const GLfloat g_color_buffer_data[] = {
+    1, 0, 0, 1,
+    0, 1, 0, 1,
+    0, 0, 1, 1
+};
 
-@implementation ViewController {
+@interface ViewController ()<GLKViewDelegate>{
     
     float _curRed;
     BOOL _increasing;
+    GLuint _vertexBuffer;
+    GLuint _colorBuffer;
+    GLuint _vertexArray;
 }
+
+@property (weak, nonatomic) IBOutlet GLKView *glkView;
+@property (strong, nonatomic) CADisplayLink* displayLink;
+@property (strong, nonatomic) EAGLContext *context;
+
+@end
+
+@implementation ViewController
 
 #pragma mark - Life cycle
 
@@ -27,10 +52,28 @@
     [super viewDidLoad];
     
     [self setup];
+    [self setupGL];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    
+    [self clearGL];
+    
+    if ([EAGLContext currentContext] == self.context) {
+        [EAGLContext setCurrentContext:nil];
+    }
+    self.context = nil;
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+//    _displayLink.paused = !_displayLink.paused;
 }
 
 #pragma mark - Set up
@@ -40,13 +83,57 @@
     _increasing = YES;
     _curRed = 0.0;
     
-    EAGLContext * context =[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-    _glkView.context = context;
+    _context =[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    
+    if (!self.context) {
+        NSLog(@"Failed to create ES context");
+    }
+    
+    _glkView.context = _context;
     _glkView.delegate = self;
     _glkView.enableSetNeedsDisplay = NO;
     
-    CADisplayLink* displayLink = [CADisplayLink displayLinkWithTarget:_glkView selector:@selector(display)];
-    [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    _displayLink = [CADisplayLink displayLinkWithTarget:_glkView selector:@selector(display)];
+    [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+}
+
+#pragma mark - OpenGL
+
+- (void)setupGL {
+    
+    [EAGLContext setCurrentContext:self.context];
+    glEnable(GL_CULL_FACE);
+    
+    glGenVertexArraysOES(1, &_vertexArray);
+    glBindVertexArrayOES(_vertexArray);
+
+    glGenBuffers(1, &_vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+    
+    glGenBuffers(1, &_colorBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
+    
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    
+    glEnableVertexAttribArray(GLKVertexAttribColor);
+    glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer);
+    glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    
+    glBindVertexArrayOES(0);
+    
+}
+
+- (void)clearGL {
+    
+    [EAGLContext setCurrentContext:self.context];
+    
+    glDeleteBuffers(1, &_vertexBuffer);
+    glDeleteBuffers(1, &_colorBuffer);
+    glDeleteVertexArraysOES(1, &_vertexArray);
 }
 
 #pragma mark - GLKViewDelegate
@@ -67,8 +154,11 @@
         _increasing = YES;
     }
     
-    glClearColor(_curRed, 0.0, 0.0, 1.0);
+    glClearColor(_curRed, 0.0, 1.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT);
+    
+    glBindVertexArrayOES(_vertexArray);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
 @end

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E64FC16C1CE1D580005C8069 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E64FC16B1CE1D580005C8069 /* UIKit.framework */; };
+		E64FC16E1CE1D588005C8069 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E64FC16D1CE1D588005C8069 /* Foundation.framework */; };
+		E64FC1701CE1D59C005C8069 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E64FC16F1CE1D59C005C8069 /* CoreGraphics.framework */; };
 		E6628A541CDF963300B9353A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E6628A531CDF963300B9353A /* main.m */; };
 		E6628A571CDF963300B9353A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E6628A561CDF963300B9353A /* AppDelegate.m */; };
 		E6628A5A1CDF963300B9353A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6628A591CDF963300B9353A /* ViewController.m */; };
@@ -38,6 +41,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E64FC16B1CE1D580005C8069 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		E64FC16D1CE1D588005C8069 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E64FC16F1CE1D59C005C8069 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		E6628A4F1CDF963300B9353A /* HelloGLKitPractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloGLKitPractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6628A531CDF963300B9353A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E6628A551CDF963300B9353A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -64,6 +70,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E64FC1701CE1D59C005C8069 /* CoreGraphics.framework in Frameworks */,
+				E64FC16E1CE1D588005C8069 /* Foundation.framework in Frameworks */,
+				E64FC16C1CE1D580005C8069 /* UIKit.framework in Frameworks */,
 				E6628A8B1CDF9B0D00B9353A /* QuartzCore.framework in Frameworks */,
 				E6628A881CDF977D00B9353A /* OpenGLES.framework in Frameworks */,
 				E6628A861CDF977600B9353A /* GLKit.framework in Frameworks */,
@@ -153,6 +162,9 @@
 		E6628A891CDF978800B9353A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E64FC16F1CE1D59C005C8069 /* CoreGraphics.framework */,
+				E64FC16D1CE1D588005C8069 /* Foundation.framework */,
+				E64FC16B1CE1D580005C8069 /* UIKit.framework */,
 				E6628A8A1CDF9B0D00B9353A /* QuartzCore.framework */,
 				E6628A871CDF977D00B9353A /* OpenGLES.framework */,
 				E6628A851CDF977600B9353A /* GLKit.framework */,
@@ -516,6 +528,7 @@
 				E6628A7E1CDF963300B9353A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E6628A7F1CDF963300B9353A /* Build configuration list for PBXNativeTarget "HelloGLKitPracticeTests" */ = {
 			isa = XCConfigurationList;
@@ -524,6 +537,7 @@
 				E6628A811CDF963300B9353A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E6628A821CDF963300B9353A /* Build configuration list for PBXNativeTarget "HelloGLKitPracticeUITests" */ = {
 			isa = XCConfigurationList;
@@ -532,6 +546,7 @@
 				E6628A841CDF963300B9353A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

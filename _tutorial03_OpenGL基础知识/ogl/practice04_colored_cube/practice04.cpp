@@ -167,6 +167,7 @@ static void createMatrix() {
  */
 static void createBuffers()
 {
+    glUseProgram(programID);
     
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
@@ -182,6 +183,14 @@ static void createBuffers()
     glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
     
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
@@ -193,23 +202,12 @@ static void renderScene()
     
     do{
         
-        glUseProgram(programID);
         glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
-        glEnableVertexAttribArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-        
-        glEnableVertexAttribArray(1);
-        glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-        
+        glBindVertexArray(vertexarray);
         glDrawArrays(GL_TRIANGLES, 0, 12*3);
-        
-        glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
         
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -222,6 +220,10 @@ static void renderScene()
  *  释放
  */
 static void clear() {
+    
+    
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
     
     glDeleteVertexArrays(1, &vertexarray);
     glDeleteBuffers(1, &vertexbuffer);
