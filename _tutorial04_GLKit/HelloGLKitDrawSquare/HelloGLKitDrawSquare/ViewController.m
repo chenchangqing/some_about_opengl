@@ -164,6 +164,16 @@ static const GLfloat g_color_buffer_data[] = {
         _increasing = YES;
     }
     
+    float aspect = fabs(self.view.bounds.size.width / self.view.bounds.size.height);
+    
+    GLKMatrix4 mMatrix = GLKMatrix4Identity;
+    GLKMatrix4 vMatrix = GLKMatrix4MakeLookAt(0, 0, 10, 0, 0, 0, 0, 1, 0);
+    GLKMatrix4 mvMatrix = GLKMatrix4Multiply(mMatrix, vMatrix);
+    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(45.0f), aspect, 0.1f, 10.0f);
+
+    self.effect.transform.projectionMatrix = projectionMatrix;
+    self.effect.transform.modelviewMatrix = mvMatrix;
+
     [self.effect prepareToDraw];
     
     glClearColor(_curRed, 0.0, 1.0, 0.0);
