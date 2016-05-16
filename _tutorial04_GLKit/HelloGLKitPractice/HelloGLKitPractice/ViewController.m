@@ -41,6 +41,7 @@ static const GLfloat g_color_buffer_data[] = {
 @property (weak, nonatomic) IBOutlet GLKView *glkView;
 @property (strong, nonatomic) CADisplayLink* displayLink;
 @property (strong, nonatomic) EAGLContext *context;
+@property (strong, nonatomic) GLKBaseEffect *effect;
 
 @end
 
@@ -104,6 +105,8 @@ static const GLfloat g_color_buffer_data[] = {
     [EAGLContext setCurrentContext:self.context];
     glEnable(GL_CULL_FACE);
     
+    self.effect = [[GLKBaseEffect alloc] init];
+    
     glGenVertexArraysOES(1, &_vertexArray);
     glBindVertexArrayOES(_vertexArray);
 
@@ -153,6 +156,8 @@ static const GLfloat g_color_buffer_data[] = {
         _curRed = 0.0;
         _increasing = YES;
     }
+    
+    [self.effect prepareToDraw];
     
     glClearColor(_curRed, 0.0, 1.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT);
