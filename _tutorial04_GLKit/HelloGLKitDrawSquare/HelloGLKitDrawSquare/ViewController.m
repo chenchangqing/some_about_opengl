@@ -164,23 +164,41 @@ static const GLfloat g_color_buffer_data[] = {
         _increasing = YES;
     }
     
-    float aspect = fabs(self.view.bounds.size.width / self.view.bounds.size.height);
-    
-    GLKMatrix4 mMatrix = GLKMatrix4Identity;
-    GLKMatrix4 vMatrix = GLKMatrix4MakeLookAt(0, 0, 10, 0, 0, 0, 0, 1, 0);
-    GLKMatrix4 mvMatrix = GLKMatrix4Multiply(mMatrix, vMatrix);
-    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(45.0f), aspect, 0.1f, 10.0f);
-
-    self.effect.transform.projectionMatrix = projectionMatrix;
-    self.effect.transform.modelviewMatrix = mvMatrix;
-
-    [self.effect prepareToDraw];
-    
     glClearColor(_curRed, 0.0, 1.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT);
-    
     glBindVertexArrayOES(_vertexArray);
+    
+    // mvp
+    float aspect = fabs(self.view.bounds.size.width / self.view.bounds.size.height);
+    GLKMatrix4 mMatrix = GLKMatrix4Identity;
+    GLKMatrix4 vMatrix = GLKMatrix4MakeLookAt(0, 0, 5, 0, 0, 0, 0, 1, 0);
+    GLKMatrix4 pMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(30), aspect, 0.1f, 10.0f);
+    GLKMatrix4 mvMatrix = GLKMatrix4Multiply(mMatrix, vMatrix);
+    GLKMatrix4 mvpMatrix = GLKMatrix4Multiply(pMatrix, mvMatrix);
+    self.effect.transform.projectionMatrix = mvpMatrix;
+    
+    // 绘制CollectionView
+    GLKMatrix4 scaleMatrix = GLKMatrix4MakeScale(0.25, 0.25, 1);
+    GLKMatrix4 transMatrix = GLKMatrix4MakeTranslation(-0.28, 0.25, 0);
+    self.effect.transform.modelviewMatrix = GLKMatrix4Multiply(transMatrix, scaleMatrix);
+    [self.effect prepareToDraw];
     glDrawArrays(GL_TRIANGLES, 0, 6);
+    
+    GLKMatrix4 scaleMatrix2 = GLKMatrix4MakeScale(0.25, 0.25, 1);
+    GLKMatrix4 transMatrix2 = GLKMatrix4MakeTranslation(0.28, 0.25, 0);
+    self.effect.transform.modelviewMatrix = GLKMatrix4Multiply(transMatrix2, scaleMatrix2);
+    [self.effect prepareToDraw];
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    
+    // 绘制ToolBar
+    GLKMatrix4 rotatMatrix = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(-70), 1, 0, 0);
+    GLKMatrix4 scaleMatrix3 = GLKMatrix4MakeScale(0.8, 0.25, 1);
+    GLKMatrix4 transMatrix3 = GLKMatrix4MakeTranslation(0, -0.25, 0);
+    GLKMatrix4 rsMatrix = GLKMatrix4Multiply(rotatMatrix, scaleMatrix3);
+    self.effect.transform.modelviewMatrix = GLKMatrix4Multiply(transMatrix3, rsMatrix);
+    [self.effect prepareToDraw];
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    
 }
 
 @end
