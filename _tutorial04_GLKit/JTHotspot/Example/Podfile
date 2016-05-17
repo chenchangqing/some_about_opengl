@@ -1,0 +1,9 @@
+use_frameworks!
+
+target 'JTHotspot_Example' do
+  pod 'JTHotspot', :path => '../'
+end
+
+target 'JTHotspot_Tests' do
+  pod 'JTHotspot', :path => '../'
+end
