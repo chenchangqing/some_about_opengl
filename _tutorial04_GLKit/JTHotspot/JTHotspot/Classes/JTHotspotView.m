@@ -47,6 +47,7 @@ static const GLfloat g_color_buffer_data[] = {
 @property (strong, nonatomic) CADisplayLink* displayLink;
 @property (strong, nonatomic) EAGLContext *glkcontext;
 @property (strong, nonatomic) GLKBaseEffect *effect;
+@property (strong, nonatomic) NSMutableArray *hotspots;
 
 @end
 
@@ -57,7 +58,7 @@ static const GLfloat g_color_buffer_data[] = {
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    [self setupGL];
+    [self setup];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -65,7 +66,7 @@ static const GLfloat g_color_buffer_data[] = {
     self = [super initWithFrame:frame];
     if (self) {
         
-        [self setupGL];
+        [self setup];
     }
     return self;
 }
@@ -82,19 +83,18 @@ static const GLfloat g_color_buffer_data[] = {
 
 #pragma mark - Set up
 
-- (void)setupGL {
+- (void)setup {
     
-    // 初始化glkview
     _glkcontext =[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     
     GLKView *tglkView = [[GLKView alloc] initWithFrame:CGRectZero context:_glkcontext];
     [self addSubview:tglkView];
+    _glkView = tglkView;
     
-    tglkView.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *viewsDictionary = @{@"tglkView":tglkView};
+    _glkView.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *viewsDictionary = @{@"tglkView":_glkView};
     [self addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[tglkView]-0-|" options:0 metrics:nil views:viewsDictionary]];
     [self addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[tglkView]-0-|" options:0 metrics:nil views:viewsDictionary]];
-    _glkView = tglkView;
     
     
     if (!_glkcontext) {
@@ -106,11 +106,17 @@ static const GLfloat g_color_buffer_data[] = {
     _displayLink = [CADisplayLink displayLinkWithTarget:_glkView selector:@selector(display)];
     [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     
+    _effect = [[GLKBaseEffect alloc] init];
+    _hotspots = [[NSMutableArray alloc] initWithCapacity:0];
+    
+    [self setupGL];
+}
+
+- (void)setupGL {
+    
     // OpenGL相关
     [EAGLContext setCurrentContext:_glkcontext];
     glEnable(GL_CULL_FACE);
-    
-    _effect = [[GLKBaseEffect alloc] init];
     
     glGenVertexArraysOES(1, &_vertexArray);
     glBindVertexArrayOES(_vertexArray);
