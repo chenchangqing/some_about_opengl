@@ -23,6 +23,9 @@
     
     
     HotspotItem *item = [[HotspotItem alloc] init];
+    
+    item.rotation.xAngle = 70;
+    
     [_hotspotView addHotspot:item];
     
 }
