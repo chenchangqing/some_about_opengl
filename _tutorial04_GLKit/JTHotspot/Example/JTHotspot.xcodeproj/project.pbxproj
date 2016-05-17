@@ -25,6 +25,7 @@
 		E61DD6631CEAE27A00D20DD0 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E61DD6601CEAE27A00D20DD0 /* Default-568h@2x.png */; };
 		E61DD6641CEAE27A00D20DD0 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E61DD6611CEAE27A00D20DD0 /* Default.png */; };
 		E61DD6651CEAE27A00D20DD0 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E61DD6621CEAE27A00D20DD0 /* Default@2x.png */; };
+		E6BAE6081CEB114B005E54DC /* JTViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BAE6071CEB114B005E54DC /* JTViewController2.m */; };
 		ED8A2F0AD78FC039ED8FC5CF /* Pods_JTHotspot_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ABBF96345AF0310E9EE62C9 /* Pods_JTHotspot_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +71,8 @@
 		E61DD6601CEAE27A00D20DD0 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		E61DD6611CEAE27A00D20DD0 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		E61DD6621CEAE27A00D20DD0 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		E6BAE6061CEB114B005E54DC /* JTViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTViewController2.h; sourceTree = "<group>"; };
+		E6BAE6071CEB114B005E54DC /* JTViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTViewController2.m; sourceTree = "<group>"; };
 		F93D72347AEBDB2C79CEE4F1 /* Pods-JTHotspot_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JTHotspot_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-JTHotspot_Tests/Pods-JTHotspot_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -141,6 +144,8 @@
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* JTViewController.h */,
 				6003F5A6195388D20070C39A /* JTViewController.m */,
+				E6BAE6061CEB114B005E54DC /* JTViewController2.h */,
+				E6BAE6071CEB114B005E54DC /* JTViewController2.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
 			);
@@ -403,6 +408,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F59E195388D20070C39A /* JTAppDelegate.m in Sources */,
+				E6BAE6081CEB114B005E54DC /* JTViewController2.m in Sources */,
 				6003F5A7195388D20070C39A /* JTViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);

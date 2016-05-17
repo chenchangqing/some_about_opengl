@@ -79,6 +79,8 @@ static const GLfloat g_color_buffer_data[] = {
         [EAGLContext setCurrentContext:nil];
     }
     _glkcontext = nil;
+    _displayLink.paused = YES;
+    _displayLink = nil;
 }
 
 #pragma mark - Public
