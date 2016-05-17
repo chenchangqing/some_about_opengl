@@ -124,8 +124,10 @@ static const GLfloat g_color_buffer_data[] = {
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
     
     glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);// 很关键
     glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(GLKVertexAttribColor);
+    glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer);// 很关键
     glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, 0, 0);
     
     glBindVertexArrayOES(0);
@@ -164,26 +166,26 @@ static const GLfloat g_color_buffer_data[] = {
     _effect.transform.projectionMatrix = mvpMatrix;
 
     // 绘制CollectionView
-//    GLKMatrix4 scaleMatrix = GLKMatrix4MakeScale(0.25, 0.25, 1);
-//    GLKMatrix4 transMatrix = GLKMatrix4MakeTranslation(-0.28, 0.25, 0);
-//    _effect.transform.modelviewMatrix = GLKMatrix4Multiply(transMatrix, scaleMatrix);
+    GLKMatrix4 scaleMatrix = GLKMatrix4MakeScale(0.25, 0.25, 1);
+    GLKMatrix4 transMatrix = GLKMatrix4MakeTranslation(-0.28, 0.25, 0);
+    _effect.transform.modelviewMatrix = GLKMatrix4Multiply(transMatrix, scaleMatrix);
     [_effect prepareToDraw];
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-//
-//    GLKMatrix4 scaleMatrix2 = GLKMatrix4MakeScale(0.25, 0.25, 1);
-//    GLKMatrix4 transMatrix2 = GLKMatrix4MakeTranslation(0.28, 0.25, 0);
-//    self.effect.transform.modelviewMatrix = GLKMatrix4Multiply(transMatrix2, scaleMatrix2);
-//    [_effect prepareToDraw];
-//    glDrawArrays(GL_TRIANGLES, 0, 6);
-//    
-//    // 绘制ToolBar
-//    GLKMatrix4 rotatMatrix = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(-70), 1, 0, 0);
-//    GLKMatrix4 scaleMatrix3 = GLKMatrix4MakeScale(0.8, 0.25, 1);
-//    GLKMatrix4 transMatrix3 = GLKMatrix4MakeTranslation(0, -0.25, 0);
-//    GLKMatrix4 rsMatrix = GLKMatrix4Multiply(rotatMatrix, scaleMatrix3);
-//    self.effect.transform.modelviewMatrix = GLKMatrix4Multiply(transMatrix3, rsMatrix);
-//    [_effect prepareToDraw];
-//    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+
+    GLKMatrix4 scaleMatrix2 = GLKMatrix4MakeScale(0.25, 0.25, 1);
+    GLKMatrix4 transMatrix2 = GLKMatrix4MakeTranslation(0.28, 0.25, 0);
+    self.effect.transform.modelviewMatrix = GLKMatrix4Multiply(transMatrix2, scaleMatrix2);
+    [_effect prepareToDraw];
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    
+    // 绘制ToolBar
+    GLKMatrix4 rotatMatrix = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(-70), 1, 0, 0);
+    GLKMatrix4 scaleMatrix3 = GLKMatrix4MakeScale(0.8, 0.25, 1);
+    GLKMatrix4 transMatrix3 = GLKMatrix4MakeTranslation(0, -0.25, 0);
+    GLKMatrix4 rsMatrix = GLKMatrix4Multiply(rotatMatrix, scaleMatrix3);
+    self.effect.transform.modelviewMatrix = GLKMatrix4Multiply(transMatrix3, rsMatrix);
+    [_effect prepareToDraw];
+    glDrawArrays(GL_TRIANGLES, 0, 6);
     
 }
 
