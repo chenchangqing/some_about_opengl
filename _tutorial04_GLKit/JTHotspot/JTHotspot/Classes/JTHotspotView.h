@@ -6,9 +6,7 @@
 //
 //
 
-#import <GLKit/GLKit.h>
-
-@class HotspotItem;
+#import "HotspotItem.h"
 
 @interface JTHotspotView : UIView
 

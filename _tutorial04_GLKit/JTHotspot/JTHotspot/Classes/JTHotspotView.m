@@ -81,6 +81,23 @@ static const GLfloat g_color_buffer_data[] = {
     _glkcontext = nil;
 }
 
+#pragma mark - Public
+
+- (void)addHotspot:(HotspotItem *)item {
+    
+    [_hotspots addObject:item];
+}
+
+- (void)removeHotspot:(HotspotItem *)item {
+    
+    [_hotspots removeObject:item];
+}
+
+- (void)clearHotspots {
+    
+    [_hotspots removeAllObjects];
+}
+
 #pragma mark - Set up
 
 - (void)setup {
@@ -161,6 +178,7 @@ static const GLfloat g_color_buffer_data[] = {
     glClear(GL_COLOR_BUFFER_BIT);
     
     glBindVertexArrayOES(_vertexArray);
+    
     // mvp
     float aspect = fabs(self.bounds.size.width / self.bounds.size.height);
     
@@ -170,28 +188,37 @@ static const GLfloat g_color_buffer_data[] = {
     GLKMatrix4 mvMatrix = GLKMatrix4Multiply(mMatrix, vMatrix);
     GLKMatrix4 mvpMatrix = GLKMatrix4Multiply(pMatrix, mvMatrix);
     _effect.transform.projectionMatrix = mvpMatrix;
-
-    // 绘制CollectionView
-    GLKMatrix4 scaleMatrix = GLKMatrix4MakeScale(0.25, 0.25, 1);
-    GLKMatrix4 transMatrix = GLKMatrix4MakeTranslation(-0.28, 0.25, 0);
-    _effect.transform.modelviewMatrix = GLKMatrix4Multiply(transMatrix, scaleMatrix);
-    [_effect prepareToDraw];
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-
-    GLKMatrix4 scaleMatrix2 = GLKMatrix4MakeScale(0.25, 0.25, 1);
-    GLKMatrix4 transMatrix2 = GLKMatrix4MakeTranslation(0.28, 0.25, 0);
-    self.effect.transform.modelviewMatrix = GLKMatrix4Multiply(transMatrix2, scaleMatrix2);
-    [_effect prepareToDraw];
-    glDrawArrays(GL_TRIANGLES, 0, 6);
     
-    // 绘制ToolBar
-    GLKMatrix4 rotatMatrix = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(-70), 1, 0, 0);
-    GLKMatrix4 scaleMatrix3 = GLKMatrix4MakeScale(0.8, 0.25, 1);
-    GLKMatrix4 transMatrix3 = GLKMatrix4MakeTranslation(0, -0.25, 0);
-    GLKMatrix4 rsMatrix = GLKMatrix4Multiply(rotatMatrix, scaleMatrix3);
-    self.effect.transform.modelviewMatrix = GLKMatrix4Multiply(transMatrix3, rsMatrix);
-    [_effect prepareToDraw];
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    // 绘制热点
+    
+    for (HotspotItem *item in _hotspots) {
+        
+        GLKMatrix4 resultMat = GLKMatrix4Identity;
+        
+        // 旋转
+        GLKMatrix4 rotatXMatrix = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(-item.rotation.xAngle), 1, 0, 0);
+        GLKMatrix4 rotatYMatrix = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(-item.rotation.yAngle), 0, 1, 0);
+        GLKMatrix4 rotatZMatrix = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(-item.rotation.zAngle), 0, 0, 1);
+        
+        resultMat = GLKMatrix4Multiply(resultMat, rotatXMatrix);
+        resultMat = GLKMatrix4Multiply(resultMat, rotatYMatrix);
+        resultMat = GLKMatrix4Multiply(resultMat, rotatZMatrix);
+        
+        // 缩放
+        GLKMatrix4 scaleMatrix3 = GLKMatrix4MakeScale(item.scale.widthScale, item.scale.heigthScale, 1);
+        
+        resultMat = GLKMatrix4Multiply(resultMat, scaleMatrix3);
+        
+        // 位置
+        GLKMatrix4 transMatrix3 = GLKMatrix4MakeTranslation(item.position.x, item.position.y, item.position.z);
+        
+        resultMat = GLKMatrix4Multiply(resultMat, transMatrix3);
+        
+        self.effect.transform.modelviewMatrix = resultMat;
+        [_effect prepareToDraw];
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        
+    }
     
 }
 

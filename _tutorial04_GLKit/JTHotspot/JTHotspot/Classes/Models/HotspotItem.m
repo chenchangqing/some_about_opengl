@@ -17,14 +17,10 @@
     if (self) {
         
         _type = HotspotTypeSquare;
-        _centerVector = GLKVector4Make(0, 0, 0, 1);
         
-        struct HotspotRotation rotation;
-        rotation.xAngle = 0;
-        rotation.yAngle = 0;
-        rotation.zAngle = 0;
-        
-        _rotation = rotation;
+        _position = [[HotspotPosition alloc] init];
+        _rotation = [[HotspotRotation alloc] init];
+        _scale = [[HotspotScale alloc] init];
     }
     
     return self;

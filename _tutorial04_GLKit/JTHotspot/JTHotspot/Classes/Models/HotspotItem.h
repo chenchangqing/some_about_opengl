@@ -8,13 +8,17 @@
 
 #import <Foundation/Foundation.h>
 #import <GLKit/GLKit.h>
+#import <UIKit/UIKit.h>
 #import "HotspotType.h"
+#import "HotspotScale.h"
 #import "HotspotRotation.h"
+#import "HotspotPosition.h"
 
 @interface HotspotItem : NSObject
 
 @property (nonatomic, assign) HotspotType type;
-@property (nonatomic, assign) GLKVector4 centerVector;
-@property (nonatomic, assign) struct HotspotRotation rotation;
+@property (nonatomic, strong) HotspotPosition *position;
+@property (nonatomic, strong) HotspotScale *scale;
+@property (nonatomic, strong) HotspotRotation *rotation;
 
 @end
