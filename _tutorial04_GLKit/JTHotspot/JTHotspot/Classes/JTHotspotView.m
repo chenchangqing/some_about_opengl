@@ -36,10 +36,20 @@ static const GLfloat g_color_buffer_data[] = {
     0, 0, 1, 1
 };
 
+static const GLfloat g_texture_buffer_data[] = {
+    3,0,
+    3,3,
+    0,3,
+    3,0,
+//    3,3,
+//    0,3
+};
+
 // Uniform index.
 enum
 {
     UNIFORM_MODELVIEWPROJECTION_MATRIX,
+    UNIFORM_TEXTURE_SAMPLER,
     NUM_UNIFORMS
 };
 
@@ -48,6 +58,7 @@ enum
 {
     ATTRIB_VERTEX,
     ATTRIB_COLOR,
+    ATTRIB_TEXTURE,
     NUM_ATTRIBUTES
 };
 
@@ -58,6 +69,7 @@ enum
     
     GLuint _vertexBuffer;
     GLuint _colorBuffer;
+    GLuint _textureBuffer;
     GLuint _vertexArray;
 }
 
@@ -168,12 +180,18 @@ enum
     glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
     
+    [self setupTexture:@"duck"];
+    
     glEnableVertexAttribArray(ATTRIB_VERTEX);
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);// 很关键
     glVertexAttribPointer(ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    
     glEnableVertexAttribArray(ATTRIB_COLOR);
     glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer);// 很关键
     glVertexAttribPointer(ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    
+    glEnableVertexAttribArray(ATTRIB_TEXTURE);
+    glVertexAttribPointer(ATTRIB_TEXTURE, 2, GL_FLOAT, GL_FALSE, sizeof(g_texture_buffer_data), 0);
     
     glBindVertexArrayOES(0);
 }
@@ -189,12 +207,43 @@ enum
     
     glDeleteBuffers(1, &_vertexBuffer);
     glDeleteBuffers(1, &_colorBuffer);
+    glDeleteBuffers(1, &_textureBuffer);
     glDeleteVertexArraysOES(1, &_vertexArray);
     
     if (_program) {
         glDeleteProgram(_program);
         _program = 0;
     }
+}
+
+#pragma mark - Texture
+
+- (GLuint)setupTexture:(NSString *)fileName {
+    
+    NSString* filePath = [NSString stringWithFormat:@"Frameworks/JTHotspot.framework/JTHotspot.Bundle/%@",fileName];
+    UIImage * image = [UIImage imageNamed:filePath];
+    CGImageRef spriteImage = image.CGImage;
+    
+    size_t width = CGImageGetWidth(spriteImage);
+    size_t height = CGImageGetHeight(spriteImage);
+    
+    GLubyte * spriteData = (GLubyte *)calloc(width * height * 4, sizeof(GLubyte));
+    
+    CGContextRef spriteContext = CGBitmapContextCreate(spriteData, width, height, 8, width * 4, CGImageGetColorSpace(spriteImage), (CGBitmapInfo)kCGImageAlphaPremultipliedLast);
+    
+    CGContextDrawImage(spriteContext, CGRectMake(0, 0, width, height), spriteImage);
+    
+    CGContextRelease(spriteContext);
+    
+    glGenTextures(1, &_textureBuffer);
+    
+    glBindTexture(GL_TEXTURE_2D, _textureBuffer);
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height, 0, GL_RGBA, GL_UNSIGNED_BYTE, spriteData);
+    
+    free(spriteData);
 }
 
 #pragma mark - GLKViewDelegate
@@ -240,6 +289,7 @@ enum
         resultMat = GLKMatrix4Multiply(resultMat, transMatrix3);
         
         glUseProgram(_program);
+        glUniform1i(_uniforms[UNIFORM_TEXTURE_SAMPLER], 0);
         glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, resultMat.m);
         glDrawArrays(GL_TRIANGLES, 0, 6);
         
@@ -280,6 +330,7 @@ enum
     // This needs to be done prior to linking.
     glBindAttribLocation(_program, ATTRIB_VERTEX, "position");
     glBindAttribLocation(_program, ATTRIB_COLOR, "color");
+    glBindAttribLocation(_program, ATTRIB_TEXTURE, "texture");
     
     // Link program.
     if (![self linkProgram:_program]) {
@@ -303,6 +354,7 @@ enum
     
     // Get uniform locations.
     _uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX] = glGetUniformLocation(_program, "modelViewProjectionMatrix");
+    _uniforms[UNIFORM_TEXTURE_SAMPLER] = glGetUniformLocation(_program, "textureSampler");
     
     // Release vertex and fragment shaders.
     if (vertShader) {
