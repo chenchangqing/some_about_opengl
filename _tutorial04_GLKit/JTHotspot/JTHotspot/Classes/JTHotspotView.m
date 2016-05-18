@@ -214,7 +214,6 @@ enum
     GLKMatrix4 pMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(15), aspect, 0.1f, 10.0f);
     GLKMatrix4 mvMatrix = GLKMatrix4Multiply(mMatrix, vMatrix);
     GLKMatrix4 mvpMatrix = GLKMatrix4Multiply(pMatrix, mvMatrix);
-//    _effect.transform.projectionMatrix = mvpMatrix;
     
     // 绘制热点
     for (HotspotItem *item in _hotspots) {
@@ -240,8 +239,6 @@ enum
         
         resultMat = GLKMatrix4Multiply(resultMat, transMatrix3);
         
-//        self.effect.transform.modelviewMatrix = resultMat;
-//        [_effect prepareToDraw];
         glUseProgram(_program);
         glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, resultMat.m);
         glDrawArrays(GL_TRIANGLES, 0, 6);
