@@ -1,0 +1,9 @@
+use_frameworks!
+
+target 'JTHotspotUseEffect_Example' do
+  pod 'JTHotspotUseEffect', :path => '../'
+end
+
+target 'JTHotspotUseEffect_Tests' do
+  pod 'JTHotspotUseEffect', :path => '../'
+end

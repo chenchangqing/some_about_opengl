@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="oWh-3B-c7L">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="wQg-tq-qST">
+            <objects>
+                <viewController id="whP-gf-Uak" customClass="JTViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uEw-UM-LJ8"/>
+                        <viewControllerLayoutGuide type="bottom" id="Mvr-aV-6Um"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TpU-gO-2f1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ghT-Jy-AdK" customClass="JTHotspotView">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="ghT-Jy-AdK" firstAttribute="leading" secondItem="TpU-gO-2f1" secondAttribute="leading" id="3Tx-JV-xlL"/>
+                            <constraint firstAttribute="trailing" secondItem="ghT-Jy-AdK" secondAttribute="trailing" id="Ntc-PE-54D"/>
+                            <constraint firstItem="ghT-Jy-AdK" firstAttribute="top" secondItem="TpU-gO-2f1" secondAttribute="top" constant="64" id="Xju-dm-kuI"/>
+                            <constraint firstItem="ghT-Jy-AdK" firstAttribute="top" secondItem="uEw-UM-LJ8" secondAttribute="bottom" id="lJm-F6-6D9"/>
+                            <constraint firstItem="Mvr-aV-6Um" firstAttribute="top" secondItem="ghT-Jy-AdK" secondAttribute="bottom" id="tH5-fW-ETn"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Xju-dm-kuI"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" id="U35-Wk-rRy">
+                        <barButtonItem key="rightBarButtonItem" title="test" id="PUN-h8-J9A">
+                            <connections>
+                                <segue destination="G61-Gm-vXf" kind="show" id="Zde-fk-CiL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="hotspotView" destination="ghT-Jy-AdK" id="82u-b1-dln"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tc2-Qw-aMS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="928" y="443"/>
+        </scene>
+        <!--View Controller2-->
+        <scene sceneID="FJk-Xz-9wJ">
+            <objects>
+                <viewController id="G61-Gm-vXf" customClass="JTViewController2" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6Vb-0A-BAc"/>
+                        <viewControllerLayoutGuide type="bottom" id="wbm-L0-ZQu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Bkx-sI-m3x">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0bV-df-lVL" customClass="JTHotspotView">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="0bV-df-lVL" firstAttribute="top" secondItem="6Vb-0A-BAc" secondAttribute="bottom" id="4t7-ln-YQW"/>
+                            <constraint firstAttribute="trailing" secondItem="0bV-df-lVL" secondAttribute="trailing" id="DiR-98-t23"/>
+                            <constraint firstItem="0bV-df-lVL" firstAttribute="leading" secondItem="Bkx-sI-m3x" secondAttribute="leading" id="KUs-Sh-wZq"/>
+                            <constraint firstItem="wbm-L0-ZQu" firstAttribute="top" secondItem="0bV-df-lVL" secondAttribute="bottom" id="a2h-lw-LMe"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="hotspotView" destination="0bV-df-lVL" id="vUL-9R-Fbu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s1X-Sf-5dD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1438" y="443"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Xwy-0H-JJD">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="oWh-3B-c7L" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="osy-wl-UDG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="whP-gf-Uak" kind="relationship" relationship="rootViewController" id="KuJ-wF-fUn"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VNn-BO-myb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="497" y="443"/>
+        </scene>
+    </scenes>
+</document>
