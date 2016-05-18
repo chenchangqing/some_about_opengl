@@ -64,7 +64,6 @@ enum
 @property (weak, nonatomic) GLKView *glkView;
 @property (strong, nonatomic) CADisplayLink* displayLink;
 @property (strong, nonatomic) EAGLContext *glkcontext;
-@property (strong, nonatomic) GLKBaseEffect *effect;
 @property (strong, nonatomic) NSMutableArray *hotspots;
 
 @end
@@ -143,7 +142,6 @@ enum
     _displayLink = [CADisplayLink displayLinkWithTarget:_glkView selector:@selector(display)];
     [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     
-    _effect = [[GLKBaseEffect alloc] init];
     _hotspots = [[NSMutableArray alloc] initWithCapacity:0];
     
     [self setupGL];
@@ -157,6 +155,7 @@ enum
     [self loadShaders];
     
     glEnable(GL_CULL_FACE);
+    glEnable(GL_DEPTH_TEST);
     
     glGenVertexArraysOES(1, &_vertexArray);
     glBindVertexArrayOES(_vertexArray);
@@ -191,8 +190,6 @@ enum
     glDeleteBuffers(1, &_vertexBuffer);
     glDeleteBuffers(1, &_colorBuffer);
     glDeleteVertexArraysOES(1, &_vertexArray);
-    
-    self.effect = nil;
     
     if (_program) {
         glDeleteProgram(_program);
