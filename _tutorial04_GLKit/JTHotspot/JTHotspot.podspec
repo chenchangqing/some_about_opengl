@@ -32,9 +32,9 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'JTHotspot/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'JTHotspot' => ['JTHotspot/Assets/*.png']
-  # }
+  s.resource_bundles = {
+    'JTHotspot' => ['JTHotspot/Assets/*.{fsh,vsh}']
+  }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'GLKit', 'OpenGLES'

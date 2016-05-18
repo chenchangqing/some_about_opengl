@@ -36,7 +36,25 @@ static const GLfloat g_color_buffer_data[] = {
     0, 0, 1, 1
 };
 
+// Uniform index.
+enum
+{
+    UNIFORM_MODELVIEWPROJECTION_MATRIX,
+    NUM_UNIFORMS
+};
+
+// Attribute index.
+enum
+{
+    ATTRIB_VERTEX,
+    ATTRIB_COLOR,
+    NUM_ATTRIBUTES
+};
+
 @interface JTHotspotView ()<GLKViewDelegate>{
+    
+    GLuint _program;
+    GLint _uniforms[NUM_UNIFORMS];
     
     GLuint _vertexBuffer;
     GLuint _colorBuffer;
@@ -73,7 +91,7 @@ static const GLfloat g_color_buffer_data[] = {
 
 - (void)dealloc
 {
-    [self clearGL];
+    [self tearDownGL];
     
     if ([EAGLContext currentContext] == _glkcontext) {
         [EAGLContext setCurrentContext:nil];
@@ -135,6 +153,9 @@ static const GLfloat g_color_buffer_data[] = {
     
     // OpenGL相关
     [EAGLContext setCurrentContext:_glkcontext];
+    
+    [self loadShaders];
+    
     glEnable(GL_CULL_FACE);
     
     glGenVertexArraysOES(1, &_vertexArray);
@@ -148,19 +169,19 @@ static const GLfloat g_color_buffer_data[] = {
     glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
     
-    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glEnableVertexAttribArray(ATTRIB_VERTEX);
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);// 很关键
-    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(GLKVertexAttribColor);
+    glVertexAttribPointer(ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glEnableVertexAttribArray(ATTRIB_COLOR);
     glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer);// 很关键
-    glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, 0);
     
     glBindVertexArrayOES(0);
 }
 
 #pragma mark - clearGL
 
-- (void)clearGL {
+- (void)tearDownGL {
     
     [EAGLContext setCurrentContext:_glkcontext];
     
@@ -170,14 +191,21 @@ static const GLfloat g_color_buffer_data[] = {
     glDeleteBuffers(1, &_vertexBuffer);
     glDeleteBuffers(1, &_colorBuffer);
     glDeleteVertexArraysOES(1, &_vertexArray);
+    
+    self.effect = nil;
+    
+    if (_program) {
+        glDeleteProgram(_program);
+        _program = 0;
+    }
 }
 
 #pragma mark - GLKViewDelegate
 
-- (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
-    
-    glClearColor(0.0, 0.0, 1.0, 0.0);
-    glClear(GL_COLOR_BUFFER_BIT);
+- (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
+{
+    glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     glBindVertexArrayOES(_vertexArray);
     
@@ -189,13 +217,12 @@ static const GLfloat g_color_buffer_data[] = {
     GLKMatrix4 pMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(15), aspect, 0.1f, 10.0f);
     GLKMatrix4 mvMatrix = GLKMatrix4Multiply(mMatrix, vMatrix);
     GLKMatrix4 mvpMatrix = GLKMatrix4Multiply(pMatrix, mvMatrix);
-    _effect.transform.projectionMatrix = mvpMatrix;
+//    _effect.transform.projectionMatrix = mvpMatrix;
     
     // 绘制热点
-    
     for (HotspotItem *item in _hotspots) {
         
-        GLKMatrix4 resultMat = GLKMatrix4Identity;
+        GLKMatrix4 resultMat = mvpMatrix;
         
         // 旋转
         GLKMatrix4 rotatXMatrix = GLKMatrix4MakeRotation(GLKMathDegreesToRadians(-item.rotation.xAngle), 1, 0, 0);
@@ -216,12 +243,164 @@ static const GLfloat g_color_buffer_data[] = {
         
         resultMat = GLKMatrix4Multiply(resultMat, transMatrix3);
         
-        self.effect.transform.modelviewMatrix = resultMat;
-        [_effect prepareToDraw];
+//        self.effect.transform.modelviewMatrix = resultMat;
+//        [_effect prepareToDraw];
+        glUseProgram(_program);
+        glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, resultMat.m);
         glDrawArrays(GL_TRIANGLES, 0, 6);
         
     }
+}
+
+#pragma mark -  OpenGL ES 2 shader compilation
+
+- (BOOL)loadShaders
+{
+    GLuint vertShader, fragShader;
+    NSString *vertShaderPathname, *fragShaderPathname;
     
+    // Create shader program.
+    _program = glCreateProgram();
+    
+    // Create and compile vertex shader.
+    vertShaderPathname = [[NSBundle mainBundle] pathForResource:@"Frameworks/JTHotspot.framework/JTHotspot.Bundle/Shader" ofType:@"vsh"];
+    if (![self compileShader:&vertShader type:GL_VERTEX_SHADER file:vertShaderPathname]) {
+        NSLog(@"Failed to compile vertex shader");
+        return NO;
+    }
+    
+    // Create and compile fragment shader.
+    fragShaderPathname = [[NSBundle mainBundle] pathForResource:@"Frameworks/JTHotspot.framework/JTHotspot.Bundle/Shader" ofType:@"fsh"];
+    if (![self compileShader:&fragShader type:GL_FRAGMENT_SHADER file:fragShaderPathname]) {
+        NSLog(@"Failed to compile fragment shader");
+        return NO;
+    }
+    
+    // Attach vertex shader to program.
+    glAttachShader(_program, vertShader);
+    
+    // Attach fragment shader to program.
+    glAttachShader(_program, fragShader);
+    
+    // Bind attribute locations.
+    // This needs to be done prior to linking.
+    glBindAttribLocation(_program, ATTRIB_VERTEX, "position");
+    glBindAttribLocation(_program, ATTRIB_COLOR, "color");
+    
+    // Link program.
+    if (![self linkProgram:_program]) {
+        NSLog(@"Failed to link program: %d", _program);
+        
+        if (vertShader) {
+            glDeleteShader(vertShader);
+            vertShader = 0;
+        }
+        if (fragShader) {
+            glDeleteShader(fragShader);
+            fragShader = 0;
+        }
+        if (_program) {
+            glDeleteProgram(_program);
+            _program = 0;
+        }
+        
+        return NO;
+    }
+    
+    // Get uniform locations.
+    _uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX] = glGetUniformLocation(_program, "modelViewProjectionMatrix");
+    
+    // Release vertex and fragment shaders.
+    if (vertShader) {
+        glDetachShader(_program, vertShader);
+        glDeleteShader(vertShader);
+    }
+    if (fragShader) {
+        glDetachShader(_program, fragShader);
+        glDeleteShader(fragShader);
+    }
+    
+    return YES;
+}
+
+- (BOOL)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file
+{
+    GLint status;
+    const GLchar *source;
+    
+    source = (GLchar *)[[NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:nil] UTF8String];
+    if (!source) {
+        NSLog(@"Failed to load vertex shader");
+        return NO;
+    }
+    
+    *shader = glCreateShader(type);
+    glShaderSource(*shader, 1, &source, NULL);
+    glCompileShader(*shader);
+    
+#if defined(DEBUG)
+    GLint logLength;
+    glGetShaderiv(*shader, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength > 0) {
+        GLchar *log = (GLchar *)malloc(logLength);
+        glGetShaderInfoLog(*shader, logLength, &logLength, log);
+        NSLog(@"Shader compile log:\n%s", log);
+        free(log);
+    }
+#endif
+    
+    glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
+    if (status == 0) {
+        glDeleteShader(*shader);
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (BOOL)linkProgram:(GLuint)prog
+{
+    GLint status;
+    glLinkProgram(prog);
+    
+#if defined(DEBUG)
+    GLint logLength;
+    glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength > 0) {
+        GLchar *log = (GLchar *)malloc(logLength);
+        glGetProgramInfoLog(prog, logLength, &logLength, log);
+        NSLog(@"Program link log:\n%s", log);
+        free(log);
+    }
+#endif
+    
+    glGetProgramiv(prog, GL_LINK_STATUS, &status);
+    if (status == 0) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (BOOL)validateProgram:(GLuint)prog
+{
+    GLint logLength, status;
+    
+    glValidateProgram(prog);
+    glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength > 0) {
+        GLchar *log = (GLchar *)malloc(logLength);
+        glGetProgramInfoLog(prog, logLength, &logLength, log);
+        NSLog(@"Program validate log:\n%s", log);
+        free(log);
+    }
+    
+    glGetProgramiv(prog, GL_VALIDATE_STATUS, &status);
+    if (status == 0) {
+        return NO;
+    }
+    
+    return YES;
 }
 
 @end
