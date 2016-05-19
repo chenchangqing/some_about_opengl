@@ -78,7 +78,7 @@ enum
 @property (strong, nonatomic) CADisplayLink* displayLink;
 @property (strong, nonatomic) EAGLContext *glkcontext;
 @property (strong, nonatomic) NSMutableArray *hotspots;
-@property (strong, nonatomic) GLKTextureInfo *textureInfo;
+@property (strong, nonatomic) NSMutableArray *textureInfos;
 
 @end
 
@@ -157,6 +157,7 @@ enum
     [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     
     _hotspots = [[NSMutableArray alloc] initWithCapacity:0];
+    _textureInfos = [[NSMutableArray alloc] initWithCapacity:0];
     
     [self setupGL];
 }
@@ -188,8 +189,15 @@ enum
     
     NSString* filePath = [NSString stringWithFormat:@"Frameworks/JTHotspot.framework/JTHotspot.Bundle/%@",@"leaves.gif"];
     UIImage * image = [UIImage imageNamed:filePath];
-    _textureInfo = [GLKTextureLoader textureWithCGImage:image.CGImage options:nil error:nil];
-    _textureBuffer = _textureInfo.name;
+    GLKTextureInfo* textureInfo = [GLKTextureLoader textureWithCGImage:image.CGImage options:nil error:nil];
+    [_textureInfos addObject:textureInfo];
+    
+    NSString* filePath2 = [NSString stringWithFormat:@"Frameworks/JTHotspot.framework/JTHotspot.Bundle/%@",@"duck"];
+    UIImage * image2 = [UIImage imageNamed:filePath2];
+    GLKTextureInfo* textureInfo2= [GLKTextureLoader textureWithCGImage:image2.CGImage options:nil error:nil];
+    [_textureInfos addObject:textureInfo2];
+    
+    _textureBuffer = textureInfo.name;
     
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -274,6 +282,8 @@ enum
         resultMat = GLKMatrix4Multiply(resultMat, transMatrix3);
         
         glUseProgram(_program);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, _textureBuffer);
         glUniform1i(_uniforms[UNIFORM_TEXTURE_SAMPLER], 0);
         glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, resultMat.m);
         glDrawArrays(GL_TRIANGLES, 0, 6);
