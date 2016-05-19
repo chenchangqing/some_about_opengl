@@ -78,6 +78,7 @@ enum
 @property (strong, nonatomic) CADisplayLink* displayLink;
 @property (strong, nonatomic) EAGLContext *glkcontext;
 @property (strong, nonatomic) NSMutableArray *hotspots;
+@property (strong, nonatomic) GLKTextureInfo *textureInfo;
 
 @end
 
@@ -185,7 +186,15 @@ enum
     glBindBuffer(GL_ARRAY_BUFFER, _textureUVBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data), g_uv_buffer_data, GL_STATIC_DRAW);
     
-    [self setupTexture:@"leaves.gif"];
+    NSString* filePath = [NSString stringWithFormat:@"Frameworks/JTHotspot.framework/JTHotspot.Bundle/%@",@"leaves.gif"];
+    UIImage * image = [UIImage imageNamed:filePath];
+    _textureInfo = [GLKTextureLoader textureWithCGImage:image.CGImage options:nil error:nil];
+    _textureBuffer = _textureInfo.name;
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     
     glEnableVertexAttribArray(ATTRIB_VERTEX);
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);// 很关键
@@ -220,39 +229,6 @@ enum
         glDeleteProgram(_program);
         _program = 0;
     }
-}
-
-#pragma mark - Texture
-
-- (GLuint)setupTexture:(NSString *)fileName {
-    
-    NSString* filePath = [NSString stringWithFormat:@"Frameworks/JTHotspot.framework/JTHotspot.Bundle/%@",fileName];
-    UIImage * image = [UIImage imageNamed:filePath];
-    CGImageRef spriteImage = image.CGImage;
-    
-    size_t width = CGImageGetWidth(spriteImage);
-    size_t height = CGImageGetHeight(spriteImage);
-    
-    GLubyte * spriteData = (GLubyte *)calloc(width * height * 4, sizeof(GLubyte));
-    
-    CGContextRef spriteContext = CGBitmapContextCreate(spriteData, width, height, 8, width * 4, CGImageGetColorSpace(spriteImage), (CGBitmapInfo)kCGImageAlphaPremultipliedLast);
-    
-    CGContextDrawImage(spriteContext, CGRectMake(0, 0, width, height), spriteImage);
-    
-    CGContextRelease(spriteContext);
-    
-    glGenTextures(1, &_textureBuffer);
-    
-    glBindTexture(GL_TEXTURE_2D, _textureBuffer);
-    
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height, 0, GL_RGBA, GL_UNSIGNED_BYTE, spriteData);
-    
-    free(spriteData);
 }
 
 #pragma mark - GLKViewDelegate
@@ -298,6 +274,8 @@ enum
         resultMat = GLKMatrix4Multiply(resultMat, transMatrix3);
         
         glUseProgram(_program);
+        glActiveTexture(GL_TEXTURE10);
+        glBindTexture(GL_TEXTURE_2D, _textureBuffer);
         glUniform1i(_uniforms[UNIFORM_TEXTURE_SAMPLER], 0);
         glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, resultMat.m);
         glDrawArrays(GL_TRIANGLES, 0, 6);
