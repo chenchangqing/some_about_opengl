@@ -14,5 +14,5 @@ uniform sampler2D textureSampler;
 void main()
 {
 //    gl_FragColor = colorVarying;
-    gl_FragColor = texture2D(textureSampler,textureVarying);
+    gl_FragColor = texture2D(textureSampler,textureVarying).rgba;
 }

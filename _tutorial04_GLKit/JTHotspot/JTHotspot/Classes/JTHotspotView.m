@@ -36,13 +36,13 @@ static const GLfloat g_color_buffer_data[] = {
     0, 0, 1, 1
 };
 
-static const GLfloat g_texture_buffer_data[] = {
-    3,0,
-    3,3,
-    0,3,
-    3,0,
-//    3,3,
-//    0,3
+static const GLfloat g_uv_buffer_data[] = {
+    0,0,
+    1,0,
+    1,1,
+    1,1,
+    0,1,
+    0,0
 };
 
 // Uniform index.
@@ -70,6 +70,7 @@ enum
     GLuint _vertexBuffer;
     GLuint _colorBuffer;
     GLuint _textureBuffer;
+    GLuint _textureUVBuffer;
     GLuint _vertexArray;
 }
 
@@ -180,7 +181,11 @@ enum
     glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
     
-    [self setupTexture:@"duck"];
+    glGenBuffers(1,&_textureUVBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, _textureUVBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data), g_uv_buffer_data, GL_STATIC_DRAW);
+    
+    [self setupTexture:@"leaves.gif"];
     
     glEnableVertexAttribArray(ATTRIB_VERTEX);
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);// 很关键
@@ -191,7 +196,8 @@ enum
     glVertexAttribPointer(ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, 0);
     
     glEnableVertexAttribArray(ATTRIB_TEXTURE);
-    glVertexAttribPointer(ATTRIB_TEXTURE, 2, GL_FLOAT, GL_FALSE, sizeof(g_texture_buffer_data), 0);
+    glBindBuffer(GL_ARRAY_BUFFER, _textureUVBuffer);// 很关键
+    glVertexAttribPointer(ATTRIB_TEXTURE, 2, GL_FLOAT, GL_FALSE, 0, 0);
     
     glBindVertexArrayOES(0);
 }
@@ -330,7 +336,7 @@ enum
     // This needs to be done prior to linking.
     glBindAttribLocation(_program, ATTRIB_VERTEX, "position");
     glBindAttribLocation(_program, ATTRIB_COLOR, "color");
-    glBindAttribLocation(_program, ATTRIB_TEXTURE, "texture");
+    glBindAttribLocation(_program, ATTRIB_TEXTURE, "textureuv");
     
     // Link program.
     if (![self linkProgram:_program]) {

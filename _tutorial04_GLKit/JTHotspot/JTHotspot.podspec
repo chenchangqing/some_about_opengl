@@ -33,7 +33,7 @@ TODO: Add long description of the pod here.
   s.source_files = 'JTHotspot/Classes/**/*'
   
   s.resource_bundles = {
-    'JTHotspot' => ['JTHotspot/Assets/*.{fsh,vsh,png}']
+    'JTHotspot' => ['JTHotspot/Assets/*.{fsh,vsh,png,gif}']
   }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'

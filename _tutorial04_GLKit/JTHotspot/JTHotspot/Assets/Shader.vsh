@@ -8,7 +8,7 @@
 
 attribute vec4 position;
 attribute vec4 color;
-attribute vec2 texture;
+attribute vec2 textureuv;
 
 varying lowp vec4 colorVarying;
 varying lowp vec2 textureVarying;
@@ -18,6 +18,6 @@ uniform mat4 modelViewProjectionMatrix;
 void main()
 {
     colorVarying = color;
-    textureVarying = texture;
+    textureVarying = textureuv;
     gl_Position = modelViewProjectionMatrix * position;
 }
