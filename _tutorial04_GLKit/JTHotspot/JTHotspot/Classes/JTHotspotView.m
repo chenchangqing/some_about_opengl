@@ -274,8 +274,6 @@ enum
         resultMat = GLKMatrix4Multiply(resultMat, transMatrix3);
         
         glUseProgram(_program);
-        glActiveTexture(GL_TEXTURE10);
-        glBindTexture(GL_TEXTURE_2D, _textureBuffer);
         glUniform1i(_uniforms[UNIFORM_TEXTURE_SAMPLER], 0);
         glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, resultMat.m);
         glDrawArrays(GL_TRIANGLES, 0, 6);
