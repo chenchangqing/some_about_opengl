@@ -1,0 +1,9 @@
+use_frameworks!
+
+target 'SphereModel_Example' do
+  pod 'SphereModel', :path => '../'
+end
+
+target 'SphereModel_Tests' do
+  pod 'SphereModel', :path => '../'
+end
