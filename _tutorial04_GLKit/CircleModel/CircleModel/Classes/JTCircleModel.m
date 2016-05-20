@@ -203,9 +203,9 @@ enum
     int vertexSize = 3;
     
     segW = 48;
-    segH = 8;
+    segH = 10;
     
-    pointCount = segW * segH * vertexSize;
+    pointCount = segW * segH * 2 * vertexSize;
     
     pointCount += 6 * vertexSize;
     
@@ -228,6 +228,32 @@ enum
             float zz = (float) (cos(deltP) * cosdeltT);
             float xx = (float) (sin(deltP) * cosdeltT);
             float yy = (float) sindeltT;
+            vertices[kk++] = xx;
+            vertices[kk++] = yy;
+            vertices[kk++] = zz;
+            printf("%f,",xx);
+            printf("%f,",yy);
+            printf("%f\n",zz);
+        }
+    }
+    
+    for (int j = 1; j <= segH; j++) {
+        
+        double vj = 1.0 * j / segH;
+        double deltT = (0.5 - vj) * M_PI;
+        double cosdeltT = cos(deltT);
+        double sindeltT = sin(deltT);
+        
+        printf("%lf,",deltT);
+        printf("%lf,",cosdeltT);
+        printf("%lf----- ----- ----- ----- -----\n",sindeltT);
+        
+        for (int i = 1; i <= segW; i++) {
+            double ui = 2.0 * i / segW;
+            double deltP = -ui * M_PI;
+            float yy = (float) (cos(deltP) * cosdeltT);
+            float zz = (float) (sin(deltP) * cosdeltT);
+            float xx = (float) sindeltT;
             vertices[kk++] = xx;
             vertices[kk++] = yy;
             vertices[kk++] = zz;
@@ -292,22 +318,15 @@ enum
     // mvp
     float aspect = fabs(self.bounds.size.width / self.bounds.size.height);
     
-//    GLKMatrix4 mMatrix = GLKMatrix4Identity;
-//    GLKMatrix4 vMatrix = GLKMatrix4MakeLookAt(0, 0, 0.1+3.0, 0, 0, 0, 0, 1, 0);
-//    GLKMatrix4 mvMatrix = GLKMatrix4Multiply(mMatrix, vMatrix);
+    GLKMatrix4 mvMatrix = GLKMatrix4MakeTranslation(0.0f,0.0f, -1.5f);
     
-    GLKMatrix4 mvMatrix = GLKMatrix4MakeTranslation(0.0f,0.0f, -4.0f);
-    mvMatrix = GLKMatrix4Rotate(mvMatrix,90, 0.0f, 0.0f, 1.0f);
-    
-    GLKMatrix4 pMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(100), aspect, 0.1f, 100.0f);
+    GLKMatrix4 pMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(100), aspect, 0.1f, 4.9f);
     GLKMatrix4 mvpMatrix = GLKMatrix4Multiply(pMatrix, mvMatrix);
-    
-//    mvpMatrix = GLKMatrix4Identity;
     
     // 手势
     GLKMatrix4 mvMatrix2 = GLKMatrix4Identity;
     GLKMatrix4 xMatrix2= GLKMatrix4MakeRotation(self.pitch, 1, 0, 0);
-    GLKMatrix4 yMatrix2 = GLKMatrix4MakeRotation(self.yaw + M_PI, 0, 1, 0);
+    GLKMatrix4 yMatrix2 = GLKMatrix4MakeRotation(self.yaw, 0, 1, 0);
     mvpMatrix = GLKMatrix4Multiply(mvpMatrix, xMatrix2);
     mvpMatrix = GLKMatrix4Multiply(mvpMatrix, yMatrix2);
     
@@ -319,17 +338,8 @@ enum
         
         glDrawArrays(GL_LINE_LOOP, segW*i, segW);
     }
-    
-    glDrawArrays(GL_LINE_LOOP, segW*segH, 6);
-    
-//    GLKMatrix4 zMatrix3 = GLKMatrix4Rotate(mvpMatrix,90, 0.0f, 0.0f, 1.0f);
-//    mvpMatrix = GLKMatrix4Multiply(mvpMatrix, zMatrix3);
-//    glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvpMatrix.m);
-//    
-//    for (int i = 0; i < segH; i++) {
-//        
-//        glDrawArrays(GL_LINE_LOOP, segW*i, segW);
-//    }
+
+    glDrawArrays(GL_LINE_LOOP, segW*segH*2, 6);
     
     
 }
