@@ -33,6 +33,8 @@ enum
     GLuint _vertexArray;
     
     int _pointCount;
+    int segW;
+    int segH;
 }
 
 @property (weak, nonatomic) GLKView *glkView;
@@ -119,27 +121,58 @@ enum
  *  圆模型
  */
 -(void)createCircleMode{
-    int segW = 48;// 宽度分块数目
-    int segW1 = segW + 1;// 宽度分块顶点数目
-    // 顶点坐标
-    int vertexSize = 3;//一个点x/y/z三个坐标
-    _pointCount = segW1 * vertexSize;
+    
+    segW = 48;
+    segH = 48;
+    
+    int vertexSize = 3;
+    
+    _pointCount = segW * segH * vertexSize;
     float *vertices = (float*) malloc(sizeof(float) * _pointCount);
+    
     int kk = 0;
-    for (int i = 0; i < segW1; i++) {
-        double ui = 2.0 * i / segW;
-        printf("%f,",ui);
-        double deltP = -ui * M_PI;
-        printf("%f,",deltP);
-        float xx = (float) cos(deltP);
-        float yy = (float) sin(deltP);
-        float zz = 0;
-        vertices[kk++] = xx;
-        vertices[kk++] = yy;
-        vertices[kk++] = zz;
-        printf("%f,",xx);
-        printf("%f,",yy);
-        printf("%f\n",zz);
+    
+//    for (int i = 0; i < segW1; i++) {
+//        double ui = 2.0 * i / segW;
+//        printf("%f,",ui);
+//        double deltP = -ui * M_PI;
+//        printf("%f,",deltP);
+//        float xx = (float) cos(deltP);
+//        float yy = 0;
+//        float zz = (float) sin(deltP);
+//        vertices[kk++] = xx;
+//        vertices[kk++] = yy;
+//        vertices[kk++] = zz;
+//        printf("%f,",xx);
+//        printf("%f,",yy);
+//        printf("%f\n",zz);
+//    }
+    
+    
+    for (int j = 1; j <= segH; j++) {
+        
+        double vj = 1.0 * j / segH;
+        double deltT = (0.5 - vj) * M_PI;
+        double cosdeltT = cos(deltT);
+        double sindeltT = sin(deltT);
+        
+        printf("%lf,",deltT);
+        printf("%lf,",cosdeltT);
+        printf("%lf----- ----- ----- ----- -----\n",sindeltT);
+        
+        for (int i = 1; i <= segW; i++) {
+            double ui = 2.0 * i / segW;
+            double deltP = -ui * M_PI;
+            float zz = (float) (cos(deltP) * cosdeltT);
+            float xx = (float) (sin(deltP) * cosdeltT);
+            float yy = (float) sindeltT;
+            vertices[kk++] = xx;
+            vertices[kk++] = yy;
+            vertices[kk++] = zz;
+            printf("%f,",xx);
+            printf("%f,",yy);
+            printf("%f\n",zz);
+        }
     }
     
     glGenVertexArraysOES(1, &_vertexArray);
@@ -174,8 +207,8 @@ enum
     float aspect = fabs(self.bounds.size.width / self.bounds.size.height);
     
     GLKMatrix4 mMatrix = GLKMatrix4Identity;
-    GLKMatrix4 vMatrix = GLKMatrix4MakeLookAt(0, 0, 0.1+1.1f, 0, 0, 0, 0, 1, 0);
-    GLKMatrix4 pMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(100), aspect, 0.1f+1.0f, 2.4f+1.0f);
+    GLKMatrix4 vMatrix = GLKMatrix4MakeLookAt(0, 0, 0.1, 0, 0, 0, 0, 1, 0);
+    GLKMatrix4 pMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(100), aspect, 0.1f, 2.4f);
     GLKMatrix4 mvMatrix = GLKMatrix4Multiply(mMatrix, vMatrix);
     GLKMatrix4 mvpMatrix = GLKMatrix4Multiply(pMatrix, mvMatrix);
     
@@ -192,9 +225,12 @@ enum
     
     glBindVertexArrayOES(_vertexArray);
     glUseProgram(_program);
-    glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvpMatrix.m);
-    glLineWidth(5);
-    glDrawArrays(GL_LINES, 1, _pointCount-1);
+    glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, GLKMatrix4Identity.m);
+    
+    for (int i = 0; i < segH; i++) {
+        
+        glDrawArrays(GL_LINES, segW*i, segW);
+    }
     
     
 }
@@ -228,14 +264,14 @@ enum
     _program = glCreateProgram();
     
     // Create and compile vertex shader.
-    vertShaderPathname = [[NSBundle mainBundle] pathForResource:@"Frameworks/CircleModel.framework/CircleModel.Bundle/Shader" ofType:@"vsh"];
+    vertShaderPathname = [[NSBundle mainBundle] pathForResource:@"Frameworks/CircleModel.framework/CircleModel.bundle/Shader" ofType:@"vsh"];
     if (![self compileShader:&vertShader type:GL_VERTEX_SHADER file:vertShaderPathname]) {
         NSLog(@"Failed to compile vertex shader");
         return NO;
     }
     
     // Create and compile fragment shader.
-    fragShaderPathname = [[NSBundle mainBundle] pathForResource:@"Frameworks/CircleModel.framework/CircleModel.Bundle/Shader" ofType:@"fsh"];
+    fragShaderPathname = [[NSBundle mainBundle] pathForResource:@"Frameworks/CircleModel.framework/CircleModel.bundle/Shader" ofType:@"fsh"];
     if (![self compileShader:&fragShader type:GL_FRAGMENT_SHADER file:fragShaderPathname]) {
         NSLog(@"Failed to compile fragment shader");
         return NO;
