@@ -1,0 +1,9 @@
+use_frameworks!
+
+target 'CircleModel_Example' do
+  pod 'CircleModel', :path => '../'
+end
+
+target 'CircleModel_Tests' do
+  pod 'CircleModel', :path => '../'
+end
