@@ -132,8 +132,8 @@ enum
         double deltP = -ui * M_PI;
         printf("%f,",deltP);
         float xx = (float) cos(deltP);
-        float zz = (float) sin(deltP);
-        float yy = 0;
+        float yy = (float) sin(deltP);
+        float zz = 0;
         vertices[kk++] = xx;
         vertices[kk++] = yy;
         vertices[kk++] = zz;
@@ -174,14 +174,14 @@ enum
     float aspect = fabs(self.bounds.size.width / self.bounds.size.height);
     
     GLKMatrix4 mMatrix = GLKMatrix4Identity;
-    GLKMatrix4 vMatrix = GLKMatrix4MakeLookAt(0, 0, 0.1+1.0f, 0, 0, 0, 0, 1, 0);
+    GLKMatrix4 vMatrix = GLKMatrix4MakeLookAt(0, 0, 0.1+1.1f, 0, 0, 0, 0, 1, 0);
     GLKMatrix4 pMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(100), aspect, 0.1f+1.0f, 2.4f+1.0f);
     GLKMatrix4 mvMatrix = GLKMatrix4Multiply(mMatrix, vMatrix);
     GLKMatrix4 mvpMatrix = GLKMatrix4Multiply(pMatrix, mvMatrix);
     
     // 旋转
     GLKMatrix4 _mvMatrix = GLKMatrix4Identity;
-    GLKMatrix4 xMatrix = GLKMatrix4MakeRotation(90, 1, 0, 0);
+    GLKMatrix4 xMatrix = GLKMatrix4MakeRotation(0, 1, 0, 0);
     GLKMatrix4 yMatrix = GLKMatrix4MakeRotation(0, 0, 1, 0);
     GLKMatrix4 zMatrix = GLKMatrix4MakeRotation(0, 0, 0, 1);
     _mvMatrix = GLKMatrix4Multiply(_mvMatrix, xMatrix);
@@ -193,16 +193,8 @@ enum
     glBindVertexArrayOES(_vertexArray);
     glUseProgram(_program);
     glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvpMatrix.m);
-//    glDrawArrays(GL_LINES, 0, _pointCount);
+    glLineWidth(5);
     glDrawArrays(GL_LINES, 0, _pointCount);
-    
-//    GLKMatrix4 zMatrix2 = GLKMatrix4MakeRotation(90, 0, 0, 1);
-//    
-//    mvpMatrix = GLKMatrix4Multiply(mvpMatrix, zMatrix2);
-//    
-//    glUseProgram(_program);
-//    glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvpMatrix.m);
-//    glDrawArrays(GL_LINES, 0, _pointCount);
     
     
 }
