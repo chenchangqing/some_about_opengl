@@ -194,7 +194,7 @@ enum
     glUseProgram(_program);
     glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvpMatrix.m);
     glLineWidth(5);
-    glDrawArrays(GL_LINES, 0, _pointCount);
+    glDrawArrays(GL_LINES, 1, _pointCount-1);
     
     
 }
