@@ -119,37 +119,27 @@ enum
  *  圆模型
  */
 -(void)createCircleMode{
+    int segW = 48;// 宽度分块数目
+    int segW1 = segW + 1;// 宽度分块顶点数目
     // 顶点坐标
     int vertexSize = 3;//一个点x/y/z三个坐标
-    
-    //==以下创建球模型==
-    int segW = 48;// 宽度分块数目
-    int segH = 6;// 高度分块数目
-    
-    _pointCount = segW * segH * vertexSize;
+    _pointCount = segW1 * vertexSize;
     float *vertices = (float*) malloc(sizeof(float) * _pointCount);
-    
     int kk = 0;
-    for (int j = 0; j < segH; j++) {
-        double vj = 1.0 * j / segH;
-        double deltT = (0.5 - vj) * M_PI;
-        double cosdeltT = cos(deltT);
-        double sindeltT = sin(deltT);
-        for (int i = 0; i < segW; i++) {
-            double ui = 2.0 * i / segW;
-            double deltP = -ui * M_PI;
-            float zz = (float) (cos(deltP) * cosdeltT);
-            float xx = (float) (sin(deltP) * cosdeltT);
-            float yy = (float) sindeltT;
-            vertices[kk++] = xx;
-            vertices[kk++] = yy;
-            vertices[kk++] = zz;
-            
-            printf("%f,",xx);
-            printf("%f,",yy);
-            printf("%f\n",zz);
-            
-        }
+    for (int i = 0; i < segW1; i++) {
+        double ui = 2.0 * i / segW;
+        printf("%f,",ui);
+        double deltP = -ui * M_PI;
+        printf("%f,",deltP);
+        float xx = (float) cos(deltP);
+        float zz = (float) sin(deltP);
+        float yy = 0;
+        vertices[kk++] = xx;
+        vertices[kk++] = yy;
+        vertices[kk++] = zz;
+        printf("%f,",xx);
+        printf("%f,",yy);
+        printf("%f\n",zz);
     }
     
     glGenVertexArraysOES(1, &_vertexArray);
@@ -169,24 +159,6 @@ enum
     //释放
     free(vertices);
     //==以上创建球模型==
-}
-
-#pragma mark - clearGL
-
-- (void)tearDownGL {
-    
-    [EAGLContext setCurrentContext:_glkcontext];
-    
-    glDisableVertexAttribArray(GLKVertexAttribPosition);
-    glDisableVertexAttribArray(GLKVertexAttribColor);
-    
-    glDeleteBuffers(1, &_vertexBuffer);
-    glDeleteVertexArraysOES(1, &_vertexArray);
-    
-    if (_program) {
-        glDeleteProgram(_program);
-        _program = 0;
-    }
 }
 
 #pragma mark - GLKViewDelegate
@@ -209,7 +181,7 @@ enum
     
     // 旋转
     GLKMatrix4 _mvMatrix = GLKMatrix4Identity;
-    GLKMatrix4 xMatrix = GLKMatrix4MakeRotation(0, 1, 0, 0);
+    GLKMatrix4 xMatrix = GLKMatrix4MakeRotation(90, 1, 0, 0);
     GLKMatrix4 yMatrix = GLKMatrix4MakeRotation(0, 0, 1, 0);
     GLKMatrix4 zMatrix = GLKMatrix4MakeRotation(0, 0, 0, 1);
     _mvMatrix = GLKMatrix4Multiply(_mvMatrix, xMatrix);
@@ -221,6 +193,7 @@ enum
     glBindVertexArrayOES(_vertexArray);
     glUseProgram(_program);
     glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvpMatrix.m);
+//    glDrawArrays(GL_LINES, 0, _pointCount);
     glDrawArrays(GL_LINES, 0, _pointCount);
     
 //    GLKMatrix4 zMatrix2 = GLKMatrix4MakeRotation(90, 0, 0, 1);
@@ -232,6 +205,24 @@ enum
 //    glDrawArrays(GL_LINES, 0, _pointCount);
     
     
+}
+
+#pragma mark - clearGL
+
+- (void)tearDownGL {
+    
+    [EAGLContext setCurrentContext:_glkcontext];
+    
+    glDisableVertexAttribArray(GLKVertexAttribPosition);
+    glDisableVertexAttribArray(GLKVertexAttribColor);
+    
+    glDeleteBuffers(1, &_vertexBuffer);
+    glDeleteVertexArraysOES(1, &_vertexArray);
+    
+    if (_program) {
+        glDeleteProgram(_program);
+        _program = 0;
+    }
 }
 
 #pragma mark -  OpenGL ES 2 shader compilation
