@@ -108,8 +108,8 @@ enum
     
     [self loadShaders];
     
-    glEnable(GL_CULL_FACE);
-    glEnable(GL_DEPTH_TEST);
+//    glEnable(GL_CULL_FACE);
+//    glEnable(GL_DEPTH_TEST);
     
     [self createCircleMode];
     
@@ -152,7 +152,6 @@ enum
     glVertexAttribPointer(ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, NULL);
     
     glBindVertexArrayOES(0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     
@@ -166,7 +165,8 @@ enum
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
     glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
     
     glBindVertexArrayOES(_vertexArray);
     
