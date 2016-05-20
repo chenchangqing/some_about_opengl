@@ -41,6 +41,12 @@ enum
 @property (strong, nonatomic) CADisplayLink* displayLink;
 @property (strong, nonatomic) EAGLContext *glkcontext;
 
+@property (nonatomic,assign) float yaw;
+@property (nonatomic,assign) float pitch;
+@property (nonatomic,assign) CGPoint velocityValue;
+@property (nonatomic,assign) CGPoint beginPoint;
+@property (nonatomic,assign) CGPoint previousPoint;
+
 @end
 
 @implementation JTCircleModel
@@ -101,6 +107,7 @@ enum
     [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     
     [self setupGL];
+    [self setupGestures];
 }
 
 - (void)setupGL {
@@ -114,6 +121,77 @@ enum
     glEnable(GL_DEPTH_TEST);
     
     [self createCircleMode];
+    
+}
+
+#pragma mark - Yaw/Pitch
+
+-(void)setYaw:(float)yaw {
+    if (yaw < 0) {
+        yaw += M_PI * 2;
+    } else if (yaw > M_PI * 2) {
+        yaw -= M_PI * 2;
+    }
+    _yaw = yaw ;
+}
+
+-(void)setPitch:(float)pitch {
+    _pitch = pitch;
+}
+
+#pragma mark - Gestures
+
+- (void)setupGestures {
+    
+    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)];
+    panGesture.maximumNumberOfTouches = 1;
+    [self addGestureRecognizer:panGesture];
+}
+
+- (void)panGesture:(UIPanGestureRecognizer *)panGesture
+{
+    CGPoint currentPoint = [panGesture locationInView:panGesture.view];
+    
+    switch (panGesture.state) {
+        case UIGestureRecognizerStateEnded: {
+            self.velocityValue = [panGesture velocityInView:panGesture.view];
+            break;
+        }
+        case UIGestureRecognizerStateBegan: {
+            self.beginPoint = currentPoint;
+            self.previousPoint = currentPoint;
+            self.velocityValue = CGPointZero;
+            break;
+        }
+        case UIGestureRecognizerStateChanged: {
+            [self moveToPointX:currentPoint.x - self.previousPoint.x andPointY:currentPoint.y - self.previousPoint.y];
+            self.previousPoint = currentPoint;
+            break;
+        }
+        default:
+            break;
+    }
+    
+    
+}
+- (void)moveToPointX:(CGFloat)pointX andPointY:(CGFloat)pointY
+{
+    pointX *= 0.005;
+    pointY *= 0.005;
+    float newYaw = _yaw - pointX / 1;
+    float newPitch = _pitch - pointY / 1;
+    //限制pitch在-90到90之间
+    if(newPitch > M_PI_2)
+    {
+        newPitch = M_PI_2;
+    }else if(newPitch < -M_PI_2)
+    {
+        newPitch = -M_PI_2;
+    }
+    //to do 可以限制yaw在 0到360度之间
+    
+    self.yaw = newYaw;
+    self.pitch = newPitch;
     
 }
 
@@ -205,23 +283,30 @@ enum
     //    mvpMatrix = GLKMatrix4Multiply(mvpMatrix, _mvMatrix);
     mvpMatrix = GLKMatrix4Identity;
     
+    // 手势
+    GLKMatrix4 mvMatrix2 = GLKMatrix4Identity;
+    GLKMatrix4 xMatrix2= GLKMatrix4MakeRotation(self.pitch, 1, 0, 0);
+    GLKMatrix4 yMatrix2 = GLKMatrix4MakeRotation(self.yaw + M_PI, 0, 1, 0);
+    mvpMatrix = GLKMatrix4Multiply(mvpMatrix, xMatrix2);
+    mvpMatrix = GLKMatrix4Multiply(mvpMatrix, yMatrix2);
+    
     glBindVertexArrayOES(_vertexArray);
     glUseProgram(_program);
     glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvpMatrix.m);
     
     for (int i = 0; i < segH; i++) {
         
-        glDrawArrays(GL_LINES, segW*i, segW);
+        glDrawArrays(GL_LINE_LOOP, segW*i, segW);
     }
     
-    GLKMatrix4 zMatrix2 = GLKMatrix4MakeRotation(90, 0, 0, 1);
-    mvpMatrix = GLKMatrix4Multiply(mvpMatrix, zMatrix2);
-    glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvpMatrix.m);
-    
-    for (int i = 0; i < segH; i++) {
-        
-        glDrawArrays(GL_LINE_STRIP, segW*i, segW);
-    }
+//    GLKMatrix4 zMatrix2 = GLKMatrix4MakeRotation(90, 0, 0, 1);
+//    mvpMatrix = GLKMatrix4Multiply(mvpMatrix, zMatrix2);
+//    glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvpMatrix.m);
+//    
+//    for (int i = 0; i < segH; i++) {
+//        
+//        glDrawArrays(GL_LINE_STRIP, segW*i, segW);
+//    }
     
     
 }
