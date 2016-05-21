@@ -1,0 +1,9 @@
+use_frameworks!
+
+target 'VRPlayer_Example' do
+  pod 'VRPlayer', :path => '../'
+end
+
+target 'VRPlayer_Tests' do
+  pod 'VRPlayer', :path => '../'
+end
