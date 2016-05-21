@@ -203,7 +203,7 @@ enum
     int vertexSize = 3;
     
     segW = 48;
-    segH = 48;
+    segH = 2;
     
     pointCount = segW * segH * 2 * vertexSize;
     
@@ -323,9 +323,11 @@ enum
     GLKMatrix4 pMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(100), aspect, 0.1f, 3.9f);
     GLKMatrix4 mvpMatrix = GLKMatrix4Multiply(pMatrix, mvMatrix);
     
+//    mvpMatrix = GLKMatrix4Identity;
+    
     // 手势
     GLKMatrix4 mvMatrix2 = GLKMatrix4Identity;
-    GLKMatrix4 xMatrix2= GLKMatrix4MakeRotation(self.pitch, 1, 0, 0);
+    GLKMatrix4 xMatrix2= GLKMatrix4MakeRotation(0, 1, 0, 0);
     GLKMatrix4 yMatrix2 = GLKMatrix4MakeRotation(self.yaw, 0, 1, 0);
     mvpMatrix = GLKMatrix4Multiply(mvpMatrix, xMatrix2);
     mvpMatrix = GLKMatrix4Multiply(mvpMatrix, yMatrix2);
@@ -336,8 +338,21 @@ enum
     
     for (int i = 0; i < segH*2; i++) {
         
-        glDrawArrays(GL_LINE_LOOP, segW*i, segW);
+        glDrawArrays(GL_LINE_LOOP, segW*i, segW );
     }
+    
+    
+    mvpMatrix = GLKMatrix4Multiply(mvpMatrix, GLKMatrix4MakeRotation(60, 0, 1, 0));
+    glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvpMatrix.m);
+    glDrawArrays(GL_LINE_LOOP, segW*segH, segW );
+    
+    mvpMatrix = GLKMatrix4Multiply(mvpMatrix, GLKMatrix4MakeRotation(60, 0, 1, 0));
+    glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvpMatrix.m);
+    glDrawArrays(GL_LINE_LOOP, segW*segH, segW );
+    
+    mvpMatrix = GLKMatrix4Multiply(mvpMatrix, GLKMatrix4MakeRotation(60, 0, 1, 0));
+    glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvpMatrix.m);
+    glDrawArrays(GL_LINE_LOOP, segW*segH, segW );
 
     glDrawArrays(GL_LINE_LOOP, segW*segH*2, 6);
     
