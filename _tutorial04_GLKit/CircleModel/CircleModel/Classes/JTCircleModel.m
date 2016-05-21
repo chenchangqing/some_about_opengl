@@ -203,7 +203,7 @@ enum
     int vertexSize = 3;
     
     segW = 48;
-    segH = 2;
+    segH = 48;
     
     pointCount = segW * segH * 2 * vertexSize;
     
