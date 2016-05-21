@@ -203,7 +203,7 @@ enum
     int vertexSize = 3;
     
     segW = 48;
-    segH = 10;
+    segH = 2;
     
     pointCount = segW * segH * 2 * vertexSize;
     
@@ -318,9 +318,9 @@ enum
     // mvp
     float aspect = fabs(self.bounds.size.width / self.bounds.size.height);
     
-    GLKMatrix4 mvMatrix = GLKMatrix4MakeTranslation(0.0f,0.0f, -1.5f);
+    GLKMatrix4 mvMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -1.5f);
     
-    GLKMatrix4 pMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(100), aspect, 0.1f, 4.9f);
+    GLKMatrix4 pMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(100), aspect, 0.1f, 3.9f);
     GLKMatrix4 mvpMatrix = GLKMatrix4Multiply(pMatrix, mvMatrix);
     
     // 手势
@@ -334,7 +334,7 @@ enum
     glUseProgram(_program);
     glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvpMatrix.m);
     
-    for (int i = 0; i < segH; i++) {
+    for (int i = 0; i < segH*2; i++) {
         
         glDrawArrays(GL_LINE_LOOP, segW*i, segW);
     }
