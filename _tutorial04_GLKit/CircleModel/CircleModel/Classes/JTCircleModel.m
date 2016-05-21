@@ -34,7 +34,7 @@ enum
     GLuint _vertexBuffer;
     int pointCount;
     int segW;
-    int segH;
+    int segW1;
 }
 
 @property (weak, nonatomic) GLKView *glkView;
@@ -203,64 +203,27 @@ enum
     int vertexSize = 3;
     
     segW = 48;
-    segH = 2;
+    segW1 = segW + 1;
     
-    pointCount = segW * segH * 2 * vertexSize;
+    pointCount = segW1 * vertexSize;
     
     pointCount += 6 * vertexSize;
     
     float *vertices = (float*) malloc(sizeof(float) * pointCount);
     int kk = 0;
-    for (int j = 1; j <= segH; j++) {
-        
-        double vj = 1.0 * j / segH;
-        double deltT = (0.5 - vj) * M_PI;
-        double cosdeltT = cos(deltT);
-        double sindeltT = sin(deltT);
-        
-        printf("%lf,",deltT);
-        printf("%lf,",cosdeltT);
-        printf("%lf----- ----- ----- ----- -----\n",sindeltT);
-        
-        for (int i = 1; i <= segW; i++) {
-            double ui = 2.0 * i / segW;
-            double deltP = -ui * M_PI;
-            float zz = (float) (cos(deltP) * cosdeltT);
-            float xx = (float) (sin(deltP) * cosdeltT);
-            float yy = (float) sindeltT;
-            vertices[kk++] = xx;
-            vertices[kk++] = yy;
-            vertices[kk++] = zz;
-            printf("%f,",xx);
-            printf("%f,",yy);
-            printf("%f\n",zz);
-        }
-    }
     
-    for (int j = 1; j <= segH; j++) {
-        
-        double vj = 1.0 * j / segH;
-        double deltT = (0.5 - vj) * M_PI;
-        double cosdeltT = cos(deltT);
-        double sindeltT = sin(deltT);
-        
-        printf("%lf,",deltT);
-        printf("%lf,",cosdeltT);
-        printf("%lf----- ----- ----- ----- -----\n",sindeltT);
-        
-        for (int i = 1; i <= segW; i++) {
-            double ui = 2.0 * i / segW;
-            double deltP = -ui * M_PI;
-            float yy = (float) (cos(deltP) * cosdeltT);
-            float zz = (float) (sin(deltP) * cosdeltT);
-            float xx = (float) sindeltT;
-            vertices[kk++] = xx;
-            vertices[kk++] = yy;
-            vertices[kk++] = zz;
-            printf("%f,",xx);
-            printf("%f,",yy);
-            printf("%f\n",zz);
-        }
+    for (int i = 0; i < segW1; i++) {
+        double ui = 2.0 * i / segW;
+        double deltP = -ui * M_PI;
+        float zz = (float) (cos(deltP) * 1);
+        float xx = (float) (sin(deltP) * 1);
+        float yy = (float) 0;
+        vertices[kk++] = xx;
+        vertices[kk++] = yy;
+        vertices[kk++] = zz;
+        printf("%f,",xx);
+        printf("%f,",yy);
+        printf("%f\n",zz);
     }
     
     vertices[kk++] = 0;
@@ -314,47 +277,40 @@ enum
     glClear(GL_COLOR_BUFFER_BIT);
     
     glBindVertexArrayOES(_vertexArray);
+    glUseProgram(_program);
     
     // mvp
     float aspect = fabs(self.bounds.size.width / self.bounds.size.height);
     
     GLKMatrix4 mvMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -1.5f);
-    
     GLKMatrix4 pMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(100), aspect, 0.1f, 3.9f);
-    GLKMatrix4 mvpMatrix = GLKMatrix4Multiply(pMatrix, mvMatrix);
     
-//    mvpMatrix = GLKMatrix4Identity;
+//    mvMatrix = GLKMatrix4Identity;
+//    pMatrix = GLKMatrix4Identity;
     
     // 手势
-    GLKMatrix4 mvMatrix2 = GLKMatrix4Identity;
-    GLKMatrix4 xMatrix2= GLKMatrix4MakeRotation(0, 1, 0, 0);
-    GLKMatrix4 yMatrix2 = GLKMatrix4MakeRotation(self.yaw, 0, 1, 0);
-    mvpMatrix = GLKMatrix4Multiply(mvpMatrix, xMatrix2);
-    mvpMatrix = GLKMatrix4Multiply(mvpMatrix, yMatrix2);
+    mvMatrix = GLKMatrix4Multiply(mvMatrix, GLKMatrix4MakeRotation(self.pitch, 1, 0, 0));
+    mvMatrix = GLKMatrix4Multiply(mvMatrix, GLKMatrix4MakeRotation(self.yaw, 0, 1, 0));
     
-    glBindVertexArrayOES(_vertexArray);
-    glUseProgram(_program);
-    glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvpMatrix.m);
+    glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, GLKMatrix4Multiply(pMatrix, mvMatrix).m);
+    glDrawArrays(GL_LINE_LOOP, 0, segW1);
+    glDrawArrays(GL_LINE_LOOP, segW1, 6);
     
-    for (int i = 0; i < segH*2; i++) {
-        
-        glDrawArrays(GL_LINE_LOOP, segW*i, segW );
-    }
+    mvMatrix = GLKMatrix4Rotate(mvMatrix, GLKMathDegreesToRadians(90), 0, 0, 1);
+    glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, GLKMatrix4Multiply(pMatrix, mvMatrix).m);
+    glDrawArrays(GL_LINE_LOOP, 0, segW1);
     
+    mvMatrix = GLKMatrix4Rotate(mvMatrix, GLKMathDegreesToRadians(45), 1, 0, 0);
+    glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, GLKMatrix4Multiply(pMatrix, mvMatrix).m);
+    glDrawArrays(GL_LINE_LOOP, 0, segW1);
     
-    mvpMatrix = GLKMatrix4Multiply(mvpMatrix, GLKMatrix4MakeRotation(60, 0, 1, 0));
-    glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvpMatrix.m);
-    glDrawArrays(GL_LINE_LOOP, segW*segH, segW );
+    mvMatrix = GLKMatrix4Rotate(mvMatrix, GLKMathDegreesToRadians(45), 1, 0, 0);
+    glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, GLKMatrix4Multiply(pMatrix, mvMatrix).m);
+    glDrawArrays(GL_LINE_LOOP, 0, segW1);
     
-    mvpMatrix = GLKMatrix4Multiply(mvpMatrix, GLKMatrix4MakeRotation(60, 0, 1, 0));
-    glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvpMatrix.m);
-    glDrawArrays(GL_LINE_LOOP, segW*segH, segW );
-    
-    mvpMatrix = GLKMatrix4Multiply(mvpMatrix, GLKMatrix4MakeRotation(60, 0, 1, 0));
-    glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, mvpMatrix.m);
-    glDrawArrays(GL_LINE_LOOP, segW*segH, segW );
-
-    glDrawArrays(GL_LINE_LOOP, segW*segH*2, 6);
+    mvMatrix = GLKMatrix4Rotate(mvMatrix, GLKMathDegreesToRadians(45), 1, 0, 0);
+    glUniformMatrix4fv(_uniforms[UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, GLKMatrix4Multiply(pMatrix, mvMatrix).m);
+    glDrawArrays(GL_LINE_LOOP, 0, segW1);
     
     
 }
