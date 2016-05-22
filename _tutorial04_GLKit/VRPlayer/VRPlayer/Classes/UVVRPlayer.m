@@ -10,7 +10,8 @@
 #import <GLKit/GLKit.h>
 #import <OpenGLES/ES2/glext.h>
 #import "UVShellLoader.h"
-#import "UVBorderSphereModel.h"
+#import "UVBorderSphereScene.h"
+#import "UVModel.h"
 
 @interface UVVRPlayer()<GLKViewDelegate>
 
@@ -19,7 +20,6 @@
 @property (strong, nonatomic) EAGLContext *glkcontext;
 
 @property(nonatomic,strong) NSMutableArray *scenes;
-@property(nonatomic,strong) UVBorderSphereModel *borderSphereModel;
 
 @end
 
@@ -45,7 +45,9 @@
 
 - (void)setup {
     
-    _borderSphereModel = [[UVBorderSphereModel alloc] init];
+    _scenes = [NSMutableArray arrayWithCapacity:0];
+    
+    [_scenes addObject:[[UVBorderSphereScene alloc] init]];
     
     _glkcontext =[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     
@@ -77,15 +79,28 @@
     [EAGLContext setCurrentContext:_glkcontext];
     
     glEnable(GL_CULL_FACE);
-    glEnable(GL_DEPTH_TEST);
+//    glEnable(GL_DEPTH_TEST);
     
-    [_borderSphereModel createBorderSphere];
+    UVScene *topScene = _scenes.lastObject;
+    
+    for (UVModel *model in topScene.models) {
+        
+        [model create];
+    }
     
 }
 
 - (void)dealloc
 {
-    [self tearDownGL];
+    [EAGLContext setCurrentContext:_glkcontext];
+    
+    
+    UVScene *topScene = _scenes.lastObject;
+    
+    for (UVModel *model in topScene.models) {
+        
+        [model free];
+    }
     
     if ([EAGLContext currentContext] == _glkcontext) {
         [EAGLContext setCurrentContext:nil];
@@ -96,19 +111,19 @@
     _displayLink = nil;
 }
 
-- (void)tearDownGL {
-    
-    [EAGLContext setCurrentContext:_glkcontext];
-    
-    [_borderSphereModel free];
-}
-
 #pragma mark - GLKViewDelegate
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
     
-    [_borderSphereModel drawInRect:rect];
+    glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    UVScene *topScene = _scenes.lastObject;
+    
+    for (UVModel *model in topScene.models) {
+        
+        [model drawInRect:rect];
+    }
     
 }
 

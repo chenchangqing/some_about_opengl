@@ -11,10 +11,4 @@
 
 @interface UVBorderSphereModel : UVModel
 
-- (void)createBorderSphere;
-
-- (void)drawInRect:(CGRect)rect;
-
-- (void)free;
-
 @end

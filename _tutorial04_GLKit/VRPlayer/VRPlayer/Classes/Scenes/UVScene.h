@@ -11,6 +11,6 @@
 
 @interface UVScene : NSObject
 
-@property (nonatomic, strong) UVModel *model;
+@property(nonatomic,strong) NSMutableArray *models;
 
 @end

@@ -27,7 +27,8 @@
 
 @property (nonatomic, strong) UIImage *backgroundImage;
 
-- (void)addSubModel:(UVModel *)model;
-- (void)removeSubModel:(UVModel *)model;
+- (void)create;
+- (void)drawInRect:(CGRect)rect;
+- (void)free;
 
 @end

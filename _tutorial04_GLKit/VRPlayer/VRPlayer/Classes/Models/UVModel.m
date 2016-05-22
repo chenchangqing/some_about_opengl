@@ -8,12 +8,6 @@
 
 #import "UVModel.h"
 
-@interface UVModel()
-
-@property(nonatomic,strong) NSMutableArray *submodels;
-
-@end
-
 @implementation UVModel
 
 - (instancetype)init {
@@ -37,21 +31,26 @@
         _ry = 0;
         _rz = 0;
         
-        _submodels = [NSMutableArray arrayWithCapacity:0];
-        
     }
     
     return self;
 }
 
-- (void)addSubModel:(UVModel *)model {
-    
-    [_submodels addObject:model];
+- (void)dealloc
+{
+    [self free];
 }
 
-- (void)removeSubModel:(UVModel *)model {
+- (void)create {
     
-    [_submodels removeObject:model];
+}
+
+- (void)drawInRect:(CGRect)rect {
+    
+}
+
+- (void)free {
+    
 }
 
 @end

@@ -42,21 +42,10 @@
     [self free];
 }
 
-- (void)free {
-    
-    glDeleteBuffers(1, &_vertexBuffer);
-    glDeleteVertexArraysOES(1, &_vertexArray);
-    
-    if (_program) {
-        glDeleteProgram(_program);
-        _program = 0;
-    }
-}
-
 /**
  *  球网格
  */
--(void)createBorderSphere {
+- (void)create {
     
     _program = [UVShellLoader loadSphereShadersWithVertexShaderString:@"BorderSphere" fragmentShaderString:@"BorderSphere" andAttribLocations:
                 @[@{@"index":[NSNumber numberWithUnsignedInt:_attribVertex],@"name":@"position"}]];
@@ -124,10 +113,7 @@
     free(vertices);
 }
 
-- (void)drawInRect:(CGRect)rect
-{
-    glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+- (void)drawInRect:(CGRect)rect {
     
     glBindVertexArrayOES(self.vertexArray);
     glUseProgram(self.program);
@@ -162,6 +148,17 @@
     glUniformMatrix4fv(self.uniformMVP, 1, 0, GLKMatrix4Multiply(pMatrix, mvMatrix).m);
     glDrawArrays(GL_LINE_LOOP, 0, self.segW+1);
     
+}
+
+- (void)free {
+    
+    glDeleteBuffers(1, &_vertexBuffer);
+    glDeleteVertexArraysOES(1, &_vertexArray);
+    
+    if (_program) {
+        glDeleteProgram(_program);
+        _program = 0;
+    }
 }
 
 @end

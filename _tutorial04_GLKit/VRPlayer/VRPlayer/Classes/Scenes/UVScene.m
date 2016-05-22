@@ -8,6 +8,10 @@
 
 #import "UVScene.h"
 
+@interface UVScene ()
+
+@end
+
 @implementation UVScene
 
 - (instancetype)init {
@@ -16,7 +20,7 @@
     
     if (self) {
         
-        _model = [[UVModel alloc] init];
+        _models = [NSMutableArray arrayWithCapacity:0];
     }
     
     return self;
