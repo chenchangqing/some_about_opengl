@@ -257,6 +257,8 @@ enum
     GLKMatrix4 mvMatrix = GLKMatrix4Multiply(mMatrix, vMatrix);
     GLKMatrix4 mvpMatrix = GLKMatrix4Multiply(pMatrix, mvMatrix);
     
+    mvpMatrix = GLKMatrix4Identity;
+    
     // 绘制热点
     for (HotspotItem *item in _hotspots) {
         

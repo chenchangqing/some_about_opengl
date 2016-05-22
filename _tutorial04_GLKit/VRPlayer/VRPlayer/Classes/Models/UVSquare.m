@@ -91,6 +91,17 @@ static const GLfloat g_color_buffer_data[] = {
     
     glBindVertexArrayOES(_vertexArray);
     
+    // 缩放
+    mvp = GLKMatrix4Scale(mvp, config.sx, config.sy, config.sz);
+    
+    // 位移
+    mvp = GLKMatrix4Translate(mvp, config.tx, config.ty, config.tz);
+    
+    // 旋转
+    mvp = GLKMatrix4Rotate(mvp, GLKMathDegreesToRadians(-config.rx), 1, 0, 0);
+    mvp = GLKMatrix4Rotate(mvp, GLKMathDegreesToRadians(-config.ry), 0, 1, 0);
+    mvp = GLKMatrix4Rotate(mvp, GLKMathDegreesToRadians(-config.rz), 0, 0, 1);
+    
     glUseProgram(_program);
     glUniformMatrix4fv(_uniformMVP, 1, 0, mvp.m);
     glDrawArrays(GL_TRIANGLES, 0, 6);
