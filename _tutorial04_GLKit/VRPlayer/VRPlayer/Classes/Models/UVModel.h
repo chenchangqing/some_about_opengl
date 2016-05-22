@@ -7,28 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <OpenGLES/ES2/glext.h>
+#import <GLKit/GLKit.h>
+#import "UVModelConfig.h"
 
 @interface UVModel : NSObject
 
-@property (nonatomic, assign) float yaw;
-@property (nonatomic, assign) float pitch;
-
-@property (nonatomic, assign) float sx;
-@property (nonatomic, assign) float sy;
-@property (nonatomic, assign) float sz;
-
-@property (nonatomic, assign) float tx;
-@property (nonatomic, assign) float ty;
-@property (nonatomic, assign) float tz;
-
-@property (nonatomic, assign) float rx;
-@property (nonatomic, assign) float ry;
-@property (nonatomic, assign) float rz;
-
-@property (nonatomic, strong) UIImage *backgroundImage;
-
-- (void)create;
-- (void)drawInRect:(CGRect)rect;
+- (void)setup;
+- (void)drawWithMVP: (GLKMatrix4) mvp andConfig: (UVModelConfig *) config;
 - (void)free;
 
 @end

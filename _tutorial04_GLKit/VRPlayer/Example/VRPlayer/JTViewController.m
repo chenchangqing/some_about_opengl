@@ -7,8 +7,12 @@
 //
 
 #import "JTViewController.h"
+#import <VRPlayer/VRPlayer.h>
+#import "JTTestScene.h"
 
 @interface JTViewController ()
+
+@property (nonatomic, weak) IBOutlet UVVRPlayer *player;
 
 @end
 
@@ -17,13 +21,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	
+    JTTestScene *scene = [[JTTestScene alloc] init];
+    [_player pushWithScene:scene];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
 }
 
 @end

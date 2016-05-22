@@ -7,7 +7,6 @@
 //
 
 varying lowp vec4 colorVarying;
-varying lowp vec2 textureVarying;
 
 void main()
 {

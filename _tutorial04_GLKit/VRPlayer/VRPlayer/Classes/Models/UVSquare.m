@@ -53,9 +53,12 @@ static const GLfloat g_color_buffer_data[] = {
 
 @implementation UVSquare
 
-- (void)create {
+- (void)setup {
     
-    _attribVertex = 1;
+    _uniformMVP     = 0;
+    _attribColor    = 0;
+    _attribVertex   = 1;
+    
     _program = [UVShellLoader loadSphereShadersWithVertexShaderString:@"SquareShader" fragmentShaderString:@"SquareShader" andAttribLocations:
                 @[@{@"index":[NSNumber numberWithUnsignedInt:_attribVertex],@"name":@"position"},
                   @{@"index":[NSNumber numberWithUnsignedInt:_attribColor],@"name":@"color"}]];
@@ -84,24 +87,19 @@ static const GLfloat g_color_buffer_data[] = {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-- (void)drawInRect:(CGRect)rect {
+- (void)drawWithMVP:(GLKMatrix4)mvp andConfig:(UVModelConfig *)config {
     
     glBindVertexArrayOES(_vertexArray);
     
-    float aspect = fabs(rect.size.width / rect.size.height);
-    
-    GLKMatrix4 mvMatrix =  GLKMatrix4MakeTranslation(0.0f, 0.0f, -5.0f);
-    GLKMatrix4 pMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(15), aspect, 0.1f, 10.0f);
-    
     glUseProgram(_program);
-    //    glUniformMatrix4fv(_uniformMVP, 1, 0, GLKMatrix4Multiply(pMatrix, mvMatrix).m);
-    glUniformMatrix4fv(_uniformMVP, 1, 0, GLKMatrix4Identity.m);
+    glUniformMatrix4fv(_uniformMVP, 1, 0, mvp.m);
     glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
 - (void)free {
     
     glDeleteBuffers(1, &_vertexBuffer);
+    glDeleteBuffers(1, &_colorBuffer);
     glDeleteVertexArraysOES(1, &_vertexArray);
     
     if (_program) {

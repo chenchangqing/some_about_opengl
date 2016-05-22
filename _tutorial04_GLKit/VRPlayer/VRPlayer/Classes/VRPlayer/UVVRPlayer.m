@@ -10,7 +10,6 @@
 #import <GLKit/GLKit.h>
 #import <OpenGLES/ES2/glext.h>
 #import "UVShellLoader.h"
-#import "UVBorderSphereScene.h"
 #import "UVModel.h"
 
 @interface UVVRPlayer()<GLKViewDelegate>
@@ -47,8 +46,6 @@
     
     _scenes = [NSMutableArray arrayWithCapacity:0];
     
-    [_scenes addObject:[[UVBorderSphereScene alloc] init]];
-    
     _glkcontext =[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     
     GLKView *tglkView = [[GLKView alloc] initWithFrame:CGRectZero context:_glkcontext];
@@ -75,18 +72,10 @@
 
 - (void)setupGL {
     
-    // OpenGL相关
     [EAGLContext setCurrentContext:_glkcontext];
     
     glEnable(GL_CULL_FACE);
-//    glEnable(GL_DEPTH_TEST);
-    
-    UVScene *topScene = _scenes.lastObject;
-    
-    for (UVModel *model in topScene.models) {
-        
-        [model create];
-    }
+    glEnable(GL_DEPTH_TEST);
     
 }
 
@@ -94,12 +83,9 @@
 {
     [EAGLContext setCurrentContext:_glkcontext];
     
-    
-    UVScene *topScene = _scenes.lastObject;
-    
-    for (UVModel *model in topScene.models) {
+    for (UVScene *scene in _scenes) {
         
-        [model free];
+        [scene free];
     }
     
     if ([EAGLContext currentContext] == _glkcontext) {
@@ -119,18 +105,14 @@
     glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     UVScene *topScene = _scenes.lastObject;
-    
-    for (UVModel *model in topScene.models) {
-        
-        [model drawInRect:rect];
-    }
-    
+    [topScene drawWithMVP:GLKMatrix4Identity andConfig:nil];
 }
 
 #pragma mark - Public
 
 - (void)pushWithScene:(UVScene *)scene {
     
+    [scene setup];
     [_scenes addObject:scene];
 }
 

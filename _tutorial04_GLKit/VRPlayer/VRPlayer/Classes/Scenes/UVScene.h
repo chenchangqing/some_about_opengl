@@ -9,8 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "UVModel.h"
 
-@interface UVScene : NSObject
+@interface UVScene : UVModel
 
-@property(nonatomic,strong) NSMutableArray *models;
+@property(nonatomic,strong) NSMutableArray *configs;
+
+- (void)prepareConfigs;
 
 @end
