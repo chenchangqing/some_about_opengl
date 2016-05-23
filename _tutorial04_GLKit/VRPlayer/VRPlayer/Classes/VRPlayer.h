@@ -10,8 +10,6 @@
 #define VRPlayer_h
 
 #import "UVVRPlayer.h"
-#import "UVModelConfig.h"
-#import "UVSquareConfig.h"
 #import "UVModel.h"
 #import "UVSquare.h"
 #import "UVScene.h"

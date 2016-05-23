@@ -23,6 +23,8 @@
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		85496498ACA3C257C9E663AE /* Pods_VRPlayer_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF8D69F96C71A2629BB56EC /* Pods_VRPlayer_Example.framework */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		E645E9811CF35F5F0096E1AC /* JTTestVRPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E645E9801CF35F5F0096E1AC /* JTTestVRPlayer.m */; };
+		E645E9841CF364EB0096E1AC /* JTTestScene2.m in Sources */ = {isa = PBXBuildFile; fileRef = E645E9831CF364EB0096E1AC /* JTTestScene2.m */; };
 		E67651A01CF0F41D00EDE9FA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E676519D1CF0F41D00EDE9FA /* Default-568h@2x.png */; };
 		E67651A11CF0F41D00EDE9FA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E676519E1CF0F41D00EDE9FA /* Default.png */; };
 		E67651A21CF0F41D00EDE9FA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E676519F1CF0F41D00EDE9FA /* Default@2x.png */; };
@@ -67,6 +69,10 @@
 		AC6CAEF52B33C9A689E59012 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		BAF8D69F96C71A2629BB56EC /* Pods_VRPlayer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VRPlayer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E527F7244559135EBA91F336 /* Pods-VRPlayer_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VRPlayer_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-VRPlayer_Example/Pods-VRPlayer_Example.release.xcconfig"; sourceTree = "<group>"; };
+		E645E97F1CF35F5F0096E1AC /* JTTestVRPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTTestVRPlayer.h; sourceTree = "<group>"; };
+		E645E9801CF35F5F0096E1AC /* JTTestVRPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTTestVRPlayer.m; sourceTree = "<group>"; };
+		E645E9821CF364EB0096E1AC /* JTTestScene2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTTestScene2.h; sourceTree = "<group>"; };
+		E645E9831CF364EB0096E1AC /* JTTestScene2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTTestScene2.m; sourceTree = "<group>"; };
 		E676519D1CF0F41D00EDE9FA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		E676519E1CF0F41D00EDE9FA /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		E676519F1CF0F41D00EDE9FA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -148,6 +154,10 @@
 				6003F594195388D20070C39A /* Supporting Files */,
 				E6F190751CF2130500ACC660 /* JTTestScene.h */,
 				E6F190761CF2130500ACC660 /* JTTestScene.m */,
+				E645E97F1CF35F5F0096E1AC /* JTTestVRPlayer.h */,
+				E645E9801CF35F5F0096E1AC /* JTTestVRPlayer.m */,
+				E645E9821CF364EB0096E1AC /* JTTestScene2.h */,
+				E645E9831CF364EB0096E1AC /* JTTestScene2.m */,
 			);
 			name = "Example for VRPlayer";
 			path = VRPlayer;
@@ -407,10 +417,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E645E9811CF35F5F0096E1AC /* JTTestVRPlayer.m in Sources */,
 				E6F190771CF2130500ACC660 /* JTTestScene.m in Sources */,
 				6003F59E195388D20070C39A /* JTAppDelegate.m in Sources */,
 				6003F5A7195388D20070C39A /* JTViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				E645E9841CF364EB0096E1AC /* JTTestScene2.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -20,8 +20,6 @@
 @property (strong, nonatomic) CADisplayLink* displayLink;
 @property (strong, nonatomic) EAGLContext *glkcontext;
 
-@property(nonatomic,strong) NSMutableArray *scenes;
-
 @end
 
 @implementation UVVRPlayer
@@ -69,14 +67,12 @@
     _displayLink = [CADisplayLink displayLinkWithTarget:_glkView selector:@selector(display)];
     [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     
-    [self setupGL];
+    [self prepareScenes];
 }
 
-- (void)setupGL {
+- (void)prepareScenes {
     
     [EAGLContext setCurrentContext:_glkcontext];
-    
-//    glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
     
 }
@@ -119,20 +115,10 @@
     
 //    projectionMatrix = GLKMatrix4Identity;
     
-    [self.scenes.lastObject drawWithPMatrix:projectionMatrix andConfig:nil];
-}
-
-#pragma mark - Public
-
-- (void)pushWithScene:(UVScene *)scene {
-    
-    [scene setup];
-    [_scenes addObject:scene];
-}
-
-- (void)popScene {
-    
-    [_scenes removeLastObject];
+    for (UVScene *scene in _scenes) {
+        
+        [scene drawWithPMatrix:projectionMatrix];
+    }
 }
 
 @end

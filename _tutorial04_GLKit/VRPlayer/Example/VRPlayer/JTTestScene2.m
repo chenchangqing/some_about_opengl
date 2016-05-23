@@ -1,14 +1,14 @@
 //
-//  JTTestScene.m
+//  JTTestScene2.m
 //  VRPlayer
 //
-//  Created by green on 16/5/23.
+//  Created by green on 16/5/24.
 //  Copyright © 2016年 chenchangqing. All rights reserved.
 //
 
-#import "JTTestScene.h"
+#import "JTTestScene2.h"
 
-@implementation JTTestScene
+@implementation JTTestScene2
 
 - (void)prepareModels {
     [super prepareModels];
@@ -16,10 +16,10 @@
     UVSquare *square = [[UVSquare alloc] init];
     
     square.yaw = 0;
-    square.pitch = 0;
+    square.pitch = 80;
     
-    square.rx = 0;
-    square.ry = 0;
+    square.rx = 0.5;
+    square.ry = 0.5;
     square.rz = 0;
     
     square.sx = 1;

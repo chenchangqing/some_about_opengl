@@ -8,11 +8,8 @@
 
 #import "UVScene.h"
 #import "UVSquare.h"
-#import "UVSquareConfig.h"
 
 @interface UVScene ()
-
-@property (nonatomic, strong) UVSquare * square;
 
 @end
 
@@ -24,37 +21,43 @@
     
     if (self) {
         
-        _configs = [NSMutableArray arrayWithCapacity:0];
-        _square = [[UVSquare alloc] init];
-        [self prepareConfigs];
+        _models = [NSMutableArray arrayWithCapacity:0];
+        [self prepareModels];
+        [self setup];
     }
     
     return self;
 }
 
-- (void)prepareConfigs {
+- (void)prepareModels {
     
 }
 
 - (void)setup {
     
-    [_square setup];
+    for (UVModel *model in _models) {
+        
+        [model setup];
+    }
 }
 
-- (void)drawWithPMatrix: (GLKMatrix4) projectionMatrix andConfig: (UVModelConfig *) config {
+- (void)drawWithPMatrix: (GLKMatrix4) projectionMatrix {
     
-    for (UVModelConfig *config in _configs) {
+    for (UVModel *model in _models) {
         
-        if ([config isKindOfClass:[UVSquareConfig class]]) {
+        if ([model isKindOfClass:[UVSquare class]]) {
             
-            [_square drawWithPMatrix:projectionMatrix andConfig:config];
+            [(UVSquare *)model drawWithPMatrix:projectionMatrix];
         }
     }
 }
 
 - (void)free {
     
-    [_square free];
+    for (UVModel *model in _models) {
+        
+        [model free];
+    }
 }
 
 @end

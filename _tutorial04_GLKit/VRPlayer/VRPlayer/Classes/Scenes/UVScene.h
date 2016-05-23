@@ -11,8 +11,8 @@
 
 @interface UVScene : UVModel
 
-@property(nonatomic,strong) NSMutableArray *configs;
+@property(nonatomic,strong) NSMutableArray *models;
 
-- (void)prepareConfigs;
+- (void)prepareModels;
 
 @end

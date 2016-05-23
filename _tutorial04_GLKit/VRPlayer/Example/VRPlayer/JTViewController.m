@@ -9,10 +9,11 @@
 #import "JTViewController.h"
 #import <VRPlayer/VRPlayer.h>
 #import "JTTestScene.h"
+#import "JTTestVRPlayer.h"
 
 @interface JTViewController ()
 
-@property (nonatomic, weak) IBOutlet UVVRPlayer *player;
+@property (nonatomic, weak) IBOutlet JTTestVRPlayer *player;
 
 @end
 
@@ -21,9 +22,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
-    JTTestScene *scene = [[JTTestScene alloc] init];
-    [_player pushWithScene:scene];
 }
 
 - (void)didReceiveMemoryWarning

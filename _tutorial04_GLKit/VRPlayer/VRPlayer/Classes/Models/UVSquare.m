@@ -90,8 +90,8 @@ static const GLfloat g_color_buffer_data[] = {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-- (void)drawWithPMatrix: (GLKMatrix4) projectionMatrix andConfig: (UVModelConfig *) config {
-    [super drawWithPMatrix:projectionMatrix andConfig:config];
+- (void)drawWithPMatrix: (GLKMatrix4) projectionMatrix {
+    [super drawWithPMatrix:projectionMatrix];
     
     glBindVertexArrayOES(_vertexArray);
     

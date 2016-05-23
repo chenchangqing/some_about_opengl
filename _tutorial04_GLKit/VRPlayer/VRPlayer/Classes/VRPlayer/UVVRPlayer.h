@@ -11,7 +11,8 @@
 
 @interface UVVRPlayer : UIView
 
-- (void)pushWithScene:(UVScene *)scene;
-- (void)popScene;
+@property(nonatomic,strong) NSMutableArray *scenes;
+
+- (void)prepareScenes;
 
 @end
