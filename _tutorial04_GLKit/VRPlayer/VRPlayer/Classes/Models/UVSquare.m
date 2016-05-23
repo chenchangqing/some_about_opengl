@@ -87,20 +87,23 @@ static const GLfloat g_color_buffer_data[] = {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-- (void)drawWithMVP:(GLKMatrix4)mvp andConfig:(UVModelConfig *)config {
+- (void)drawWithPMatrix: (GLKMatrix4) projectionMatrix andMVMatrix:(GLKMatrix4) modelViewMatrix andConfig: (UVModelConfig *) config {
     
     glBindVertexArrayOES(_vertexArray);
     
     // 缩放
-    mvp = GLKMatrix4Scale(mvp, config.sx, config.sy, config.sz);
+    modelViewMatrix = GLKMatrix4Scale(modelViewMatrix, config.sx, config.sy, config.sz);
     
     // 位移
-    mvp = GLKMatrix4Translate(mvp, config.tx, config.ty, config.tz);
+    modelViewMatrix = GLKMatrix4Translate(modelViewMatrix, config.tx, config.ty, config.tz);
     
     // 旋转
-    mvp = GLKMatrix4Rotate(mvp, GLKMathDegreesToRadians(-config.rx), 1, 0, 0);
-    mvp = GLKMatrix4Rotate(mvp, GLKMathDegreesToRadians(-config.ry), 0, 1, 0);
-    mvp = GLKMatrix4Rotate(mvp, GLKMathDegreesToRadians(-config.rz), 0, 0, 1);
+    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, GLKMathDegreesToRadians(-config.rx), 1, 0, 0);
+    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, GLKMathDegreesToRadians(-config.ry), 0, 1, 0);
+    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, GLKMathDegreesToRadians(-config.rz), 0, 0, 1);
+    
+    // mvp
+    GLKMatrix4 mvp = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix);
     
     glUseProgram(_program);
     glUniformMatrix4fv(_uniformMVP, 1, 0, mvp.m);

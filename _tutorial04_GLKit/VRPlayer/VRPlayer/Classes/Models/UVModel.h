@@ -14,7 +14,7 @@
 @interface UVModel : NSObject
 
 - (void)setup;
-- (void)drawWithMVP: (GLKMatrix4) mvp andConfig: (UVModelConfig *) config;
+- (void)drawWithPMatrix: (GLKMatrix4) projectionMatrix andMVMatrix:(GLKMatrix4) modelViewMatrix andConfig: (UVModelConfig *) config;
 - (void)free;
 
 @end
