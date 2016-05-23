@@ -13,8 +13,10 @@
 
 @interface UVModel : NSObject
 
+@property (nonatomic, assign) GLKMatrix4 mvp;
+
 - (void)setup;
-- (void)drawWithPMatrix: (GLKMatrix4) projectionMatrix andMVMatrix:(GLKMatrix4) modelViewMatrix andConfig: (UVModelConfig *) config;
+- (void)drawWithPMatrix: (GLKMatrix4) projectionMatrix andConfig: (UVModelConfig *) config;
 - (void)free;
 
 @end

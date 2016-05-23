@@ -10,6 +10,7 @@
 
 @interface UVModelConfig : NSObject
 
+// 逆时针公转
 @property (nonatomic, assign) float yaw;
 @property (nonatomic, assign) float pitch;
 
@@ -23,7 +24,7 @@
 @property (nonatomic, assign) float ty;
 @property (nonatomic, assign) float tz;
 
-// 顺时针自旋转
+// 逆时针自转
 @property (nonatomic, assign) float rx;
 @property (nonatomic, assign) float ry;
 @property (nonatomic, assign) float rz;

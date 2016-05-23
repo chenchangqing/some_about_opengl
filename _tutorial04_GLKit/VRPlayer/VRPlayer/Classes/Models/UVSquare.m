@@ -14,13 +14,13 @@
  *  顶点数据
  */
 static const GLfloat g_vertex_buffer_data[] = {
-    -1.0f, -1.0f, -1.0f,
-    1.0f, -1.0f, -1.0f,
-    1.0f,  1.0f, -1.0f,
+    -1.0f, -1.0f, -0.0f,
+    1.0f, -1.0f, -0.0f,
+    1.0f,  1.0f, -0.0f,
     
-    1.0f,  1.0f, -1.0f,
-    -1.0f,  1.0f, -1.0f,
-    -1.0f, -1.0f, -1.0f
+    1.0f,  1.0f, -0.0f,
+    -1.0f,  1.0f, -0.0f,
+    -1.0f, -1.0f, -0.0f
 };
 
 /**
@@ -35,7 +35,9 @@ static const GLfloat g_color_buffer_data[] = {
     0, 0, 1, 1
 };
 
-@interface UVSquare()
+@interface UVSquare() {
+    
+}
 
 @property (nonatomic, assign) GLuint program;
 
@@ -54,6 +56,7 @@ static const GLfloat g_color_buffer_data[] = {
 @implementation UVSquare
 
 - (void)setup {
+    [super setup];
     
     _uniformMVP     = 0;
     _attribColor    = 0;
@@ -87,30 +90,18 @@ static const GLfloat g_color_buffer_data[] = {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-- (void)drawWithPMatrix: (GLKMatrix4) projectionMatrix andMVMatrix:(GLKMatrix4) modelViewMatrix andConfig: (UVModelConfig *) config {
+- (void)drawWithPMatrix: (GLKMatrix4) projectionMatrix andConfig: (UVModelConfig *) config {
+    [super drawWithPMatrix:projectionMatrix andConfig:config];
     
     glBindVertexArrayOES(_vertexArray);
     
-    // 缩放
-    modelViewMatrix = GLKMatrix4Scale(modelViewMatrix, config.sx, config.sy, config.sz);
-    
-    // 位移
-    modelViewMatrix = GLKMatrix4Translate(modelViewMatrix, config.tx, config.ty, config.tz);
-    
-    // 旋转
-    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, GLKMathDegreesToRadians(-config.rx), 1, 0, 0);
-    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, GLKMathDegreesToRadians(-config.ry), 0, 1, 0);
-    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, GLKMathDegreesToRadians(-config.rz), 0, 0, 1);
-    
-    // mvp
-    GLKMatrix4 mvp = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix);
-    
     glUseProgram(_program);
-    glUniformMatrix4fv(_uniformMVP, 1, 0, mvp.m);
+    glUniformMatrix4fv(_uniformMVP, 1, 0, super.mvp.m);
     glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
 - (void)free {
+    [super free];
     
     glDeleteBuffers(1, &_vertexBuffer);
     glDeleteBuffers(1, &_colorBuffer);

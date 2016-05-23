@@ -14,7 +14,6 @@
 
 @interface UVVRPlayer()<GLKViewDelegate> {
     
-    int _degree;
 }
 
 @property (weak, nonatomic) GLKView *glkView;
@@ -106,35 +105,21 @@
     glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    // 透视
+    // 透视 projectionMatrix
     float aspect = fabs(self.bounds.size.width / self.bounds.size.height);
     GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), aspect, 0.1f, 100.0f);
     
-    GLKMatrix4 baseModelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -3.0f);
-    baseModelViewMatrix = GLKMatrix4Rotate(baseModelViewMatrix, GLKMathDegreesToRadians(_degree), 0.0f, 1.0f, 0.0f);
-    
-//    GLKMatrix4 modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, 0.0f);
-//    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, GLKMathDegreesToRadians(_degree), 1.0f, 1.0f, 1.0f);
-//    modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix);
-    
-    // 正交
+//    // 正交 projectionMatrix
 //    const GLfloat zNear = 0.01, zFar = 1000.0, fieldOfView = 45.0;
 //    GLfloat size;
 //    size = zNear * tanf(GLKMathDegreesToRadians(fieldOfView) / 2.0);
 //    rect.size.width *= [UIScreen mainScreen].scale;
 //    rect.size.height *= [UIScreen mainScreen].scale;
-//    modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -5.0f);
-//    projectionMatrix = GLKMatrix4MakeFrustum(-size, size, -size / (rect.size.width / rect.size.height), size /
-//                                               (rect.size.width / rect.size.height), zNear, zFar);
+//    projectionMatrix = GLKMatrix4MakeFrustum(-size, size, -size / (rect.size.width / rect.size.height), size / (rect.size.width / rect.size.height), zNear, zFar);
     
-    [self.scenes.lastObject drawWithPMatrix:projectionMatrix andMVMatrix:baseModelViewMatrix andConfig:nil];
+//    projectionMatrix = GLKMatrix4Identity;
     
-    _degree++;
-    
-    if (_degree >= 360) {
-        
-        _degree = _degree % 360;
-    }
+    [self.scenes.lastObject drawWithPMatrix:projectionMatrix andConfig:nil];
 }
 
 #pragma mark - Public

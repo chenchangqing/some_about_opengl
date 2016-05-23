@@ -14,26 +14,22 @@
     
     UVSquareConfig *square = [[UVSquareConfig alloc] init];
     
-//    square.rx = 70;
+    square.yaw = 0;
+    square.pitch = 0;
     
-    square.sx = 0.5;
-    square.sy = 0.5;
+    square.rx = 0;
+    square.ry = 0;
+    square.rz = 0;
     
-    square.tx = -3;
+    square.sx = 1;
+    square.sy = 1;
+    square.sz = 1;
+    
+    square.tx = 0;
+    square.ty = 0;
+    square.tz = 0;
     
     [super.configs addObject:square];
-    
-//    UVSquareConfig *square2 = [[UVSquareConfig alloc] init];
-//    
-//    square2.rx = 70;
-//    
-//    square2.tx = 0.1;
-//    square2.ty = 0.1;
-//    
-//    square2.sx = 0.5;
-//    square2.sy = 0.5;
-//    
-//    [super.configs addObject:square2];
 }
 
 @end

@@ -41,13 +41,13 @@
     [_square setup];
 }
 
-- (void)drawWithPMatrix: (GLKMatrix4) projectionMatrix andMVMatrix:(GLKMatrix4) modelViewMatrix andConfig: (UVModelConfig *) config {
+- (void)drawWithPMatrix: (GLKMatrix4) projectionMatrix andConfig: (UVModelConfig *) config {
     
     for (UVModelConfig *config in _configs) {
         
         if ([config isKindOfClass:[UVSquareConfig class]]) {
             
-            [_square drawWithPMatrix:projectionMatrix andMVMatrix:modelViewMatrix andConfig:config];
+            [_square drawWithPMatrix:projectionMatrix andConfig:config];
         }
     }
 }
