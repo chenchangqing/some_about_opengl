@@ -103,7 +103,7 @@
     
     // 透视 projectionMatrix
     float aspect = fabs(self.bounds.size.width / self.bounds.size.height);
-    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), aspect, 0.1f, 100.0f);
+    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(100.0f), aspect, 0.1f, 100.0f);
     
 //    // 正交 projectionMatrix
 //    const GLfloat zNear = 0.01, zFar = 1000.0, fieldOfView = 45.0;

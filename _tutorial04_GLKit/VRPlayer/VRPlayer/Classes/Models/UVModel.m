@@ -54,7 +54,7 @@
 
 - (void)updateWithPMatrix:(GLKMatrix4)projectionMatrix {
     
-    GLKMatrix4 baseModelViewMatrix = GLKMatrix4MakeTranslation(0, 0, -0.8);
+    GLKMatrix4 baseModelViewMatrix = GLKMatrix4MakeTranslation(0, 0, -0.2f);
     
     // 位置
     // baseModelViewMatrix = GLKMatrix4Rotate(baseModelViewMatrix, GLKMathDegreesToRadians(_pitch), 1, 0, 0);

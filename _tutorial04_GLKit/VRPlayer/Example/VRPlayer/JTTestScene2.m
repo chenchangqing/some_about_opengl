@@ -22,15 +22,34 @@
     collection.ry = 0;
     collection.rz = 0;
     
-    collection.sx = 1.6;
-    collection.sy = 0.8;
+    collection.sx = 0.7f;
+    collection.sy = 0.3f;
     collection.sz = 1;
     
     collection.tx = 0;
-    collection.ty = 0;
+    collection.ty = 0.4f;
     collection.tz = 0;
     
     [super.models addObject:collection];
+    
+    UVSquare *square = [[UVSquare alloc] init];
+    
+    square.yaw = 0;
+    square.pitch = 0;
+    
+    square.rx = 10;
+    square.ry = 0;
+    square.rz = 0;
+    
+    square.sx = 0.8;
+    square.sy = 0.1;
+    square.sz = 1;
+    
+    square.tx = 0;
+    square.ty = -3.0f;
+    square.tz = 0;
+    
+    [super.models addObject:square];
     
 }
 

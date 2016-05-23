@@ -10,7 +10,13 @@
 
 @interface UVCollection : UVSquare
 
-@property (nonatomic, assign) int rowCount;
-@property (nonatomic, assign) int columnCount;
+@property (nonatomic, assign) float rowCount;
+@property (nonatomic, assign) float columnCount;
+
+@property (nonatomic) float margin;
+@property (nonatomic) float padding;
+
+@property (nonatomic) float rowSpace;
+@property (nonatomic) float columnSpace;
 
 @end

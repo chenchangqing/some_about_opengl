@@ -15,8 +15,14 @@
     self = [super init];
     if (self) {
         
-        _rowCount = 3;
-        _columnCount = 4;
+        _rowCount = 2.0f;
+        _columnCount = 3.0f;
+        
+        _margin = 0.1f;
+        _padding = 0.1f;
+        
+        _rowSpace = 0.1f;
+        _columnSpace = 0.1f;
     }
     return self;
 }
@@ -33,6 +39,35 @@
 
 - (void)draw {
     [super draw];
+    
+    float itemW = 1.0f/_columnCount;
+    float itemH = 1.0f/_rowCount;
+    
+    float itemSx = itemW;
+    float itemSy = itemH;
+    
+    super.mvp = GLKMatrix4Scale(super.mvp, itemSx, itemSy, 1.0f);
+    
+    for(int i=0;i<_rowCount;i++) {
+        
+        for(int j=0;j<_columnCount;j++) {
+            
+        }
+    }
+    super.mvp = GLKMatrix4Translate(super.mvp, 1-_columnCount, _rowCount-1, 0.0f);
+    [super draw];
+    super.mvp = GLKMatrix4Translate(super.mvp, 2, 0, 0.0f);
+    [super draw];
+    super.mvp = GLKMatrix4Translate(super.mvp, 2, 0, 0.0f);
+    [super draw];
+    
+    super.mvp = GLKMatrix4Translate(super.mvp, 0, -2, 0.0f);
+    [super draw];
+    super.mvp = GLKMatrix4Translate(super.mvp, -2, 0, 0.0f);
+    [super draw];
+    super.mvp = GLKMatrix4Translate(super.mvp, -2, 0, 0.0f);
+    [super draw];
+    
     
 }
 
