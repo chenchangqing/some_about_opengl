@@ -23,7 +23,7 @@
 @property (nonatomic, assign) float ty;
 @property (nonatomic, assign) float tz;
 
-// 顺时针旋转
+// 顺时针自旋转
 @property (nonatomic, assign) float rx;
 @property (nonatomic, assign) float ry;
 @property (nonatomic, assign) float rz;

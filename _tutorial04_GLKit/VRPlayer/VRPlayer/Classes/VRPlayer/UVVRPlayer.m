@@ -105,23 +105,23 @@
     
     // 透视
     float aspect = fabs(self.bounds.size.width / self.bounds.size.height);
-    GLKMatrix4 mvMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -0.5f);
+    GLKMatrix4 mvMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -1.5f);
     GLKMatrix4 pMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(100), aspect, 0.1f, 2.4f);
     
     // 正交
-    const GLfloat zNear = 0.01, zFar = 1000.0, fieldOfView = 45.0;
-    GLfloat size;
-    size = zNear * tanf(GLKMathDegreesToRadians(fieldOfView) / 2.0);
-    rect.size.width *= [UIScreen mainScreen].scale;
-    rect.size.height *= [UIScreen mainScreen].scale;
-    mvMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -5.0f);
-    pMatrix = GLKMatrix4MakeFrustum(-size, size, -size / (rect.size.width / rect.size.height), size /
-                                               (rect.size.width / rect.size.height), zNear, zFar);
+//    const GLfloat zNear = 0.01, zFar = 1000.0, fieldOfView = 45.0;
+//    GLfloat size;
+//    size = zNear * tanf(GLKMathDegreesToRadians(fieldOfView) / 2.0);
+//    rect.size.width *= [UIScreen mainScreen].scale;
+//    rect.size.height *= [UIScreen mainScreen].scale;
+//    mvMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -5.0f);
+//    pMatrix = GLKMatrix4MakeFrustum(-size, size, -size / (rect.size.width / rect.size.height), size /
+//                                               (rect.size.width / rect.size.height), zNear, zFar);
     
     // mvp
     GLKMatrix4 mvp = GLKMatrix4Multiply(pMatrix, mvMatrix);
     
-    mvp = GLKMatrix4Identity;
+//    mvp = GLKMatrix4Identity;
     
     [_scenes.lastObject drawWithMVP:mvp andConfig:nil];
 }
