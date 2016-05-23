@@ -19,6 +19,8 @@
     square.sx = 0.5;
     square.sy = 0.5;
     
+    square.tx = -3;
+    
     [super.configs addObject:square];
     
 //    UVSquareConfig *square2 = [[UVSquareConfig alloc] init];
