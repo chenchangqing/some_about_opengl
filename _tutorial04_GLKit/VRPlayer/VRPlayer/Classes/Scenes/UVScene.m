@@ -34,6 +34,7 @@
 }
 
 - (void)setup {
+    [super setup];
     
     for (UVModel *model in _models) {
         
@@ -41,18 +42,30 @@
     }
 }
 
-- (void)drawWithPMatrix: (GLKMatrix4) projectionMatrix {
+- (void)updateWithPMatrix: (GLKMatrix4) projectionMatrix {
+    [super updateWithPMatrix:projectionMatrix];
+    
+    for (UVModel *model in _models) {
+        
+        [model updateWithPMatrix:projectionMatrix];
+    }
+    
+}
+
+- (void)draw {
+    [super draw];
     
     for (UVModel *model in _models) {
         
         if ([model isKindOfClass:[UVSquare class]]) {
             
-            [(UVSquare *)model drawWithPMatrix:projectionMatrix];
+            [(UVSquare *)model draw];
         }
     }
 }
 
 - (void)free {
+    [super free];
     
     for (UVModel *model in _models) {
         

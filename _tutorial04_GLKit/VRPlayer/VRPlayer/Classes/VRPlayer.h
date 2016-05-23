@@ -13,5 +13,6 @@
 #import "UVModel.h"
 #import "UVSquare.h"
 #import "UVScene.h"
+#import "UVCollection.h"
 
 #endif /* VRPlayer_h */

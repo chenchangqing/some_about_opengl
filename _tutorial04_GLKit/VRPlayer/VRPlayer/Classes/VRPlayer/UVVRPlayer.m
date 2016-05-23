@@ -115,10 +115,8 @@
     
 //    projectionMatrix = GLKMatrix4Identity;
     
-    for (UVScene *scene in _scenes) {
-        
-        [scene drawWithPMatrix:projectionMatrix];
-    }
+    [_scenes.lastObject updateWithPMatrix:projectionMatrix];
+    [_scenes.lastObject draw];
 }
 
 @end

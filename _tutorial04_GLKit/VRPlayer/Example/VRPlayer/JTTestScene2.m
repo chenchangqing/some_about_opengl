@@ -13,24 +13,24 @@
 - (void)prepareModels {
     [super prepareModels];
     
-    UVSquare *square = [[UVSquare alloc] init];
+    UVCollection *collection = [[UVCollection alloc] init];
     
-    square.yaw = 0;
-    square.pitch = 80;
+    collection.yaw = 0;
+    collection.pitch = 0;
     
-    square.rx = 0.5;
-    square.ry = 0.5;
-    square.rz = 0;
+    collection.rx = 0;
+    collection.ry = 0;
+    collection.rz = 0;
     
-    square.sx = 1;
-    square.sy = 1;
-    square.sz = 1;
+    collection.sx = 1.6;
+    collection.sy = 0.8;
+    collection.sz = 1;
     
-    square.tx = 0;
-    square.ty = 0;
-    square.tz = 0;
+    collection.tx = 0;
+    collection.ty = 0;
+    collection.tz = 0;
     
-    [super.models addObject:square];
+    [super.models addObject:collection];
     
 }
 

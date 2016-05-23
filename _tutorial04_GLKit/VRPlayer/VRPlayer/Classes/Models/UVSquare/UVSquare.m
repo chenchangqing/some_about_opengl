@@ -55,6 +55,15 @@ static const GLfloat g_color_buffer_data[] = {
 
 @implementation UVSquare
 
+- (instancetype)init {
+    
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
+
 - (void)setup {
     [super setup];
     
@@ -90,8 +99,12 @@ static const GLfloat g_color_buffer_data[] = {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-- (void)drawWithPMatrix: (GLKMatrix4) projectionMatrix {
-    [super drawWithPMatrix:projectionMatrix];
+- (void)updateWithPMatrix: (GLKMatrix4) projectionMatrix {
+    [super updateWithPMatrix:projectionMatrix];
+    
+}
+
+- (void)draw {
     
     glBindVertexArrayOES(_vertexArray);
     

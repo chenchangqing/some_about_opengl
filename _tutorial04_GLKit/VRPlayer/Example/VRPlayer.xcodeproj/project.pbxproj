@@ -154,10 +154,10 @@
 				6003F594195388D20070C39A /* Supporting Files */,
 				E6F190751CF2130500ACC660 /* JTTestScene.h */,
 				E6F190761CF2130500ACC660 /* JTTestScene.m */,
-				E645E97F1CF35F5F0096E1AC /* JTTestVRPlayer.h */,
-				E645E9801CF35F5F0096E1AC /* JTTestVRPlayer.m */,
 				E645E9821CF364EB0096E1AC /* JTTestScene2.h */,
 				E645E9831CF364EB0096E1AC /* JTTestScene2.m */,
+				E645E97F1CF35F5F0096E1AC /* JTTestVRPlayer.h */,
+				E645E9801CF35F5F0096E1AC /* JTTestVRPlayer.m */,
 			);
 			name = "Example for VRPlayer";
 			path = VRPlayer;

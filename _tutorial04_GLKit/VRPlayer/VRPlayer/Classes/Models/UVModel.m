@@ -52,9 +52,9 @@
     
 }
 
-- (void)drawWithPMatrix: (GLKMatrix4) projectionMatrix {
+- (void)updateWithPMatrix:(GLKMatrix4)projectionMatrix {
     
-    GLKMatrix4 baseModelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -3.0f);
+    GLKMatrix4 baseModelViewMatrix = GLKMatrix4MakeTranslation(0, 0, -0.8);
     
     // 位置
     // baseModelViewMatrix = GLKMatrix4Rotate(baseModelViewMatrix, GLKMathDegreesToRadians(_pitch), 1, 0, 0);
@@ -79,13 +79,17 @@
     // mvp
     _mvp = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix);
     
-    _degree++;
+    //    _degree++;
     
     
     if (_degree >= 360) {
         
         _degree = _degree % 360;
     }
+}
+
+- (void)draw {
+    
 }
 
 - (void)free {

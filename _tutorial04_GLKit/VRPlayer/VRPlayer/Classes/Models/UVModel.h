@@ -37,7 +37,8 @@
 @property (nonatomic, assign) GLKMatrix4 mvp;
 
 - (void)setup;
-- (void)drawWithPMatrix: (GLKMatrix4) projectionMatrix;
+- (void)updateWithPMatrix: (GLKMatrix4) projectionMatrix;
+- (void)draw;
 - (void)free;
 
 @end
