@@ -13,10 +13,8 @@
 @property (nonatomic, assign) float rowCount;
 @property (nonatomic, assign) float columnCount;
 
-@property (nonatomic) float leftMargin;
-@property (nonatomic) float rightMargin;
-@property (nonatomic) float topMargin;
-@property (nonatomic) float bottomMargin;
+@property (nonatomic) float horizontalMargin;
+@property (nonatomic) float verticalMargin;
 
 @property (nonatomic) float rowSpace;
 @property (nonatomic) float columnSpace;

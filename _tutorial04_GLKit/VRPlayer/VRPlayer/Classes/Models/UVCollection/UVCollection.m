@@ -18,13 +18,11 @@
         _rowCount = 3.0f;
         _columnCount = 4.0f;
         
-        _leftMargin = 0.1f;
-        _rightMargin = 0.1f;
-        _topMargin = 0.1f;
-        _bottomMargin = 0.1f;
+        _horizontalMargin = 0.3f;
+        _verticalMargin = 0.3f;
         
-        _rowSpace = 0.1f;
-        _columnSpace = 0.1f;
+        _rowSpace = 0.3f;
+        _columnSpace = 0.3f;
     }
     return self;
 }
@@ -42,11 +40,11 @@
 - (void)draw {
     [super draw];
     
-    float aspectW = ( 1/(_columnCount*2 + _columnSpace * (_columnCount - 1) ) / ( 1/(_columnCount*2)));
+    float aspectW = ( 1/(_horizontalMargin*2 + _columnCount*2 + _columnSpace * (_columnCount - 1) ) / ( 1/(_columnCount*2)) );
     float originW = 1.0f / _columnCount;
     float itemW = originW * aspectW;
     
-    float aspectH = ( 1/(_rowCount*2 + _rowSpace * (_rowCount - 1) ) / (1/(_rowCount*2)) );
+    float aspectH = ( 1/(_verticalMargin*2 + _rowCount*2 + _rowSpace * (_rowCount - 1) ) / (1/(_rowCount*2)) );
     float originH = 1.0f / _rowCount;
     float itemH = originH * aspectH;
     
@@ -102,32 +100,6 @@
             [super draw];
         }
     }
-//    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, 1-_columnCount, _rowCount-1, 0.0f);
-//    [super draw];
-//    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, 2, 0, 0.0f);
-//    [super draw];
-//    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, 2, 0, 0.0f);
-//    [super draw];
-//    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, 2, 0, 0.0f);
-//    [super draw];
-//    
-//    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, -(_columnCount-1)*2, -2, 0.0f);
-//    [super draw];
-//    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, 2, 0, 0.0f);
-//    [super draw];
-//    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, 2, 0, 0.0f);
-//    [super draw];
-//    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, 2, 0, 0.0f);
-//    [super draw];
-//
-//    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, -(_columnCount-1)*2, -2, 0.0f);
-//    [super draw];
-//    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, 2, 0, 0.0f);
-//    [super draw];
-//    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, 2, 0, 0.0f);
-//    [super draw];
-//    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, 2, 0, 0.0f);
-//    [super draw];
     
     
 }
