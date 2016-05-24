@@ -15,6 +15,13 @@
 
 @property (nonatomic, assign) float rowCount;
 @property (nonatomic, assign) float columnCount;
+
+@property (nonatomic, assign) float horizontalMargin;
+@property (nonatomic, assign) float verticalMargin;
+
+@property (nonatomic, assign) float rowSpace;
+@property (nonatomic, assign) float columnSpace;
+
 @property (nonatomic, readonly) NSArray *indexPaths;
 
 @end
@@ -27,12 +34,6 @@
     if (self) {
         
         _tempMatrix = GLKMatrix4Identity;
-        
-        _horizontalMargin = 0.3f;
-        _verticalMargin = 0.3f;
-        
-        _rowSpace = 0.3f;
-        _columnSpace = 0.3f;
     }
     return self;
 }
@@ -62,7 +63,7 @@
         
         return [_dataSource numberOfRowsInCollection:self];
     }
-    return 3.0f;
+    return 0.0f;
 }
 
 - (float)columnCount {
@@ -71,7 +72,43 @@
         
         return [_dataSource numberOfColumnsInCollection:self];
     }
-    return 4.0f;
+    return 0.0f;
+}
+
+- (float)horizontalMargin {
+    
+    if ([_delegate respondsToSelector:@selector(horizontalMargin)]) {
+        
+        return [_delegate horizontalMargin];
+    }
+    return 0.0f;
+}
+
+- (float)verticalMargin {
+    
+    if ([_delegate respondsToSelector:@selector(verticalMargin)]) {
+        
+        return [_delegate verticalMargin];
+    }
+    return 0.0f;
+}
+
+- (float)rowSpace {
+    
+    if ([_delegate respondsToSelector:@selector(rowSpace)]) {
+        
+        return [_delegate rowSpace];
+    }
+    return 0.0f;
+}
+
+- (float)columnSpace {
+    
+    if ([_delegate respondsToSelector:@selector(columnSpace)]) {
+        
+        return [_delegate columnSpace];
+    }
+    return 0.0f;
 }
 
 - (void)setup {
@@ -92,11 +129,11 @@
 - (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix {
     [super updateWithProjectionMatrix:projectionMatrix];
     
-    float aspectW = ( 1/(_horizontalMargin*2 + self.columnCount*2 + _columnSpace * (self.columnCount - 1) ) / ( 1/(self.columnCount*2)) );
+    float aspectW = ( 1/(self.horizontalMargin*2 + self.columnCount*2 + self.columnSpace * (self.columnCount - 1) ) / ( 1/(self.columnCount*2)) );
     float originW = 1.0f / self.columnCount;
     float itemW = originW * aspectW;
     
-    float aspectH = ( 1/(_verticalMargin*2 + self.rowCount*2 + _rowSpace * (self.rowCount - 1) ) / (1/(self.rowCount*2)) );
+    float aspectH = ( 1/(self.verticalMargin*2 + self.rowCount*2 + self.rowSpace * (self.rowCount - 1) ) / (1/(self.rowCount*2)) );
     float originH = 1.0f / self.rowCount;
     float itemH = originH * aspectH;
     
@@ -135,20 +172,20 @@
         if (indexPath.row == 0) {
             
             _tempMatrix = GLKMatrix4Translate(_tempMatrix,
-                                              -(self.columnCount-1)-_columnSpace*(/** 变量 **/(self.columnCount-1)/2),
-                                              +(self.rowCount-1)+_rowSpace*(/** 变量 **/(self.rowCount-1)/2),
+                                              -(self.columnCount-1)-self.columnSpace*(/** 变量 **/(self.columnCount-1)/2),
+                                              +(self.rowCount-1)+self.rowSpace*(/** 变量 **/(self.rowCount-1)/2),
                                               0.0f);
         } else {
             
             _tempMatrix = GLKMatrix4Translate(_tempMatrix,
-                                              -(self.columnCount-1)*2-_columnSpace*(/** 变量 **/(self.columnCount-1)),
-                                              -2-_rowSpace,
+                                              -(self.columnCount-1)*2-self.columnSpace*(/** 变量 **/(self.columnCount-1)),
+                                              -2-self.rowSpace,
                                               0.0f);
         }
         
     } else {
         
-        _tempMatrix = GLKMatrix4Translate(_tempMatrix, 2+_columnSpace, 0, 0.0f);
+        _tempMatrix = GLKMatrix4Translate(_tempMatrix, 2+self.columnSpace, 0, 0.0f);
     }
 }
 

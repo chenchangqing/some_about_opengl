@@ -33,18 +33,17 @@
 
 - (void)collection:(UVCollection *)collection modelViewMatrix:(GLKMatrix4)modelViewMatrix atIndexPath:(UVIndexPath *)indexPath;
 
+- (float)horizontalMargin;
+- (float)verticalMargin;
+- (float)rowSpace;
+- (float)columnSpace;
+
 @end
 
 /**
  *  UVCollection
  */
 @interface UVCollection : UVSquare
-
-@property (nonatomic) float horizontalMargin;
-@property (nonatomic) float verticalMargin;
-
-@property (nonatomic) float rowSpace;
-@property (nonatomic) float columnSpace;
 
 @property (nonatomic, weak) id <UVCollectionDataSource> dataSource;
 @property (nonatomic, weak) id <UVCollectionDelegate> delegate;
