@@ -41,9 +41,12 @@
     [super draw];
     
     float aspectW = (1/(_columnCount*2 + (_columnSpace * (_columnCount - 1))) / (1/(_columnCount*2)));
-    float itemW = 1.0f / _columnCount * aspectW;
+    float originW = 1.0f / _columnCount;
+    float itemW = originW * aspectW;
+    
     float aspectH = (1/(_rowCount*2 + (_rowSpace * (_rowCount - 1))) / (1/(_rowCount*2)));
-    float itemH = 1.0f / _rowCount * aspectH;
+    float originH = 1.0f / _rowCount;
+    float itemH = originH * aspectH;
     
     float itemSx = itemW;
     float itemSy = itemH;
