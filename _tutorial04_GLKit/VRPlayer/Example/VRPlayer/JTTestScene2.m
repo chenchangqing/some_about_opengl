@@ -24,6 +24,7 @@
     
     NSMutableArray *firstRow = [NSMutableArray arrayWithCapacity:0];
     NSMutableArray *secondRow = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *threeRow = [NSMutableArray arrayWithCapacity:0];
     
     [firstRow addObject:[[UVSquare alloc] init]];
     [firstRow addObject:[[UVSquare alloc] init]];
@@ -34,9 +35,15 @@
     [secondRow addObject:[[UVSquare alloc] init]];
     [secondRow addObject:[[UVSquare alloc] init]];
     [secondRow addObject:[[UVSquare alloc] init]];
+    
+    [threeRow addObject:[[UVSquare alloc] init]];
+    [threeRow addObject:[[UVSquare alloc] init]];
+    [threeRow addObject:[[UVSquare alloc] init]];
+    [threeRow addObject:[[UVSquare alloc] init]];
     
     [self.models addObject:firstRow];
     [self.models addObject:secondRow];
+    [self.models addObject:threeRow];
     
     UVCollection *collection = [[UVCollection alloc] init];
     
@@ -51,7 +58,7 @@
     collection.rz = 0.0f;
     
     collection.sx = 1.0f;
-    collection.sy = 1.0f;
+    collection.sy = 9.0f/16.0f;
     collection.sz = 1.0f;
     
     collection.tx = 0.0f;
@@ -66,12 +73,12 @@
 
 - (float)numberOfRowsInCollection:(UVCollection *)collection {
     
-    return 2.0f;
+    return 3.0f;
 }
 
 - (float)numberOfColumnsInCollection:(UVCollection *)collection {
     
-    return 1.0f;
+    return 4.0f;
 }
 
 - (UVSquare *)collection:(UVCollection *)collection modelForItemAtIndexPath:(UVIndexPath *)indexPath {
@@ -86,33 +93,26 @@
 
 - (void)collection:(UVCollection *)collection modelViewMatrix:(GLKMatrix4)modelViewMatrix atIndexPath:(UVIndexPath *)indexPath {
     
-    if (indexPath.row == 0) {
-        
-    }
-    
-    if (indexPath.row == 1) {
-       
-    }
 }
 
 - (float)horizontalMargin {
     
-    return  0.0f;
+    return  0.2f;
 }
 
 - (float)verticalMargin {
     
-    return 0.0f;
+    return 0.2f;
 }
 
 - (float)rowSpace {
     
-    return 0.0f;
+    return 0.3f;
 }
 
 - (float)columnSpace {
     
-    return 0.0f;
+    return 0.3f;
 }
 
 @end
