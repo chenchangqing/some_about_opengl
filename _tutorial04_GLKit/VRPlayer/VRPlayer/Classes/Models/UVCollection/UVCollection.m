@@ -35,6 +35,7 @@
 - (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix {
     [super updateWithProjectionMatrix:projectionMatrix];
     
+    
 }
 
 - (void)draw {
@@ -97,6 +98,12 @@
                 
                 super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, 2+_columnSpace, 0, 0.0f);
             }
+            
+            if ([_delegate respondsToSelector:@selector(collection:modelViewMatrixAtIndexPath:)]) {
+                
+//                [_delegate collection:self modelViewMatrixAtIndexPath:nsindex
+            }
+            
             [super draw];
         }
     }
