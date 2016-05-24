@@ -18,8 +18,10 @@
         _rowCount = 3.0f;
         _columnCount = 4.0f;
         
-        _margin = 0.1f;
-        _padding = 0.1f;
+        _leftMargin = 0.1f;
+        _rightMargin = 0.1f;
+        _topMargin = 0.1f;
+        _bottomMargin = 0.1f;
         
         _rowSpace = 0.1f;
         _columnSpace = 0.1f;
