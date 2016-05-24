@@ -106,52 +106,50 @@
     _tempMatrix = [super modelViewMatrix];
     _tempMatrix = GLKMatrix4Scale(_tempMatrix, itemSx, itemSy, 1.0f);
     
-    for(int row=0;row<self.rowCount;row++) {
+    
+    for (UVIndexPath *indexPath in self.indexPaths) {
         
-        for(int column=0;column<self.columnCount;column++) {
-            
-            UVIndexPath *indexPath = [UVIndexPath indexPathForRow:row andColumn:column];
-            
-            // 如果是第一列，做连续位移(self.columnCount-1)*2个单位
-            if (column == 0) {
-                
-                // 如果是第一行，特殊处理
-                if (row == 0) {
-                    
-                    _tempMatrix = GLKMatrix4Translate(_tempMatrix,
-                                                                -(self.columnCount-1)-_columnSpace*(/** 变量 **/(self.columnCount-1)/2),
-                                                                +(self.rowCount-1)+_rowSpace*(/** 变量 **/(self.rowCount-1)/2),
-                                                                0.0f);
-                } else {
-                    
-                    _tempMatrix = GLKMatrix4Translate(_tempMatrix,
-                                                                -(self.columnCount-1)*2-_columnSpace*(/** 变量 **/(self.columnCount-1)),
-                                                                -2-_rowSpace,
-                                                                0.0f);
-                }
-                
-            } else {
-                
-                _tempMatrix = GLKMatrix4Translate(_tempMatrix, 2+_columnSpace, 0, 0.0f);
-            }
+        [self updateTempMatrix:indexPath];
+        
+        if ([_dataSource respondsToSelector:@selector(collection:modelForItemAtIndexPath:)]) {
             
             UVSquare * model = [_dataSource collection:self modelForItemAtIndexPath:indexPath];
             
+            [model updateWithProjectionMatrix:projectionMatrix];
+            model.modelViewMatrix = GLKMatrix4Multiply(model.modelViewMatrix, _tempMatrix);
             
-            if ([_dataSource respondsToSelector:@selector(collection:modelForItemAtIndexPath:)]) {
+            // 回调
+            if ([_delegate respondsToSelector:@selector(collection:modelViewMatrix:atIndexPath:)]) {
                 
-                [model updateWithProjectionMatrix:projectionMatrix];
-                model.modelViewMatrix = GLKMatrix4Multiply(model.modelViewMatrix, _tempMatrix);
-                
-                // 回调
-                if ([_delegate respondsToSelector:@selector(collection:modelViewMatrix:atIndexPath:)]) {
-                    
-                    [_delegate collection:self modelViewMatrix:model.modelViewMatrix atIndexPath:indexPath];
-                }
+                [_delegate collection:self modelViewMatrix:model.modelViewMatrix atIndexPath:indexPath];
             }
         }
     }
     
+}
+
+- (void)updateTempMatrix:(UVIndexPath *) indexPath {
+    
+    if (indexPath.column == 0) {
+        
+        if (indexPath.row == 0) {
+            
+            _tempMatrix = GLKMatrix4Translate(_tempMatrix,
+                                              -(self.columnCount-1)-_columnSpace*(/** 变量 **/(self.columnCount-1)/2),
+                                              +(self.rowCount-1)+_rowSpace*(/** 变量 **/(self.rowCount-1)/2),
+                                              0.0f);
+        } else {
+            
+            _tempMatrix = GLKMatrix4Translate(_tempMatrix,
+                                              -(self.columnCount-1)*2-_columnSpace*(/** 变量 **/(self.columnCount-1)),
+                                              -2-_rowSpace,
+                                              0.0f);
+        }
+        
+    } else {
+        
+        _tempMatrix = GLKMatrix4Translate(_tempMatrix, 2+_columnSpace, 0, 0.0f);
+    }
 }
 
 - (void)draw {
