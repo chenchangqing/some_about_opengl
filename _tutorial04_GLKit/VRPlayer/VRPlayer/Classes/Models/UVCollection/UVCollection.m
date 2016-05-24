@@ -40,11 +40,11 @@
 - (void)draw {
     [super draw];
     
-    float aspectW = (1/(_columnCount*2 + (_columnSpace * (_columnCount - 1))) / (1/(_columnCount*2)));
+    float aspectW = ( 1/(_columnCount*2 + _columnSpace * (_columnCount - 1) ) / ( 1/(_columnCount*2)));
     float originW = 1.0f / _columnCount;
     float itemW = originW * aspectW;
     
-    float aspectH = (1/(_rowCount*2 + (_rowSpace * (_rowCount - 1))) / (1/(_rowCount*2)));
+    float aspectH = ( 1/(_rowCount*2 + _rowSpace * (_rowCount - 1) ) / (1/(_rowCount*2)) );
     float originH = 1.0f / _rowCount;
     float itemH = originH * aspectH;
     
