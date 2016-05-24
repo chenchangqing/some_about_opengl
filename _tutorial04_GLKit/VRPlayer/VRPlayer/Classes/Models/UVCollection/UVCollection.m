@@ -15,8 +15,8 @@
     self = [super init];
     if (self) {
         
-        _rowCount = 2.0f;
-        _columnCount = 6.0f;
+        _rowCount = 3.0f;
+        _columnCount = 8.0f;
         
         _margin = 0.1f;
         _padding = 0.1f;
@@ -56,20 +56,30 @@
             if (column == 1) {
                 
                 // 找关系Horizontal
-                // 1 0   0
-                // 2 0.5 1
-                // 3 1   2
-                // 4 1.5 3
-                // 5 2   4
-                // 6 2.5 5
+                // _columnCount row==1  row!=1
+                // 1            0       0
+                // 2            0.5     1
+                // 3            1       2
+                // 4            1.5     3
+                // 5            2       4
+                // 6            2.5     5
+                
+                // 找关系Vertical
+                // _rowCount row==1  row!=1
+                // 1            0       0
+                // 2            0.5     1
+                // 3            1       2
+                // 4            1.5     3
+                // 5            2       4
+                // 6            2.5     5
                 
                 // 如果是第一行，特殊处理
                 if (row == 1) {
                     
-                    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, -(_columnCount-1)-_columnSpace*2.5, _rowCount-1, 0.0f);
+                    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, -(_columnCount-1)-_columnSpace*((_columnCount-1)/2), _rowCount-1, 0.0f);
                 } else {
                     
-                    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, -(_columnCount-1)*2-_columnSpace*5, -2, 0.0f);
+                    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, -(_columnCount-1)*2-_columnSpace*(_columnCount-1), -2, 0.0f);
                 }
                 
             } else {

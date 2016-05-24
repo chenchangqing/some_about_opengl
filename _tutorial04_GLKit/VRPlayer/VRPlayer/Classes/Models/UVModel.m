@@ -76,7 +76,7 @@
     
     _modelViewMatrix = GLKMatrix4Multiply(positionMatrix, _modelViewMatrix);
     
-    //    _degree++;
+//        _degree++;
     
     if (_degree >= 360) {
         
