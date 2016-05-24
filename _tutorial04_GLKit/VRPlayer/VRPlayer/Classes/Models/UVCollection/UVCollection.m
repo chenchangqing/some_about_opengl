@@ -32,41 +32,41 @@
     
 }
 
-- (void)updateWithPMatrix:(GLKMatrix4)projectionMatrix {
-
-    [super updateWithPMatrix:projectionMatrix];
+- (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix {
+    [super updateWithProjectionMatrix:projectionMatrix];
+    
 }
 
 - (void)draw {
     [super draw];
     
-    float itemW = 1.0f/_columnCount;
-    float itemH = 1.0f/_rowCount;
-    
-    float itemSx = itemW;
-    float itemSy = itemH;
-    
-    super.mvp = GLKMatrix4Scale(super.mvp, itemSx, itemSy, 1.0f);
-    
-    for(int i=0;i<_rowCount;i++) {
-        
-        for(int j=0;j<_columnCount;j++) {
-            
-        }
-    }
-    super.mvp = GLKMatrix4Translate(super.mvp, 1-_columnCount, _rowCount-1, 0.0f);
-    [super draw];
-    super.mvp = GLKMatrix4Translate(super.mvp, 2, 0, 0.0f);
-    [super draw];
-    super.mvp = GLKMatrix4Translate(super.mvp, 2, 0, 0.0f);
-    [super draw];
-    
-    super.mvp = GLKMatrix4Translate(super.mvp, 0, -2, 0.0f);
-    [super draw];
-    super.mvp = GLKMatrix4Translate(super.mvp, -2, 0, 0.0f);
-    [super draw];
-    super.mvp = GLKMatrix4Translate(super.mvp, -2, 0, 0.0f);
-    [super draw];
+//    float itemW = 1.0f/_columnCount;
+//    float itemH = 1.0f/_rowCount;
+//    
+//    float itemSx = itemW;
+//    float itemSy = itemH;
+//    
+//    super.modelViewMatrix = GLKMatrix4Scale(super.modelViewMatrix, itemSx, itemSy, 1.0f);
+//    
+//    for(int i=0;i<_rowCount;i++) {
+//        
+//        for(int j=0;j<_columnCount;j++) {
+//            
+//        }
+//    }
+//    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, 1-_columnCount, _rowCount-1, 0.0f);
+//    [super draw];
+//    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, 2, 0, 0.0f);
+//    [super draw];
+//    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, 2, 0, 0.0f);
+//    [super draw];
+//    
+//    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, 0, -2, 0.0f);
+//    [super draw];
+//    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, -2, 0, 0.0f);
+//    [super draw];
+//    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, -2, 0, 0.0f);
+//    [super draw];
     
     
 }

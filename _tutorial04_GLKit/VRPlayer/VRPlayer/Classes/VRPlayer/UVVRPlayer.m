@@ -101,22 +101,34 @@
     glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    // 透视 projectionMatrix
-    float aspect = fabs(self.bounds.size.width / self.bounds.size.height);
+//    [_scenes.lastObject updateWithProjectionMatrix:[self projectionMatrix]];
+    [_scenes.lastObject updateWithProjectionMatrix:GLKMatrix4Identity];
+    [_scenes.lastObject draw];
+}
+
+/**
+ *  透视投影
+ */
+- (GLKMatrix4)projectionMatrix {
+    
+    float aspect = fabs(CGRectGetWidth([UIScreen mainScreen].bounds) / CGRectGetHeight([UIScreen mainScreen].bounds));
     GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(100.0f), aspect, 0.1f, 100.0f);
     
-//    // 正交 projectionMatrix
-//    const GLfloat zNear = 0.01, zFar = 1000.0, fieldOfView = 45.0;
-//    GLfloat size;
-//    size = zNear * tanf(GLKMathDegreesToRadians(fieldOfView) / 2.0);
-//    rect.size.width *= [UIScreen mainScreen].scale;
-//    rect.size.height *= [UIScreen mainScreen].scale;
-//    projectionMatrix = GLKMatrix4MakeFrustum(-size, size, -size / (rect.size.width / rect.size.height), size / (rect.size.width / rect.size.height), zNear, zFar);
+    return projectionMatrix;
+}
+
+/**
+ *  正交投影
+ */
+- (GLKMatrix4)frustumMatrixWithRect: (CGRect)rect {
     
-//    projectionMatrix = GLKMatrix4Identity;
-    
-    [_scenes.lastObject updateWithPMatrix:projectionMatrix];
-    [_scenes.lastObject draw];
+    const GLfloat zNear = 0.01, zFar = 1000.0, fieldOfView = 45.0;
+    GLfloat size;
+    size = zNear * tanf(GLKMathDegreesToRadians(fieldOfView) / 2.0);
+    rect.size.width *= [UIScreen mainScreen].scale;
+    rect.size.height *= [UIScreen mainScreen].scale;
+    GLKMatrix4 frustumMatrix = GLKMatrix4MakeFrustum(-size, size, -size / (rect.size.width / rect.size.height), size / (rect.size.width / rect.size.height), zNear, zFar);
+    return frustumMatrix;
 }
 
 @end

@@ -14,13 +14,13 @@
  *  顶点数据
  */
 static const GLfloat g_vertex_buffer_data[] = {
-    -1.0f, -1.0f, -0.0f,
-    1.0f, -1.0f, -0.0f,
-    1.0f,  1.0f, -0.0f,
+    -1.0f, -1.0f, -1.0f,
+    1.0f, -1.0f, -1.0f,
+    1.0f,  1.0f, -1.0f,
     
-    1.0f,  1.0f, -0.0f,
-    -1.0f,  1.0f, -0.0f,
-    -1.0f, -1.0f, -0.0f
+    1.0f,  1.0f, -1.0f,
+    -1.0f,  1.0f, -1.0f,
+    -1.0f, -1.0f, -1.0f
 };
 
 /**
@@ -99,17 +99,18 @@ static const GLfloat g_color_buffer_data[] = {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-- (void)updateWithPMatrix: (GLKMatrix4) projectionMatrix {
-    [super updateWithPMatrix:projectionMatrix];
+- (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix {
+    [super updateWithProjectionMatrix:projectionMatrix];
     
 }
 
 - (void)draw {
+    [super draw];
     
     glBindVertexArrayOES(_vertexArray);
     
     glUseProgram(_program);
-    glUniformMatrix4fv(_uniformMVP, 1, 0, super.mvp.m);
+    glUniformMatrix4fv(_uniformMVP, 1, 0, GLKMatrix4Multiply(super.projectionMatrix, super.modelViewMatrix).m);
     glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 

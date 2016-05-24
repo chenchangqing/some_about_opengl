@@ -23,7 +23,8 @@
     self = [super init];
     if (self) {
         
-        _mvp = GLKMatrix4Identity;
+        _projectionMatrix = GLKMatrix4Identity;
+        _modelViewMatrix = GLKMatrix4Identity;
         
         _yaw = 0;
         _pitch = 0;
@@ -52,35 +53,30 @@
     
 }
 
-- (void)updateWithPMatrix:(GLKMatrix4)projectionMatrix {
+- (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix {
     
-    GLKMatrix4 baseModelViewMatrix = GLKMatrix4MakeTranslation(0, 0, -0.2f);
+    // 初始位置(先绕y轴旋转,在绕x轴旋转)
+    GLKMatrix4 positionMatrix = GLKMatrix4Identity;
+    positionMatrix = GLKMatrix4Rotate(positionMatrix, GLKMathDegreesToRadians(_yaw + _degree), 0, 1, 0);
+    positionMatrix = GLKMatrix4Rotate(positionMatrix, GLKMathDegreesToRadians(_pitch + _degree), 1, 0, 0);
     
-    // 位置
-    // baseModelViewMatrix = GLKMatrix4Rotate(baseModelViewMatrix, GLKMathDegreesToRadians(_pitch), 1, 0, 0);
-    baseModelViewMatrix = GLKMatrix4Translate(baseModelViewMatrix, 0, sin(_pitch), 0);
-    baseModelViewMatrix = GLKMatrix4Rotate(baseModelViewMatrix, GLKMathDegreesToRadians(_yaw + _degree), 0, 1, 0);
-    
-    GLKMatrix4 modelViewMatrix = GLKMatrix4Translate(baseModelViewMatrix, 0, 0, 0);
+    _projectionMatrix = projectionMatrix;
+    _modelViewMatrix = GLKMatrix4Identity;
     
     // 缩放
-    modelViewMatrix = GLKMatrix4Scale(modelViewMatrix, _sx, _sy, _sz);
+    _modelViewMatrix = GLKMatrix4Scale(_modelViewMatrix, _sx, _sy, _sz);
     
     // 位移
-    modelViewMatrix = GLKMatrix4Translate(modelViewMatrix, _tx, _ty, _tz);
+    _modelViewMatrix = GLKMatrix4Translate(_modelViewMatrix, _tx, _ty, _tz);
     
     // 旋转
-    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, GLKMathDegreesToRadians(_rx + _degree), 1, 0, 0);
-    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, GLKMathDegreesToRadians(_ry + _degree), 0, 1, 0);
-    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, GLKMathDegreesToRadians(_rz + _degree), 0, 0, 1);
+    _modelViewMatrix = GLKMatrix4Rotate(_modelViewMatrix, GLKMathDegreesToRadians(_rx + _degree), 1, 0, 0);
+    _modelViewMatrix = GLKMatrix4Rotate(_modelViewMatrix, GLKMathDegreesToRadians(_ry + _degree), 0, 1, 0);
+    _modelViewMatrix = GLKMatrix4Rotate(_modelViewMatrix, GLKMathDegreesToRadians(_rz + _degree), 0, 0, 1);
     
-    modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix);
-    
-    // mvp
-    _mvp = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix);
+    _modelViewMatrix = GLKMatrix4Multiply(positionMatrix, _modelViewMatrix);
     
     //    _degree++;
-    
     
     if (_degree >= 360) {
         

@@ -34,10 +34,11 @@
 // 背景图
 @property (nonatomic, strong) UIImage *backgroundImage;
 
-@property (nonatomic, assign) GLKMatrix4 mvp;
+@property (nonatomic, assign) GLKMatrix4 projectionMatrix;
+@property (nonatomic, assign) GLKMatrix4 modelViewMatrix;
 
 - (void)setup;
-- (void)updateWithPMatrix: (GLKMatrix4) projectionMatrix;
+- (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix;
 - (void)draw;
 - (void)free;
 
