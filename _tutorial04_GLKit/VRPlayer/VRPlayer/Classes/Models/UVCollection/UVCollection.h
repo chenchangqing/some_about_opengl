@@ -31,7 +31,7 @@
 @protocol UVCollectionDelegate<NSObject>
 @optional
 
-- (void)collection:(UVCollection *)collection modelViewMatrixAtIndexPath:(UVIndexPath *)indexPath;
+- (void)collection:(UVCollection *)collection modelViewMatrix:(GLKMatrix4)modelViewMatrix atIndexPath:(UVIndexPath *)indexPath;
 
 @end
 
@@ -39,9 +39,6 @@
  *  UVCollection
  */
 @interface UVCollection : UVSquare
-
-@property (nonatomic, assign) float rowCount;
-@property (nonatomic, assign) float columnCount;
 
 @property (nonatomic) float horizontalMargin;
 @property (nonatomic) float verticalMargin;

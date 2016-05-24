@@ -8,6 +8,17 @@
 
 #import "UVCollection.h"
 
+@interface UVCollection() {
+    
+    GLKMatrix4 _tempMatrix;
+}
+
+@property (nonatomic, assign) float rowCount;
+@property (nonatomic, assign) float columnCount;
+@property (nonatomic, readonly) NSArray *indexPaths;
+
+@end
+
 @implementation UVCollection
 
 - (instancetype)init {
@@ -15,8 +26,7 @@
     self = [super init];
     if (self) {
         
-        _rowCount = 3.0f;
-        _columnCount = 4.0f;
+        _tempMatrix = GLKMatrix4Identity;
         
         _horizontalMargin = 0.3f;
         _verticalMargin = 0.3f;
@@ -27,92 +37,150 @@
     return self;
 }
 
+- (NSArray *)indexPaths {
+    
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:0];
+    
+    for(int row=0;row<self.rowCount;row++) {
+        
+        for(int column=0;column<self.columnCount;column++) {
+            
+            if ([_dataSource respondsToSelector:@selector(collection:modelForItemAtIndexPath:)]) {
+                
+                UVIndexPath *indexPath = [UVIndexPath indexPathForRow:row andColumn:column];
+                [array addObject:indexPath];
+            }
+        }
+    }
+    
+    return [NSArray arrayWithArray:array];
+}
+
+- (float)rowCount {
+    
+    if ([_dataSource respondsToSelector:@selector(numberOfRowsInCollection:)]) {
+        
+        return [_dataSource numberOfRowsInCollection:self];
+    }
+    return 3.0f;
+}
+
+- (float)columnCount {
+    
+    if ([_dataSource respondsToSelector:@selector(numberOfColumnsInCollection:)]) {
+        
+        return [_dataSource numberOfColumnsInCollection:self];
+    }
+    return 4.0f;
+}
+
 - (void)setup {
     [super setup];
+    
+    for (UVIndexPath *indexPath in self.indexPaths) {
+        
+        if ([_dataSource respondsToSelector:@selector(collection:modelForItemAtIndexPath:)]) {
+            
+            UVSquare * model = [_dataSource collection:self modelForItemAtIndexPath:indexPath];
+            
+            [model setup];
+        }
+    }
     
 }
 
 - (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix {
     [super updateWithProjectionMatrix:projectionMatrix];
     
-    
-}
-
-- (void)draw {
-    [super draw];
-    
-    float aspectW = ( 1/(_horizontalMargin*2 + _columnCount*2 + _columnSpace * (_columnCount - 1) ) / ( 1/(_columnCount*2)) );
-    float originW = 1.0f / _columnCount;
+    float aspectW = ( 1/(_horizontalMargin*2 + self.columnCount*2 + _columnSpace * (self.columnCount - 1) ) / ( 1/(self.columnCount*2)) );
+    float originW = 1.0f / self.columnCount;
     float itemW = originW * aspectW;
     
-    float aspectH = ( 1/(_verticalMargin*2 + _rowCount*2 + _rowSpace * (_rowCount - 1) ) / (1/(_rowCount*2)) );
-    float originH = 1.0f / _rowCount;
+    float aspectH = ( 1/(_verticalMargin*2 + self.rowCount*2 + _rowSpace * (self.rowCount - 1) ) / (1/(self.rowCount*2)) );
+    float originH = 1.0f / self.rowCount;
     float itemH = originH * aspectH;
     
     float itemSx = itemW;
     float itemSy = itemH;
     
-    super.modelViewMatrix = GLKMatrix4Scale(super.modelViewMatrix, itemSx, itemSy, 1.0f);
-
-    for(int row=1;row<=_rowCount;row++) {
+    _tempMatrix = [super modelViewMatrix];
+    _tempMatrix = GLKMatrix4Scale(_tempMatrix, itemSx, itemSy, 1.0f);
+    
+    for(int row=0;row<self.rowCount;row++) {
         
-        for(int column=1;column<=_columnCount;column++) {
+        for(int column=0;column<self.columnCount;column++) {
             
-            // 如果是第一列，做连续位移(_columnCount-1)*2个单位
-            if (column == 1) {
-                
-                // 找关系Horizontal
-                // _columnCount row==1  row!=1
-                // 1            0       0
-                // 2            0.5     1
-                // 3            1       2
-                // 4            1.5     3
-                // 5            2       4
-                // 6            2.5     5
-                
-                // 找关系Vertical
-                // _rowCount row==1
-                // 1            0
-                // 2            0.5
-                // 3            1
-                // 4            1.5
-                // 5            2
-                // 6            2.5
+            UVIndexPath *indexPath = [UVIndexPath indexPathForRow:row andColumn:column];
+            
+            // 如果是第一列，做连续位移(self.columnCount-1)*2个单位
+            if (column == 0) {
                 
                 // 如果是第一行，特殊处理
-                if (row == 1) {
+                if (row == 0) {
                     
-                    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix,
-                                                                -(_columnCount-1)-_columnSpace*(/** 变量 **/(_columnCount-1)/2),
-                                                                +(_rowCount-1)+_rowSpace*(/** 变量 **/(_rowCount-1)/2),
+                    _tempMatrix = GLKMatrix4Translate(_tempMatrix,
+                                                                -(self.columnCount-1)-_columnSpace*(/** 变量 **/(self.columnCount-1)/2),
+                                                                +(self.rowCount-1)+_rowSpace*(/** 变量 **/(self.rowCount-1)/2),
                                                                 0.0f);
                 } else {
                     
-                    super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix,
-                                                                -(_columnCount-1)*2-_columnSpace*(/** 变量 **/(_columnCount-1)),
+                    _tempMatrix = GLKMatrix4Translate(_tempMatrix,
+                                                                -(self.columnCount-1)*2-_columnSpace*(/** 变量 **/(self.columnCount-1)),
                                                                 -2-_rowSpace,
                                                                 0.0f);
                 }
                 
             } else {
                 
-                super.modelViewMatrix = GLKMatrix4Translate(super.modelViewMatrix, 2+_columnSpace, 0, 0.0f);
+                _tempMatrix = GLKMatrix4Translate(_tempMatrix, 2+_columnSpace, 0, 0.0f);
             }
             
-            if ([_delegate respondsToSelector:@selector(collection:modelViewMatrixAtIndexPath:)]) {
+            UVSquare * model = [_dataSource collection:self modelForItemAtIndexPath:indexPath];
+            
+            
+            if ([_dataSource respondsToSelector:@selector(collection:modelForItemAtIndexPath:)]) {
                 
-//                [_delegate collection:self modelViewMatrixAtIndexPath:nsindex
+                [model updateWithProjectionMatrix:projectionMatrix];
+                model.modelViewMatrix = GLKMatrix4Multiply(model.modelViewMatrix, _tempMatrix);
+                
+                // 回调
+                if ([_delegate respondsToSelector:@selector(collection:modelViewMatrix:atIndexPath:)]) {
+                    
+                    [_delegate collection:self modelViewMatrix:model.modelViewMatrix atIndexPath:indexPath];
+                }
             }
-            
-            [super draw];
         }
     }
     
+}
+
+- (void)draw {
+    [super draw];
+    
+    for (UVIndexPath *indexPath in self.indexPaths) {
+        
+        if ([_dataSource respondsToSelector:@selector(collection:modelForItemAtIndexPath:)]) {
+            
+            UVSquare * model = [_dataSource collection:self modelForItemAtIndexPath:indexPath];
+            
+            [model draw];
+        }
+    }
     
 }
 
 - (void)free {
     [super free];
+    
+    for (UVIndexPath *indexPath in self.indexPaths) {
+        
+        if ([_dataSource respondsToSelector:@selector(collection:modelForItemAtIndexPath:)]) {
+            
+            UVSquare * model = [_dataSource collection:self modelForItemAtIndexPath:indexPath];
+            
+            [model free];
+        }
+    }
 }
 
 @end

@@ -8,12 +8,47 @@
 
 #import "JTTestScene2.h"
 
+@interface JTTestScene2()<UVCollectionDataSource,UVCollectionDelegate>
+
+@property (nonatomic, strong) NSMutableArray *models;
+
+@end
+
 @implementation JTTestScene2
+@synthesize models;
 
 - (void)prepareModels {
     [super prepareModels];
     
+    self.models = [NSMutableArray arrayWithCapacity:0];
+    
+    NSMutableArray *firstRow = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *secondRow = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *threeRow = [NSMutableArray arrayWithCapacity:0];
+    
+    [firstRow addObject:[[UVSquare alloc] init]];
+    [firstRow addObject:[[UVSquare alloc] init]];
+    [firstRow addObject:[[UVSquare alloc] init]];
+    [firstRow addObject:[[UVSquare alloc] init]];
+    
+    [secondRow addObject:[[UVSquare alloc] init]];
+    [secondRow addObject:[[UVSquare alloc] init]];
+    [secondRow addObject:[[UVSquare alloc] init]];
+    [secondRow addObject:[[UVSquare alloc] init]];
+    
+    [threeRow addObject:[[UVSquare alloc] init]];
+    [threeRow addObject:[[UVSquare alloc] init]];
+    [threeRow addObject:[[UVSquare alloc] init]];
+    [threeRow addObject:[[UVSquare alloc] init]];
+    
+    [self.models addObject:firstRow];
+    [self.models addObject:secondRow];
+    [self.models addObject:threeRow];
+    
     UVCollection *collection = [[UVCollection alloc] init];
+    
+    collection.delegate = self;
+    collection.dataSource = self;
     
     collection.yaw = 0;
     collection.pitch = 0;
@@ -32,24 +67,33 @@
     
     [super.models addObject:collection];
     
-//    UVSquare *square = [[UVSquare alloc] init];
-//    
-//    square.yaw = 0;
-//    square.pitch = 0;
-//    
-//    square.rx = 0;
-//    square.ry = 0;
-//    square.rz = 0;
-//    
-//    square.sx = 1;
-//    square.sy = 1;
-//    square.sz = 1;
-//    
-//    square.tx = 0;
-//    square.ty = 0.0f;
-//    square.tz = 0;
-//    
-//    [super.models addObject:square];
+}
+
+#pragma mark - UVCollectionDataSource
+
+- (float)numberOfRowsInCollection:(UVCollection *)collection {
+    
+    return 3.0f;
+}
+
+- (float)numberOfColumnsInCollection:(UVCollection *)collection {
+    
+    return 4.0f;
+}
+
+- (UVSquare *)collection:(UVCollection *)collection modelForItemAtIndexPath:(UVIndexPath *)indexPath {
+    
+    NSArray *row = [models objectAtIndex:indexPath.row];
+    UVSquare *model = [row objectAtIndex:indexPath.column];
+    
+    return model;
+}
+
+#pragma mark - UVCollectionDelegate
+
+- (void)collection:(UVCollection *)collection modelViewMatrixAtIndexPath:(UVIndexPath *)indexPath {
+    
+    
     
 }
 
