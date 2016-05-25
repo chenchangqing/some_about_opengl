@@ -10,8 +10,6 @@
 
 @interface JTTestScene2()<UVCollectionDataSource,UVCollectionDelegate>
 
-@property (nonatomic, strong) NSMutableArray *models;
-
 @end
 
 @implementation JTTestScene2
@@ -19,31 +17,6 @@
 
 - (void)prepareModels {
     [super prepareModels];
-    
-    self.models = [NSMutableArray arrayWithCapacity:0];
-    
-    NSMutableArray *firstRow = [NSMutableArray arrayWithCapacity:0];
-    NSMutableArray *secondRow = [NSMutableArray arrayWithCapacity:0];
-    NSMutableArray *threeRow = [NSMutableArray arrayWithCapacity:0];
-    
-    [firstRow addObject:[[UVSquare alloc] init]];
-    [firstRow addObject:[[UVSquare alloc] init]];
-    [firstRow addObject:[[UVSquare alloc] init]];
-    [firstRow addObject:[[UVSquare alloc] init]];
-    
-    [secondRow addObject:[[UVSquare alloc] init]];
-    [secondRow addObject:[[UVSquare alloc] init]];
-    [secondRow addObject:[[UVSquare alloc] init]];
-    [secondRow addObject:[[UVSquare alloc] init]];
-    
-    [threeRow addObject:[[UVSquare alloc] init]];
-    [threeRow addObject:[[UVSquare alloc] init]];
-    [threeRow addObject:[[UVSquare alloc] init]];
-    [threeRow addObject:[[UVSquare alloc] init]];
-    
-    [self.models addObject:firstRow];
-    [self.models addObject:secondRow];
-    [self.models addObject:threeRow];
     
     UVCollection *collection = [[UVCollection alloc] init];
     
@@ -58,7 +31,7 @@
     collection.rz = 0.0f;
     
     collection.sx = 1.0f;
-    collection.sy = 9.0f/16.0f;
+    collection.sy = 1.0f;
     collection.sz = 1.0f;
     
     collection.tx = 0.0f;
@@ -81,17 +54,18 @@
     return 4.0f;
 }
 
-- (UVSquare *)collection:(UVCollection *)collection modelForItemAtIndexPath:(UVIndexPath *)indexPath {
+- (float)numberOfItemsInCollection:(UVCollection *)collection {
     
-    NSArray *row = [models objectAtIndex:indexPath.row];
-    UVSquare *model = [row objectAtIndex:indexPath.column];
-    
-    return model;
+    return 12.0f;
 }
 
 #pragma mark - UVCollectionDelegate
 
-- (void)collection:(UVCollection *)collection modelViewMatrix:(GLKMatrix4)modelViewMatrix atIndexPath:(UVIndexPath *)indexPath {
+- (void)collection:(UVCollection *)collection configureModel:(UVSquare *)model atIndexPath:(UVIndexPath *)indexPath {
+    
+}
+
+- (void)collection:(UVCollection *)collection configureModelViewMatrixForModel:(UVSquare *)model atIndexPath:(UVIndexPath *)indexPath {
     
 }
 

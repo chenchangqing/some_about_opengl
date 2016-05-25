@@ -15,6 +15,7 @@
 
 @property (nonatomic, assign) float rowCount;
 @property (nonatomic, assign) float columnCount;
+@property (nonatomic, assign) float itemCount;
 
 @property (nonatomic, assign) float horizontalMargin;
 @property (nonatomic, assign) float verticalMargin;
@@ -38,6 +39,7 @@
         
         _rowCount = 3.0f;
         _columnCount = 4.0f;
+        _itemCount = 0.0f;
         
         _horizontalMargin = 0.1f;
         _verticalMargin = 0.1f;
@@ -59,13 +61,21 @@
     
     for(int row=0;row<self.rowCount;row++) {
         
+        BOOL flag = false;
         for(int column=0;column<self.columnCount;column++) {
             
-            if ([_dataSource respondsToSelector:@selector(collection:modelForItemAtIndexPath:)]) {
+            int willnum = self.columnCount * (row) +(column + 1);
+            if (willnum > self.itemCount) {
                 
-                UVIndexPath *indexPath = [UVIndexPath indexPathForRow:row andColumn:column];
-                [array addObject:indexPath];
+                flag = true;
+                break;
             }
+            UVIndexPath *indexPath = [UVIndexPath indexPathForRow:row andColumn:column];
+            [array addObject:indexPath];
+        }
+        
+        if (flag) {
+            break;
         }
     }
     _indexPaths = [NSArray arrayWithArray:array];
@@ -82,18 +92,43 @@
     
     for(int row=0;row<self.rowCount;row++) {
         
-        NSMutableArray *row = [NSMutableArray arrayWithCapacity:0];
+        NSMutableArray *rowArray = [NSMutableArray arrayWithCapacity:0];
         
+        BOOL flag = false;
         for(int column=0;column<self.columnCount;column++) {
             
-            [row addObject:[[UVSquare alloc] init]];
+            int willnum = self.columnCount * (row) +(column + 1);
+            if (willnum > self.itemCount) {
+                
+                flag = true;
+                
+                if (column != 0) {
+                    
+                    [array addObject:rowArray];
+                }
+                break;
+            }
+            [rowArray addObject:[[UVSquare alloc] init]];
             
         }
         
-        [array addObject:row];
+        if (flag) {
+            break;
+        }
+        
+        [array addObject:rowArray];
     }
     _models = [NSArray arrayWithArray:array];
     return _models;
+}
+
+- (float)itemCount {
+    
+    if ([_dataSource respondsToSelector:@selector(numberOfItemsInCollection:)]) {
+        
+        _itemCount = [_dataSource numberOfItemsInCollection:self];
+    }
+    return _itemCount;
 }
 
 - (float)rowCount {
@@ -157,6 +192,11 @@
         
         UVSquare * model = [[self.models objectAtIndex:indexPath.row] objectAtIndex:indexPath.column];
         
+        if ([_delegate respondsToSelector:@selector(collection:configureModel:atIndexPath:)]) {
+            
+            [_delegate collection:self configureModel:model atIndexPath:indexPath];
+        }
+        
         [model setup];
     }
     
@@ -184,15 +224,15 @@
         
         UVSquare * model = [[self.models objectAtIndex:indexPath.row] objectAtIndex:indexPath.column];
         
+        [model updateWithProjectionMatrix:projectionMatrix];
         [self updateTempMatrix:indexPath];
         
-        [model updateWithProjectionMatrix:projectionMatrix];
         model.modelViewMatrix = GLKMatrix4Multiply(model.modelViewMatrix, _tempMatrix);
         
         // 回调
-        if ([_delegate respondsToSelector:@selector(collection:modelViewMatrix:atIndexPath:)]) {
+        if ([_delegate respondsToSelector:@selector(collection:configureModelViewMatrixForModel:atIndexPath:)]) {
             
-            [_delegate collection:self modelViewMatrix:model.modelViewMatrix atIndexPath:indexPath];
+            [_delegate collection:self configureModelViewMatrixForModel:model atIndexPath:indexPath];
         }
     }
     

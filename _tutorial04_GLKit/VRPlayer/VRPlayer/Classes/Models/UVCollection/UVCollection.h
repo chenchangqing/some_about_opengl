@@ -21,7 +21,7 @@
 
 - (float)numberOfColumnsInCollection:(UVCollection *)collection;
 
-- (UVSquare *)collection:(UVCollection *)collection modelForItemAtIndexPath:(UVIndexPath *)indexPath;
+- (float)numberOfItemsInCollection:(UVCollection *)collection;
 
 @end
 
@@ -31,7 +31,8 @@
 @protocol UVCollectionDelegate<NSObject>
 @optional
 
-- (void)collection:(UVCollection *)collection modelViewMatrix:(GLKMatrix4)modelViewMatrix atIndexPath:(UVIndexPath *)indexPath;
+- (void)collection:(UVCollection *)collection configureModel:(UVSquare *) model atIndexPath:(UVIndexPath *)indexPath;
+- (void)collection:(UVCollection *)collection configureModelViewMatrixForModel:(UVSquare *) model atIndexPath:(UVIndexPath *)indexPath;
 
 - (float)horizontalMargin;
 - (float)verticalMargin;
