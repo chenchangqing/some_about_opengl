@@ -22,7 +22,8 @@
 @property (nonatomic, assign) float rowSpace;
 @property (nonatomic, assign) float columnSpace;
 
-@property (nonatomic, readonly) NSArray *indexPaths;
+@property (nonatomic, strong) NSArray *indexPaths;
+@property (nonatomic, strong) NSArray *models;
 
 @end
 
@@ -34,11 +35,25 @@
     if (self) {
         
         _tempMatrix = GLKMatrix4Identity;
+        
+        _rowCount = 3.0f;
+        _columnCount = 4.0f;
+        
+        _horizontalMargin = 0.1f;
+        _verticalMargin = 0.1f;
+        
+        _rowSpace = 0.1f;
+        _columnSpace = 0.1f;
     }
     return self;
 }
 
 - (NSArray *)indexPaths {
+    
+    if (_indexPaths) {
+        
+        return _indexPaths;
+    }
     
     NSMutableArray *array = [NSMutableArray arrayWithCapacity:0];
     
@@ -53,62 +68,86 @@
             }
         }
     }
+    _indexPaths = [NSArray arrayWithArray:array];
+    return _indexPaths;
+}
+
+- (NSArray *)models {
     
-    return [NSArray arrayWithArray:array];
+    if (_models) {
+        return _models;
+    }
+    
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:0];
+    
+    for(int row=0;row<self.rowCount;row++) {
+        
+        NSMutableArray *row = [NSMutableArray arrayWithCapacity:0];
+        
+        for(int column=0;column<self.columnCount;column++) {
+            
+            [row addObject:[[UVSquare alloc] init]];
+            
+        }
+        
+        [array addObject:row];
+    }
+    _models = [NSArray arrayWithArray:array];
+    return _models;
 }
 
 - (float)rowCount {
     
     if ([_dataSource respondsToSelector:@selector(numberOfRowsInCollection:)]) {
         
-        return [_dataSource numberOfRowsInCollection:self];
+        _rowCount = [_dataSource numberOfRowsInCollection:self];
     }
-    return 0.0f;
+    return _rowCount;
 }
 
 - (float)columnCount {
     
     if ([_dataSource respondsToSelector:@selector(numberOfColumnsInCollection:)]) {
         
-        return [_dataSource numberOfColumnsInCollection:self];
+        _columnCount = [_dataSource numberOfColumnsInCollection:self];
     }
-    return 0.0f;
+    return _columnCount;
 }
 
 - (float)horizontalMargin {
     
     if ([_delegate respondsToSelector:@selector(horizontalMargin)]) {
         
-        return [_delegate horizontalMargin];
+        _horizontalMargin = [_delegate horizontalMargin];
     }
-    return 0.0f;
+    return _horizontalMargin;
 }
 
 - (float)verticalMargin {
     
     if ([_delegate respondsToSelector:@selector(verticalMargin)]) {
         
-        return [_delegate verticalMargin];
+        _verticalMargin = [_delegate verticalMargin];
     }
-    return 0.0f;
+    return _verticalMargin;
 }
 
 - (float)rowSpace {
     
     if ([_delegate respondsToSelector:@selector(rowSpace)]) {
         
-        return [_delegate rowSpace];
+        _rowSpace = [_delegate rowSpace];
     }
-    return 0.0f;
+    return _rowSpace;
 }
 
 - (float)columnSpace {
     
     if ([_delegate respondsToSelector:@selector(columnSpace)]) {
         
-        return [_delegate columnSpace];
+        _columnSpace = [_delegate columnSpace];
     }
-    return 0.0f;
+    return _columnSpace;
 }
 
 - (void)setup {
@@ -116,12 +155,9 @@
     
     for (UVIndexPath *indexPath in self.indexPaths) {
         
-        if ([_dataSource respondsToSelector:@selector(collection:modelForItemAtIndexPath:)]) {
-            
-            UVSquare * model = [_dataSource collection:self modelForItemAtIndexPath:indexPath];
-            
-            [model setup];
-        }
+        UVSquare * model = [[self.models objectAtIndex:indexPath.row] objectAtIndex:indexPath.column];
+        
+        [model setup];
     }
     
 }
@@ -146,20 +182,17 @@
     
     for (UVIndexPath *indexPath in self.indexPaths) {
         
+        UVSquare * model = [[self.models objectAtIndex:indexPath.row] objectAtIndex:indexPath.column];
+        
         [self updateTempMatrix:indexPath];
         
-        if ([_dataSource respondsToSelector:@selector(collection:modelForItemAtIndexPath:)]) {
+        [model updateWithProjectionMatrix:projectionMatrix];
+        model.modelViewMatrix = GLKMatrix4Multiply(model.modelViewMatrix, _tempMatrix);
+        
+        // 回调
+        if ([_delegate respondsToSelector:@selector(collection:modelViewMatrix:atIndexPath:)]) {
             
-            UVSquare * model = [_dataSource collection:self modelForItemAtIndexPath:indexPath];
-            
-            [model updateWithProjectionMatrix:projectionMatrix];
-            model.modelViewMatrix = GLKMatrix4Multiply(model.modelViewMatrix, _tempMatrix);
-            
-            // 回调
-            if ([_delegate respondsToSelector:@selector(collection:modelViewMatrix:atIndexPath:)]) {
-                
-                [_delegate collection:self modelViewMatrix:model.modelViewMatrix atIndexPath:indexPath];
-            }
+            [_delegate collection:self modelViewMatrix:model.modelViewMatrix atIndexPath:indexPath];
         }
     }
     
@@ -194,12 +227,9 @@
     
     for (UVIndexPath *indexPath in self.indexPaths) {
         
-        if ([_dataSource respondsToSelector:@selector(collection:modelForItemAtIndexPath:)]) {
-            
-            UVSquare * model = [_dataSource collection:self modelForItemAtIndexPath:indexPath];
-            
-            [model draw];
-        }
+        UVSquare * model = [[self.models objectAtIndex:indexPath.row] objectAtIndex:indexPath.column];
+        
+        [model draw];
     }
     
 }
@@ -209,12 +239,9 @@
     
     for (UVIndexPath *indexPath in self.indexPaths) {
         
-        if ([_dataSource respondsToSelector:@selector(collection:modelForItemAtIndexPath:)]) {
-            
-            UVSquare * model = [_dataSource collection:self modelForItemAtIndexPath:indexPath];
-            
-            [model free];
-        }
+        UVSquare * model = [[self.models objectAtIndex:indexPath.row] objectAtIndex:indexPath.column];
+        
+        [model free];
     }
 }
 
