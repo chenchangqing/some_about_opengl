@@ -57,8 +57,8 @@
     
     // 初始位置(先绕y轴旋转,在绕x轴旋转)
     GLKMatrix4 positionMatrix = GLKMatrix4Identity;
-    positionMatrix = GLKMatrix4Rotate(positionMatrix, GLKMathDegreesToRadians(_yaw), 0, 1, 0);
-    positionMatrix = GLKMatrix4Rotate(positionMatrix, GLKMathDegreesToRadians(_pitch + _degree), 1, 0, 0);
+    positionMatrix = GLKMatrix4Rotate(positionMatrix, GLKMathDegreesToRadians(_yaw + _degree), 0, 1, 0);
+    positionMatrix = GLKMatrix4Rotate(positionMatrix, GLKMathDegreesToRadians(_pitch), 1, 0, 0);
     
     _projectionMatrix = projectionMatrix;
     _modelViewMatrix = GLKMatrix4Identity;
