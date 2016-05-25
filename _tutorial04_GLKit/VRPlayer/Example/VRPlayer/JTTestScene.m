@@ -89,7 +89,7 @@
     }
 }
 
-- (void)collection:(UVCollection *)collection configureCellModel:(UVSquare *)model atIndexPath:(UVIndexPath *)indexPath {
+- (void)collection:(UVCollection *)collection configureModel:(UVSquare *)model atIndexPath:(UVIndexPath *)indexPath {
     
 }
 
