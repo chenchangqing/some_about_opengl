@@ -71,7 +71,7 @@
 
 - (float)horizontalMargin {
     
-    return  0.2f;
+    return 0.2f;
 }
 
 - (float)verticalMargin {
