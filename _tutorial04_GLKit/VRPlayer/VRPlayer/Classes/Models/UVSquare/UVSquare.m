@@ -35,9 +35,6 @@ static const GLfloat g_color_buffer_data[] = {
     0, 0, 1, 1
 };
 
-/**
- *  平面
- */
 @interface UVSquare() {
     
 }

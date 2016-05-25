@@ -8,6 +8,9 @@
 
 #import "UVModel.h"
 
+/**
+ *  平面
+ */
 @interface UVSquare : UVModel
 
 @end
