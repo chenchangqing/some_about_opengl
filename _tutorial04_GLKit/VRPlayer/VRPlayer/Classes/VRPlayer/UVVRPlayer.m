@@ -112,7 +112,7 @@
 - (GLKMatrix4)projectionMatrix {
     
     float aspect = fabs(CGRectGetWidth([UIScreen mainScreen].bounds) / CGRectGetHeight([UIScreen mainScreen].bounds));
-    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(85.0f), aspect, 0.1f, 2.4f);
+    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(78.0f), aspect, 0.1f, 2.4f);
     
     return projectionMatrix;
 }
