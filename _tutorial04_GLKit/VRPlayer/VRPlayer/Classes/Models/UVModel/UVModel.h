@@ -10,6 +10,17 @@
 #import <OpenGLES/ES2/glext.h>
 #import <GLKit/GLKit.h>
 
+@class UVModel;
+/**
+ *  UVCollection委托
+ */
+@protocol UVModelDelegate<NSObject>
+@optional
+
+- (void)configureModelViewMatrixForModel:(UVModel *) model;
+
+@end
+
 @interface UVModel : NSObject
 
 // 逆时针公转
@@ -36,6 +47,8 @@
 
 @property (nonatomic, assign) GLKMatrix4 projectionMatrix;
 @property (nonatomic, assign) GLKMatrix4 modelViewMatrix;
+
+@property (nonatomic, weak) id <UVModelDelegate> delegate;
 
 - (void)setup;
 - (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix;

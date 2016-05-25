@@ -82,6 +82,11 @@
         
         _degree = _degree % 360;
     }
+    
+    if ([self.delegate respondsToSelector:@selector(configureModelViewMatrixForModel:)]) {
+        
+        [self.delegate configureModelViewMatrixForModel:self];
+    }
 }
 
 - (void)draw {

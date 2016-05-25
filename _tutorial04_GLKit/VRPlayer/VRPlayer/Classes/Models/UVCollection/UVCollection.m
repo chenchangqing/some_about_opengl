@@ -151,36 +151,36 @@
 
 - (float)horizontalMargin {
     
-    if ([_delegate respondsToSelector:@selector(horizontalMargin:)]) {
+    if ([self.delegate respondsToSelector:@selector(horizontalMargin:)]) {
         
-        _horizontalMargin = [_delegate horizontalMargin:self];
+        _horizontalMargin = [self.delegate horizontalMargin:self];
     }
     return _horizontalMargin;
 }
 
 - (float)verticalMargin {
     
-    if ([_delegate respondsToSelector:@selector(verticalMargin:)]) {
+    if ([self.delegate respondsToSelector:@selector(verticalMargin:)]) {
         
-        _verticalMargin = [_delegate verticalMargin:self];
+        _verticalMargin = [self.delegate verticalMargin:self];
     }
     return _verticalMargin;
 }
 
 - (float)rowSpace {
     
-    if ([_delegate respondsToSelector:@selector(rowSpace:)]) {
+    if ([self.delegate respondsToSelector:@selector(rowSpace:)]) {
         
-        _rowSpace = [_delegate rowSpace:self];
+        _rowSpace = [self.delegate rowSpace:self];
     }
     return _rowSpace;
 }
 
 - (float)columnSpace {
     
-    if ([_delegate respondsToSelector:@selector(columnSpace:)]) {
+    if ([self.delegate respondsToSelector:@selector(columnSpace:)]) {
         
-        _columnSpace = [_delegate columnSpace:self];
+        _columnSpace = [self.delegate columnSpace:self];
     }
     return _columnSpace;
 }
@@ -192,9 +192,9 @@
         
         UVSquare * model = [[self.models objectAtIndex:indexPath.row] objectAtIndex:indexPath.column];
         
-        if ([_delegate respondsToSelector:@selector(collection:configureModel:atIndexPath:)]) {
+        if ([self.delegate respondsToSelector:@selector(collection:configureModel:atIndexPath:)]) {
             
-            [_delegate collection:self configureModel:model atIndexPath:indexPath];
+            [self.delegate collection:self configureModel:model atIndexPath:indexPath];
         }
         
         [model setup];
@@ -230,9 +230,9 @@
         model.modelViewMatrix = GLKMatrix4Multiply(model.modelViewMatrix, _tempMatrix);
         
         // 回调
-        if ([_delegate respondsToSelector:@selector(collection:configureModelViewMatrixForModel:atIndexPath:)]) {
+        if ([self.delegate respondsToSelector:@selector(collection:configureModelViewMatrixForModel:atIndexPath:)]) {
             
-            [_delegate collection:self configureModelViewMatrixForModel:model atIndexPath:indexPath];
+            [self.delegate collection:self configureModelViewMatrixForModel:model atIndexPath:indexPath];
         }
     }
     

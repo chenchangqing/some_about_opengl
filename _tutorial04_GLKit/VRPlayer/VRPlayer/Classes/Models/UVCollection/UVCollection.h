@@ -28,7 +28,7 @@
 /**
  *  UVCollection委托
  */
-@protocol UVCollectionDelegate<NSObject>
+@protocol UVCollectionDelegate<UVModelDelegate>
 @optional
 
 - (void)collection:(UVCollection *)collection configureModel:(UVSquare *) model atIndexPath:(UVIndexPath *)indexPath;
