@@ -16,6 +16,9 @@
 
 @property(nonatomic,strong) NSMutableArray *scenes;
 
+/**
+ *  准备场景
+ */
 - (void)prepareScenes;
 
 @end
