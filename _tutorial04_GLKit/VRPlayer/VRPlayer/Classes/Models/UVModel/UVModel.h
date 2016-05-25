@@ -12,7 +12,7 @@
 
 @class UVModel;
 /**
- *  UVCollection委托
+ *  委托
  */
 @protocol UVModelDelegate<NSObject>
 @optional
@@ -21,6 +21,9 @@
 
 @end
 
+/**
+ *  模型超类
+ */
 @interface UVModel : NSObject
 
 // 逆时针公转

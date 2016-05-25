@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "UVModel.h"
 
+/**
+ *  场景
+ */
 @interface UVScene : UVModel
 
 @property(nonatomic,strong) NSMutableArray *models;

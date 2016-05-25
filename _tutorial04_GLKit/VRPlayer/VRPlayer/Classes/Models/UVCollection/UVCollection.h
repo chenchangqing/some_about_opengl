@@ -12,7 +12,7 @@
 @class UVCollection;
 
 /**
- *  UVCollection数据源
+ *  数据源
  */
 @protocol UVCollectionDataSource<NSObject>
 @required
@@ -26,7 +26,7 @@
 @end
 
 /**
- *  UVCollection委托
+ *  委托
  */
 @protocol UVCollectionDelegate<UVModelDelegate>
 @optional
@@ -42,7 +42,7 @@
 @end
 
 /**
- *  UVCollection
+ *  网格
  */
 @interface UVCollection : UVSquare
 

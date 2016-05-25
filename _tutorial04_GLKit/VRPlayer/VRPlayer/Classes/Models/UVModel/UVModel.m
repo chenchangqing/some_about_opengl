@@ -26,20 +26,20 @@
         _projectionMatrix = GLKMatrix4Identity;
         _modelViewMatrix = GLKMatrix4Identity;
         
-        _yaw = 0;
-        _pitch = 0;
+        _yaw = 0.0f;
+        _pitch = 0.0f;
         
-        _sx = 1;
-        _sy = 1;
-        _sz = 1;
+        _sx = 1.0f;
+        _sy = 1.0f;
+        _sz = 1.0f;
         
-        _tx = 0.0;
-        _ty = 0.0;
-        _tz = 0.0;
+        _tx = 0.0f;
+        _ty = 0.0f;
+        _tz = 0.0f;
         
-        _rx = 0;
-        _ry = 0;
-        _rz = 0;
+        _rx = 0.0f;
+        _ry = 0.0f;
+        _rz = 0.0f;
     }
     return self;
 }
@@ -57,8 +57,8 @@
     
     // 初始位置(先绕y轴旋转,在绕x轴旋转)
     GLKMatrix4 positionMatrix = GLKMatrix4Identity;
-    positionMatrix = GLKMatrix4Rotate(positionMatrix, GLKMathDegreesToRadians(_yaw + _degree), 0, 1, 0);
-    positionMatrix = GLKMatrix4Rotate(positionMatrix, GLKMathDegreesToRadians(_pitch), 1, 0, 0);
+    positionMatrix = GLKMatrix4Rotate(positionMatrix, GLKMathDegreesToRadians(_yaw + _degree), 0.0f, 1.0f, 0.0f);
+    positionMatrix = GLKMatrix4Rotate(positionMatrix, GLKMathDegreesToRadians(_pitch), 1.0f, 0.0f, 0.0f);
     
     _projectionMatrix = projectionMatrix;
     _modelViewMatrix = GLKMatrix4Identity;
@@ -70,9 +70,9 @@
     _modelViewMatrix = GLKMatrix4Translate(_modelViewMatrix, _tx, _ty, _tz);
     
     // 旋转
-    _modelViewMatrix = GLKMatrix4Rotate(_modelViewMatrix, GLKMathDegreesToRadians(_rx), 1, 0, 0);
-    _modelViewMatrix = GLKMatrix4Rotate(_modelViewMatrix, GLKMathDegreesToRadians(_ry), 0, 1, 0);
-    _modelViewMatrix = GLKMatrix4Rotate(_modelViewMatrix, GLKMathDegreesToRadians(_rz), 0, 0, 1);
+    _modelViewMatrix = GLKMatrix4Rotate(_modelViewMatrix, GLKMathDegreesToRadians(_rx), 1.0f, 0.0f, 0.0f);
+    _modelViewMatrix = GLKMatrix4Rotate(_modelViewMatrix, GLKMathDegreesToRadians(_ry), 0.0f, 1.0f, 0.0f);
+    _modelViewMatrix = GLKMatrix4Rotate(_modelViewMatrix, GLKMathDegreesToRadians(_rz), 0.0f, 0.0f, 1.0f);
     
     _modelViewMatrix = GLKMatrix4Multiply(positionMatrix, _modelViewMatrix);
     
