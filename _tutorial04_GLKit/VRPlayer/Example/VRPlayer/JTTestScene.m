@@ -10,14 +10,14 @@
 
 @interface JTTestScene()<UVCollectionDataSource,UVCollectionDelegate>
 
-@property (nonatomic, strong) UVCollection *collection;
-@property (nonatomic, strong) UVSquare *square2;
+@property (nonatomic, strong) UVCollection *grid;
+@property (nonatomic, strong) UVCollection *toolbar;
 
 @end
 
 @implementation JTTestScene
-@synthesize collection;
-@synthesize square2;
+@synthesize grid;
+@synthesize toolbar;
 
 - (instancetype)init {
     self = [super init];
@@ -29,36 +29,38 @@
 - (void)prepareModels {
     [super prepareModels];
     
-//    collection = [[UVCollection alloc] init];
-//    collection.delegate = self;
-//    collection.dataSource = self;
-//    collection.yaw = 0.0f;
-//    collection.pitch = 0.0f;
-//    collection.sx = 1.0f;
-//    collection.sy = 1.0f/3.0f*2.0f;
-//    collection.sz = 1.0f;
-//    collection.tx = 0.0f;
-//    collection.ty = 0.5f;
-//    collection.tz = 0.0f;
-//    collection.rx = 0.0f;
-//    collection.ry = 0.0f;
-//    collection.rz = 0.0f;
-//    [super.models addObject:collection];
+    grid = [[UVCollection alloc] init];
+    grid.delegate = self;
+    grid.dataSource = self;
+    grid.yaw = 0.0f;
+    grid.pitch = 0.0f;
+    grid.sx = 1.0f;
+    grid.sy = 9.0f/16.0f;
+    grid.sz = 1.0f;
+    grid.tx = 0.0f;
+    grid.ty = 0.3f;
+    grid.tz = 0.0f;
+    grid.rx = 0.0f;
+    grid.ry = 0.0f;
+    grid.rz = 0.0f;
+    [super.models addObject:grid];
     
-    square2 = [[UVSquare alloc] init];
-    square2.delegate = self;
-    square2.yaw = 0.0f;
-    square2.pitch = 0.0f;
-    square2.sx = 1.0f;
-    square2.sy = 1.0f;
-    square2.sz = 1.0f;
-    square2.tx = 0.0f;
-    square2.ty = 0.0f;
-    square2.tz = 0.0f;
-    square2.rx = 0.0f;
-    square2.ry = 0.0f;
-    square2.rz = 0.0f;
-    [super.models addObject:square2];
+    toolbar = [[UVCollection alloc] init];
+    toolbar.delegate = self;
+    toolbar.dataSource = self;
+    toolbar.delegate = self;
+    toolbar.yaw = 0.0f;
+    toolbar.pitch = -30.0f;
+    toolbar.sx = 1.2f;
+    toolbar.sy = 1.0f/6.0f;
+    toolbar.sz = 1.0f;
+    toolbar.tx = 0.0f;
+    toolbar.ty = 0.0f;
+    toolbar.tz = 0.0f;
+    toolbar.rx = 0.0f;
+    toolbar.ry = 0.0f;
+    toolbar.rz = 0.0f;
+    [super.models addObject:toolbar];
     
 }
 
@@ -66,26 +68,53 @@
 
 - (float)numberOfRowsInCollection:(UVCollection *)collection {
     
-    return 3.0f;
+    if (collection == grid) {
+        
+        return 3.0f;
+    }
+    if (collection == toolbar) {
+        
+        return 1.0f;
+    }
+    
+    return 0.0f;
 }
 
 - (float)numberOfColumnsInCollection:(UVCollection *)collection {
     
-    return 4.0f;
+    if (collection == grid) {
+        
+        return 4.0f;
+    }
+    if (collection == toolbar) {
+        
+        return 3.0f;
+    }
+    
+    return 0.0f;
 }
 
 - (float)numberOfItemsInCollection:(UVCollection *)collection {
     
-    return 12.0f;
+    if (collection == grid) {
+        
+        return 12.0f;
+    }
+    if (collection == toolbar) {
+        
+        return 3.0f;
+    }
+    
+    return 0.0f;
 }
 
 #pragma mark - UVCollectionDelegate
 
 - (void)configureModelViewMatrixForModel:(UVModel *)model {
     
-    if (model == square2) {
+    if (model == toolbar) {
         
-        model.modelViewMatrix = GLKMatrix4Translate(model.modelViewMatrix, 0.0f, 0.0f, 0.0f);
+        model.modelViewMatrix = GLKMatrix4Translate(model.modelViewMatrix, 0.0f, 0.0f, -1.0f);
     }
 }
 

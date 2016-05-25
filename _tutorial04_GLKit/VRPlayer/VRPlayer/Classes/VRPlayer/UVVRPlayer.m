@@ -102,7 +102,7 @@
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     [_scenes.lastObject updateWithProjectionMatrix:[self projectionMatrix]];
-    [_scenes.lastObject updateWithProjectionMatrix:GLKMatrix4Identity];
+//    [_scenes.lastObject updateWithProjectionMatrix:GLKMatrix4Identity];
     [_scenes.lastObject draw];
 }
 
@@ -112,7 +112,7 @@
 - (GLKMatrix4)projectionMatrix {
     
     float aspect = fabs(CGRectGetWidth([UIScreen mainScreen].bounds) / CGRectGetHeight([UIScreen mainScreen].bounds));
-    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(100.0f), aspect, 0.1f, 100.0f);
+    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(85.0f), aspect, 0.1f, 2.4f);
     
     return projectionMatrix;
 }
