@@ -69,22 +69,22 @@
     
 }
 
-- (float)horizontalMargin {
+- (float)horizontalMargin:(UVCollection *)collection {
     
     return 0.2f;
 }
 
-- (float)verticalMargin {
+- (float)verticalMargin:(UVCollection *)collection {
     
     return 0.2f;
 }
 
-- (float)rowSpace {
+- (float)rowSpace:(UVCollection *)collection {
     
     return 0.3f;
 }
 
-- (float)columnSpace {
+- (float)columnSpace:(UVCollection *)collection {
     
     return 0.3f;
 }

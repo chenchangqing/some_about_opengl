@@ -8,6 +8,10 @@
 
 #import "JTTestScene.h"
 
+@interface JTTestScene()<UVCollectionDataSource,UVCollectionDelegate>
+
+@end
+
 @implementation JTTestScene
 
 - (void)prepareModels {

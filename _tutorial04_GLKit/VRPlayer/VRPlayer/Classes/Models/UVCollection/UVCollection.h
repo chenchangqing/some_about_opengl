@@ -34,10 +34,10 @@
 - (void)collection:(UVCollection *)collection configureModel:(UVSquare *) model atIndexPath:(UVIndexPath *)indexPath;
 - (void)collection:(UVCollection *)collection configureModelViewMatrixForModel:(UVSquare *) model atIndexPath:(UVIndexPath *)indexPath;
 
-- (float)horizontalMargin;
-- (float)verticalMargin;
-- (float)rowSpace;
-- (float)columnSpace;
+- (float)horizontalMargin:(UVCollection *)collection;
+- (float)verticalMargin:(UVCollection *)collection;
+- (float)rowSpace:(UVCollection *)collection;
+- (float)columnSpace:(UVCollection *)collection;
 
 @end
 

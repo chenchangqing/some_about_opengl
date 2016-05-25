@@ -151,36 +151,36 @@
 
 - (float)horizontalMargin {
     
-    if ([_delegate respondsToSelector:@selector(horizontalMargin)]) {
+    if ([_delegate respondsToSelector:@selector(horizontalMargin:)]) {
         
-        _horizontalMargin = [_delegate horizontalMargin];
+        _horizontalMargin = [_delegate horizontalMargin:self];
     }
     return _horizontalMargin;
 }
 
 - (float)verticalMargin {
     
-    if ([_delegate respondsToSelector:@selector(verticalMargin)]) {
+    if ([_delegate respondsToSelector:@selector(verticalMargin:)]) {
         
-        _verticalMargin = [_delegate verticalMargin];
+        _verticalMargin = [_delegate verticalMargin:self];
     }
     return _verticalMargin;
 }
 
 - (float)rowSpace {
     
-    if ([_delegate respondsToSelector:@selector(rowSpace)]) {
+    if ([_delegate respondsToSelector:@selector(rowSpace:)]) {
         
-        _rowSpace = [_delegate rowSpace];
+        _rowSpace = [_delegate rowSpace:self];
     }
     return _rowSpace;
 }
 
 - (float)columnSpace {
     
-    if ([_delegate respondsToSelector:@selector(columnSpace)]) {
+    if ([_delegate respondsToSelector:@selector(columnSpace:)]) {
         
-        _columnSpace = [_delegate columnSpace];
+        _columnSpace = [_delegate columnSpace:self];
     }
     return _columnSpace;
 }

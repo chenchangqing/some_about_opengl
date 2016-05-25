@@ -16,8 +16,9 @@
     [super prepareScenes];
     
     JTTestScene *scene = [[JTTestScene alloc] init];
-    JTTestScene2 *scene2 = [[JTTestScene2 alloc] init];
     [self.scenes addObject:scene];
+    
+    JTTestScene2 *scene2 = [[JTTestScene2 alloc] init];
     [self.scenes addObject:scene2];
 }
 
