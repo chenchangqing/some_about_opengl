@@ -7,6 +7,7 @@
 //
 
 #import "UVModel.h"
+#import "MacroDefinition.h"
 
 @interface UVModel() {
     
@@ -40,6 +41,8 @@
         _rx = 0.0f;
         _ry = 0.0f;
         _rz = 0.0f;
+        
+        self.backgroundColor = RandColor;
     }
     return self;
 }

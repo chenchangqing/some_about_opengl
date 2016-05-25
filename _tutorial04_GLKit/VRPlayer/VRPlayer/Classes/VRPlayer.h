@@ -14,5 +14,7 @@
 #import "UVSquare.h"
 #import "UVScene.h"
 #import "UVCollection.h"
+#import "MacroDefinition.h"
+#import "UIColor+HEX.h"
 
 #endif /* VRPlayer_h */

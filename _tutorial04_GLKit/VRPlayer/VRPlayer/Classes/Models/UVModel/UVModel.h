@@ -46,7 +46,7 @@
 @property (nonatomic, assign) float rz;
 
 // 背景图
-@property (nonatomic, strong) UIImage *backgroundImage;
+@property (nonatomic, strong) UIColor *backgroundColor;
 
 @property (nonatomic, assign) GLKMatrix4 projectionMatrix;
 @property (nonatomic, assign) GLKMatrix4 modelViewMatrix;

@@ -6,6 +6,8 @@
 //  Copyright (c) 2016 chenchangqing. All rights reserved.
 //
 
+#import <VRPlayer/VRPlayer.h>
+
 @import XCTest;
 
 @interface Tests : XCTestCase
@@ -24,11 +26,6 @@
 {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
-}
-
-- (void)testExample
-{
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
 }
 
 @end

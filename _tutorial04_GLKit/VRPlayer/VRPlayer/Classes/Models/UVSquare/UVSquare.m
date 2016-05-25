@@ -9,6 +9,7 @@
 #import "UVSquare.h"
 #import "UVShellLoader.h"
 #import <OpenGLES/ES2/glext.h>
+#import "UIColor+HEX.h"
 
 /**
  *  顶点数据
@@ -23,20 +24,9 @@ static const GLfloat g_vertex_buffer_data[] = {
     -1.0f, -1.0f, -1.0f
 };
 
-/**
- *  颜色数据
- */
-static const GLfloat g_color_buffer_data[] = {
-    1, 0, 0, 1,
-    0, 1, 0, 1,
-    0, 0, 1, 1,
-    1, 0, 0, 1,
-    0, 1, 0, 1,
-    0, 0, 1, 1
-};
-
 @interface UVSquare() {
     
+    GLfloat g_color_buffer_data[24];
 }
 
 @property (nonatomic, assign) GLuint program;
@@ -64,6 +54,28 @@ static const GLfloat g_color_buffer_data[] = {
     return self;
 }
 
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    
+    super.backgroundColor = backgroundColor;
+    
+    GLfloat red = ((NSNumber *)[super.backgroundColor.RGBDictionary objectForKey:@"R"]).floatValue;
+    GLfloat green = ((NSNumber *)[super.backgroundColor.RGBDictionary objectForKey:@"G"]).floatValue;
+    GLfloat blue = ((NSNumber *)[super.backgroundColor.RGBDictionary objectForKey:@"B"]).floatValue;
+    GLfloat alpha = ((NSNumber *)[super.backgroundColor.RGBDictionary objectForKey:@"A"]).floatValue;
+    
+    // NSLog(@"R:%f,G:%f,B:%f,A:%f",red,green,blue,alpha);
+    
+    GLfloat rgba[4] = {
+        red,green,blue,alpha
+    };
+    
+    for (int i=0; i<24; i++) {
+        
+        g_color_buffer_data[i] = rgba[i%4];
+    }
+    
+}
+
 - (void)setup {
     [super setup];
     
@@ -76,9 +88,6 @@ static const GLfloat g_color_buffer_data[] = {
                   @{@"index":[NSNumber numberWithUnsignedInt:_attribColor],@"name":@"color"}]];
     _uniformMVP = glGetUniformLocation(_program, "modelViewProjectionMatrix");
     
-    glGenVertexArraysOES(1, &_vertexArray);
-    glBindVertexArrayOES(_vertexArray);
-    
     glGenBuffers(1, &_vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
@@ -87,13 +96,16 @@ static const GLfloat g_color_buffer_data[] = {
     glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
     
-    glEnableVertexAttribArray(_attribColor);
-    glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer);
-    glVertexAttribPointer(_attribColor, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    glGenVertexArraysOES(1, &_vertexArray);
+    glBindVertexArrayOES(_vertexArray);
     
     glEnableVertexAttribArray(_attribVertex);
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
     glVertexAttribPointer(_attribVertex, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    
+    glEnableVertexAttribArray(_attribColor);
+    glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer);
+    glVertexAttribPointer(_attribColor, 4, GL_FLOAT, GL_FALSE, 0, 0);
     
     glBindVertexArrayOES(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
