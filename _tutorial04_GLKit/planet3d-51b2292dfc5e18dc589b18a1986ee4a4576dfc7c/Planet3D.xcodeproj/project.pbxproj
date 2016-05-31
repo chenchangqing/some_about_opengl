@@ -31,7 +31,6 @@
 		1F11B2160F0AA294002B2921 /* GLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GLView.h; path = Classes/GLView.h; sourceTree = SOURCE_ROOT; };
 		1F3B9A2B0EF2145700286867 /* Part5ProjectAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Part5ProjectAppDelegate.m; path = Classes/Part5ProjectAppDelegate.m; sourceTree = SOURCE_ROOT; };
 		1F3B9A2C0EF2145700286867 /* Part5ProjectAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Part5ProjectAppDelegate.h; path = Classes/Part5ProjectAppDelegate.h; sourceTree = SOURCE_ROOT; };
-		1F3B9A820EF2151B00286867 /* Planet3D_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Planet3D_Prefix.pch; path = Users/steven/Dropbox/Projects/Globe3D/Planet3D_Prefix.pch; sourceTree = SDKROOT; };
 		1FB90FDC0EF46C880086835B /* GLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GLViewController.h; path = Classes/GLViewController.h; sourceTree = SOURCE_ROOT; };
 		1FB90FDD0EF46C880086835B /* GLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GLViewController.m; path = Classes/GLViewController.m; sourceTree = SOURCE_ROOT; };
 		1FF0216B0EF21FA500761551 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = SOURCE_ROOT; };
@@ -42,6 +41,7 @@
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B0525832155DAF96001ABAC1 /* earth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earth.png; sourceTree = "<group>"; };
 		B0CC11461560083A0091355B /* mars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mars.png; sourceTree = "<group>"; };
+		E6A7CF4B1CFD366A00EED3C8 /* Planet3D_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Planet3D_Prefix.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,7 +83,7 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				1F3B9A820EF2151B00286867 /* Planet3D_Prefix.pch */,
+				E6A7CF4B1CFD366A00EED3C8 /* Planet3D_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
 			name = "Other Sources";
