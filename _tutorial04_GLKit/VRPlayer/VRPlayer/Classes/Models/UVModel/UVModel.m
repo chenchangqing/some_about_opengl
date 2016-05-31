@@ -70,7 +70,7 @@
     m0 = GLKMatrix4Rotate(m0, GLKMathDegreesToRadians(self.ry), 0, 1, 0);
     m = GLKMatrix4Multiply(m0, m);
     //移回到z处
-    mtr = GLKMatrix4MakeTranslation(self.tx, self.ty, -1);
+    mtr = GLKMatrix4MakeTranslation(self.tx, self.ty, -1+self.tz);
     m = GLKMatrix4Multiply(mtr, m);
     //转到空间yaw、pitch处
     GLKMatrix4 m1 = GLKMatrix4Identity;

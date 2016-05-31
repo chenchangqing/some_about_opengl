@@ -50,7 +50,7 @@
     grid.sy = 1.0f;
     grid.sz = 1.0f;
     grid.tx = 0.0f;
-    grid.ty = 0.0f;
+    grid.ty = 0.3f;
     grid.tz = 0.0f;
     grid.rx = 0.0f;
     grid.ry = 0.0f;
@@ -81,7 +81,7 @@
     
     if (collection == grid) {
         
-        return 3.0f;
+        return 4.0f;
     }
     if (collection == toolbar) {
         
@@ -95,7 +95,7 @@
     
     if (collection == grid) {
         
-        return 4.0f;
+        return 5.0f;
     }
     if (collection == toolbar) {
         
@@ -113,7 +113,7 @@
     }
     if (collection == toolbar) {
         
-        return 3.0f;
+        return 100.0f;
     }
     
     return 0.0f;
@@ -125,7 +125,7 @@
     
     if (model == toolbar) {
         
-//        model.mvp = GLKMatrix4Translate(model.mvp, 0.0f, 0.0f, -1.0f);
+        model.mvp = GLKMatrix4Translate(model.mvp, 0.0f, 0.0f, -1.0f);
     }
 }
 
@@ -135,27 +135,30 @@
 
 - (void)collection:(UVCollection *)collection configureModelViewMatrixForModel:(UVSquare *)model atIndexPath:(UVIndexPath *)indexPath {
     
-    
+    if (collection == toolbar) {
+        
+        model.mvp = GLKMatrix4Translate(model.mvp, 0.0f, 0.0f, -1.0f);
+    }
 }
 
 - (float)horizontalMargin:(UVCollection *)collection {
     
-    return 0.025f;
+    return 0.05f;
 }
 
 - (float)verticalMargin:(UVCollection *)collection {
     
-    return 0.025f;
+    return 0.05f;
 }
 
 - (float)rowSpace:(UVCollection *)collection {
     
-    return 0.025f;
+    return 0.05f;
 }
 
 - (float)columnSpace:(UVCollection *)collection {
     
-    return 0.025f;
+    return 0.05f;
 }
 
 

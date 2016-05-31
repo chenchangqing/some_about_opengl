@@ -215,88 +215,69 @@
         
         UVSquare * model = [[self.models objectAtIndex:indexPath.row] objectAtIndex:indexPath.column];
         
-        if (indexPath.column == 0) {
+        if ((int)self.columnCount%2 == 0) {
             
-            model.tx = -1.0f + 2*aspectW/2 + self.horizontalMargin;
-        } else if (indexPath.column == self.columnCount - 1) {
-            
-            model.tx = 1.0f - 2*aspectW/2 - self.horizontalMargin;
-        } else {
-            
-            if ((int)self.columnCount%2 == 0) {
+            if ((indexPath.column + 1) < (self.columnCount)/2) {
                 
-                if ((indexPath.column + 1) < (self.columnCount)/2) {
-                    
-                    model.tx = ((indexPath.column + 1) - (self.columnCount)/2) * (2*aspectW + self.columnSpace) - 2*aspectW/2 - self.columnSpace/2;
-                }
-                
-                if ((indexPath.column + 1) == (self.columnCount)/2) {
-                    
-                    model.tx = - 2*aspectW/2 - self.columnSpace/2;
-                }
-                
-                if ((indexPath.column + 1) > (self.columnCount)/2) {
-                    
-                    model.tx = ((indexPath.column + 1) - (self.columnCount)/2) * (2*aspectW + self.columnSpace) - 2*aspectW/2 - self.columnSpace/2;
-                }
-            } else {
-                
-                if ((indexPath.column + 1) < (self.columnCount + 1)/2) {
-                    
-                    model.tx = ((indexPath.column + 1) - (self.columnCount + 1)/2) * (2*aspectW + self.columnSpace);
-                }
-                
-                if ((indexPath.column + 1) == (self.columnCount + 1)/2) {
-                    
-                }
-                
-                if ((indexPath.column + 1) > (self.columnCount + 1)/2) {
-                    
-                    model.tx = ((indexPath.column + 1) - (self.columnCount + 1)/2) * (2*aspectW + self.columnSpace);
-                }
+                model.tx = ((indexPath.column + 1) - (self.columnCount)/2) * (2*aspectW + self.columnSpace) - 2*aspectW/2 - self.columnSpace/2;
             }
             
-        }
-        
-        if (indexPath.row == 0) {
+            if ((indexPath.column + 1) == (self.columnCount)/2) {
+                
+                model.tx = - 2*aspectW/2 - self.columnSpace/2;
+            }
             
-            model.ty = 1.0f - 2*aspectH/2 - self.verticalMargin;
-        } else if (indexPath.row == self.rowCount - 1) {
-            
-            model.ty = -1.0f + 2*aspectH/2 + self.verticalMargin;
+            if ((indexPath.column + 1) > (self.columnCount)/2) {
+                
+                model.tx = ((indexPath.column + 1) - (self.columnCount)/2) * (2*aspectW + self.columnSpace) - 2*aspectW/2 - self.columnSpace/2;
+            }
         } else {
             
-            if ((int)self.rowCount%2 == 0) {
+            if ((indexPath.column + 1) < (self.columnCount + 1)/2) {
                 
-                if ((indexPath.row + 1) < (self.rowCount)/2) {
-                    
-                    model.ty = ((indexPath.row + 1) - (self.rowCount)/2) * (2*aspectH + self.rowSpace) - 2*aspectH/2 - self.rowSpace/2;
-                }
+                model.tx = ((indexPath.column + 1) - (self.columnCount + 1)/2) * (2*aspectW + self.columnSpace);
+            }
+            
+            if ((indexPath.column + 1) == (self.columnCount + 1)/2) {
                 
-                if ((indexPath.row + 1) == (self.rowCount)/2) {
-                    
-                    model.ty = - 2*aspectH/2 - self.rowSpace/2;
-                }
+            }
+            
+            if ((indexPath.column + 1) > (self.columnCount + 1)/2) {
                 
-                if ((indexPath.row + 1) > (self.rowCount)/2) {
-                    
-                    model.ty = ((indexPath.row + 1) - (self.rowCount)/2) * (2*aspectH + self.rowSpace) - 2*aspectH/2 - self.rowSpace/2;
-                }
-            } else {
+                model.tx = ((indexPath.column + 1) - (self.columnCount + 1)/2) * (2*aspectW + self.columnSpace);
+            }
+        }
+        
+        if ((int)self.rowCount%2 == 0) {
+            
+            if ((indexPath.row + 1) < (self.rowCount)/2) {
                 
-                if ((indexPath.row + 1) < (self.rowCount + 1)/2) {
-                    
-                    model.ty = ((indexPath.row + 1) - (self.rowCount + 1)/2) * (2*aspectH + self.rowSpace);
-                }
+                model.ty = ((indexPath.row + 1) - (self.rowCount)/2) * (2*aspectH + self.rowSpace) - 2*aspectH/2 - self.rowSpace/2;
+            }
+            
+            if ((indexPath.row + 1) == (self.rowCount)/2) {
                 
-                if ((indexPath.row + 1) == (self.rowCount + 1)/2) {
-                    
-                }
+                model.ty = - 2*aspectH/2 - self.rowSpace/2;
+            }
+            
+            if ((indexPath.row + 1) > (self.rowCount)/2) {
                 
-                if ((indexPath.row + 1) > (self.rowCount + 1)/2) {
-                    
-                    model.ty = ((indexPath.row + 1) - (self.rowCount + 1)/2) * (2*aspectH + self.rowSpace);
-                }
+                model.ty = ((indexPath.row + 1) - (self.rowCount)/2) * (2*aspectH + self.rowSpace) - 2*aspectH/2 - self.rowSpace/2;
+            }
+        } else {
+            
+            if ((indexPath.row + 1) < (self.rowCount + 1)/2) {
+                
+                model.ty = ((indexPath.row + 1) - (self.rowCount + 1)/2) * (2*aspectH + self.rowSpace);
+            }
+            
+            if ((indexPath.row + 1) == (self.rowCount + 1)/2) {
+                
+            }
+            
+            if ((indexPath.row + 1) > (self.rowCount + 1)/2) {
+                
+                model.ty = ((indexPath.row + 1) - (self.rowCount + 1)/2) * (2*aspectH + self.rowSpace);
             }
         }
         
@@ -305,6 +286,8 @@
         model.sx = aspectW;
         model.sy = aspectH;
         model.sz = self.sz;
+        model.tx += self.tx;
+        model.ty += self.ty;
         model.tz = self.tz;
         model.rx = self.rx;
         model.ry = self.ry;
