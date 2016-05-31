@@ -21,4 +21,9 @@
  */
 - (void)prepareScenes;
 
+/**
+ *  投影矩阵
+ */
+- (GLKMatrix4)projectionMatrix;
+
 @end

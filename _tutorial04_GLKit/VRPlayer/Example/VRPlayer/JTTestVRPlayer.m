@@ -17,9 +17,13 @@
     
     JTTestScene *scene = [[JTTestScene alloc] init];
     [self.scenes addObject:scene];
+}
+
+- (GLKMatrix4)projectionMatrix {
     
-//    JTTestScene2 *scene2 = [[JTTestScene2 alloc] init];
-//    [self.scenes addObject:scene2];
+    GLKMatrix4 pMatrix = [super projectionMatrix];
+    
+    return pMatrix;
 }
 
 @end
