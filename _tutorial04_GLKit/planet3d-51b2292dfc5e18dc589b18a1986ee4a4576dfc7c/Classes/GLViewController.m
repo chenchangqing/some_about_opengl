@@ -163,7 +163,7 @@ static GLfloat basePinchScale = -4.0;
 	
 	glTranslatef(0.0f,0.0f,basePinchScale+pinchScale);
 	
-	//	glRotatef(rotY,1.0f, 0.0f,0.0f);
+    glRotatef(rotY,1.0f, 0.0f,0.0f);
 	glRotatef(rotX,0.0f, 1.0f,0.0f);
 	
     glClearColor(0.15, 0.15, 0.15, 1.0);
@@ -281,7 +281,7 @@ static GLfloat basePinchScale = -4.0;
 	rotVelX = ([p velocityInView:self.view].x/180);
 	
 	// two-axis rotation is a little bit more complicated than just this
-	//	rotVelY = ([p velocityInView:self.view].y/180);
+    rotVelY = ([p velocityInView:self.view].y/180);
 	
 }
 
