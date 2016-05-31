@@ -19,6 +19,9 @@
 @property (weak, nonatomic) GLKView *glkView;
 @property (strong, nonatomic) CADisplayLink* displayLink;
 @property (strong, nonatomic) EAGLContext *glkcontext;
+@property (nonatomic,assign) CGPoint previousPoint;
+@property (nonatomic,assign) float yaw;
+@property (nonatomic,assign) float pitch;
 
 @end
 
@@ -45,6 +48,8 @@
 - (void)setup {
     
     // Init Props
+    _yaw = 0.0f;
+    _pitch = 0.0f;
     _scenes = [NSMutableArray arrayWithCapacity:0];
     _glkcontext =[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     if (!_glkcontext) {
@@ -57,6 +62,10 @@
     _glkView = tglkView;
     _glkView.delegate = self;
     _glkView.enableSetNeedsDisplay = NO;
+    
+    // 增加滑动手势
+    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)];
+    [self addGestureRecognizer:panGesture];
     
     // Add GLKView Constraints
     _glkView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -95,6 +104,35 @@
     _glkcontext = nil;
     _displayLink.paused = YES;
     _displayLink = nil;
+}
+
+#pragma mark - 手势处理
+
+- (void) panGesture:(UIPanGestureRecognizer *) panGesture {
+    
+    CGPoint currentPoint = [panGesture locationInView:panGesture.view];
+    CGPoint velocity = [panGesture velocityInView:panGesture.view];
+    
+    switch (panGesture.state) {
+        case UIGestureRecognizerStateEnded: {
+            
+            break;
+        }
+        case UIGestureRecognizerStateBegan: {
+            
+            _previousPoint = currentPoint;
+            break;
+        }
+        case UIGestureRecognizerStateChanged: {
+            
+            // 改变 yaw、pitch
+            
+            _previousPoint = currentPoint;
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 #pragma mark - GLKViewDelegate

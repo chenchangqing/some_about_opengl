@@ -22,6 +22,9 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        
+        self.pitch = 0.0f;
+        self.yaw = -70.0f;
     }
     return self;
 }
@@ -123,6 +126,7 @@
 }
 
 - (void)collection:(UVCollection *)collection configureModelViewMatrixForModel:(UVSquare *)model atIndexPath:(UVIndexPath *)indexPath {
+    
     
 }
 
