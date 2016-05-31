@@ -44,29 +44,31 @@
 
 - (void)setup {
     
+    // Init Props
     _scenes = [NSMutableArray arrayWithCapacity:0];
-    
     _glkcontext =[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    if (!_glkcontext) {
+        NSLog(@"Failed to create ES context");
+    }
     
+    // Add GLKView
     GLKView *tglkView = [[GLKView alloc] initWithFrame:CGRectZero context:_glkcontext];
     [self addSubview:tglkView];
     _glkView = tglkView;
+    _glkView.delegate = self;
+    _glkView.enableSetNeedsDisplay = NO;
     
+    // Add GLKView Constraints
     _glkView.translatesAutoresizingMaskIntoConstraints = NO;
     NSDictionary *viewsDictionary = @{@"tglkView":_glkView};
     [self addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[tglkView]-0-|" options:0 metrics:nil views:viewsDictionary]];
     [self addConstraints: [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[tglkView]-0-|" options:0 metrics:nil views:viewsDictionary]];
     
-    
-    if (!_glkcontext) {
-        NSLog(@"Failed to create ES context");
-    }
-    _glkView.delegate = self;
-    _glkView.enableSetNeedsDisplay = NO;
-    
+    // 屏幕连接器
     _displayLink = [CADisplayLink displayLinkWithTarget:_glkView selector:@selector(display)];
     [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     
+    // 准备场景s
     [self prepareScenes];
 }
 
