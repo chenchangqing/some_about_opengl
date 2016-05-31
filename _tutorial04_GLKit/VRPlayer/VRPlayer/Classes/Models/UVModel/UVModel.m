@@ -24,8 +24,7 @@
     self = [super init];
     if (self) {
         
-        _projectionMatrix = GLKMatrix4Identity;
-        _modelViewMatrix = GLKMatrix4Identity;
+        _mvp = GLKMatrix4Identity;;
         
         _yaw = 0.0f;
         _pitch = 0.0f;
@@ -56,45 +55,33 @@
     
 }
 
-- (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix andModelViewMatrix:(GLKMatrix4)modelViewMatrix {
+- (void)updateWithMVP: (GLKMatrix4)mvp {
     
-    /**
-     *  投影矩阵
-     */
-    _projectionMatrix = projectionMatrix;
+    //构建平移到z=0的矩阵
+    GLKMatrix4 mtr = GLKMatrix4MakeTranslation(0, 0, 1);
+    //缩放
+    GLKMatrix4 m = GLKMatrix4Identity;
+    m = GLKMatrix4Scale(m, self.sx, self.sy, self.sz);
+    m = GLKMatrix4Multiply(m, mtr);
+    //自身旋转矩阵
+    GLKMatrix4 m0 = GLKMatrix4Identity;
+    m0 = GLKMatrix4Rotate(m0, GLKMathDegreesToRadians(self.rz), 0, 0, 1);
+    m0 = GLKMatrix4Rotate(m0, GLKMathDegreesToRadians(self.rx), 1, 0, 0);
+    m0 = GLKMatrix4Rotate(m0, GLKMathDegreesToRadians(self.ry), 0, 1, 0);
+    m = GLKMatrix4Multiply(m0, m);
+    //移回到z处
+    mtr = GLKMatrix4MakeTranslation(self.tx, self.ty, -1);
+    m = GLKMatrix4Multiply(mtr, m);
+    //转到空间yaw、pitch处
+    GLKMatrix4 m1 = GLKMatrix4Identity;
+    m1 = GLKMatrix4Rotate(m1, GLKMathDegreesToRadians(self.yaw + _degree), 0, 1, 0);
+    m1 = GLKMatrix4Rotate(m1, GLKMathDegreesToRadians(self.pitch), 1, 0, 0);
+    m1 = GLKMatrix4Multiply(m1, m);
+    //附加相机矩阵
+    m1 = GLKMatrix4Multiply(mvp, m1);
+    self.mvp = m1;
     
-    /**
-     *  观察矩阵
-     */
-    GLKMatrix4 viewMatrix = GLKMatrix4Identity;
-    viewMatrix = GLKMatrix4Rotate(viewMatrix, GLKMathDegreesToRadians(_yaw + _degree), 0.0f, 1.0f, 0.0f);
-    viewMatrix = GLKMatrix4Rotate(viewMatrix, GLKMathDegreesToRadians(_pitch), 1.0f, 0.0f, 0.0f);
-    
-    /**
-     *  模型矩阵
-     */
-    GLKMatrix4 modelMatrix = GLKMatrix4Identity;
-    
-    // 缩放
-    modelMatrix = GLKMatrix4Scale(modelMatrix, _sx, _sy, _sz);
-    
-    // 位移
-    modelMatrix = GLKMatrix4Translate(modelMatrix, _tx, _ty, _tz);
-    
-    // 旋转
-    modelMatrix = GLKMatrix4Rotate(modelMatrix, GLKMathDegreesToRadians(_rx), 1.0f, 0.0f, 0.0f);
-    modelMatrix = GLKMatrix4Rotate(modelMatrix, GLKMathDegreesToRadians(_ry), 0.0f, 1.0f, 0.0f);
-    modelMatrix = GLKMatrix4Rotate(modelMatrix, GLKMathDegreesToRadians(_rz), 0.0f, 0.0f, 1.0f);
-    
-    /**
-     *  观察矩阵 x 模型矩阵
-     */
-    _modelViewMatrix = GLKMatrix4Multiply(viewMatrix, modelMatrix);
-    
-    // 附加
-    _modelViewMatrix = GLKMatrix4Multiply(_modelViewMatrix, modelViewMatrix);
-    
-    _degree++;
+//    _degree++;
     
     if (_degree >= 360) {
         

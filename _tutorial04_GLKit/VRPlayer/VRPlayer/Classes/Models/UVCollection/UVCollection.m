@@ -202,32 +202,115 @@
     
 }
 
-- (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix andModelViewMatrix:(GLKMatrix4)modelViewMatrix {
-    [super updateWithProjectionMatrix:projectionMatrix andModelViewMatrix:modelViewMatrix];
+- (void)updateWithMVP: (GLKMatrix4)mvp {
+    [super updateWithMVP:mvp];
     
-    float aspectW = ( 1/(self.horizontalMargin*2 + self.columnCount*2 + self.columnSpace * (self.columnCount - 1) ) / ( 1/(self.columnCount*2)) );
-    float originW = 1.0f / self.columnCount;
-    float itemW = originW * aspectW;
-    
-    float aspectH = ( 1/(self.verticalMargin*2 + self.rowCount*2 + self.rowSpace * (self.rowCount - 1) ) / (1/(self.rowCount*2)) );
-    float originH = 1.0f / self.rowCount;
-    float itemH = originH * aspectH;
-    
-    float itemSx = itemW;
-    float itemSy = itemH;
-    
-    _tempMatrix = [super modelViewMatrix];
-    _tempMatrix = GLKMatrix4Scale(_tempMatrix, itemSx, itemSy, 1.0f);
-    
-    
+    float aspectW = (2 - self.columnSpace * (self.columnCount - 1) - self.horizontalMargin*2)/self.columnCount/2*self.sx;
+    float aspectH = (2 - self.rowSpace * (self.rowCount - 1) - self.verticalMargin*2)/self.rowCount/2*self.sy;
+
+    /**
+     *  单元格布局
+     */
     for (UVIndexPath *indexPath in self.indexPaths) {
         
         UVSquare * model = [[self.models objectAtIndex:indexPath.row] objectAtIndex:indexPath.column];
         
-        [model updateWithProjectionMatrix:projectionMatrix andModelViewMatrix:modelViewMatrix];
-        [self updateTempMatrix:indexPath];
+        if (indexPath.column == 0) {
+            
+            model.tx = -1.0f + 2*aspectW/2 + self.horizontalMargin;
+        } else if (indexPath.column == self.columnCount - 1) {
+            
+            model.tx = 1.0f - 2*aspectW/2 - self.horizontalMargin;
+        } else {
+            
+            if ((int)self.columnCount%2 == 0) {
+                
+                if ((indexPath.column + 1) < (self.columnCount)/2) {
+                    
+                    model.tx = ((indexPath.column + 1) - (self.columnCount)/2) * (2*aspectW + self.columnSpace) - 2*aspectW/2 - self.columnSpace/2;
+                }
+                
+                if ((indexPath.column + 1) == (self.columnCount)/2) {
+                    
+                    model.tx = - 2*aspectW/2 - self.columnSpace/2;
+                }
+                
+                if ((indexPath.column + 1) > (self.columnCount)/2) {
+                    
+                    model.tx = ((indexPath.column + 1) - (self.columnCount)/2) * (2*aspectW + self.columnSpace) - 2*aspectW/2 - self.columnSpace/2;
+                }
+            } else {
+                
+                if ((indexPath.column + 1) < (self.columnCount + 1)/2) {
+                    
+                    model.tx = ((indexPath.column + 1) - (self.columnCount + 1)/2) * (2*aspectW + self.columnSpace);
+                }
+                
+                if ((indexPath.column + 1) == (self.columnCount + 1)/2) {
+                    
+                }
+                
+                if ((indexPath.column + 1) > (self.columnCount + 1)/2) {
+                    
+                    model.tx = ((indexPath.column + 1) - (self.columnCount + 1)/2) * (2*aspectW + self.columnSpace);
+                }
+            }
+            
+        }
         
-        model.modelViewMatrix = GLKMatrix4Multiply(model.modelViewMatrix, _tempMatrix);
+        if (indexPath.row == 0) {
+            
+            model.ty = 1.0f - 2*aspectH/2 - self.verticalMargin;
+        } else if (indexPath.row == self.rowCount - 1) {
+            
+            model.ty = -1.0f + 2*aspectH/2 + self.verticalMargin;
+        } else {
+            
+            if ((int)self.rowCount%2 == 0) {
+                
+                if ((indexPath.row + 1) < (self.rowCount)/2) {
+                    
+                    model.ty = ((indexPath.row + 1) - (self.rowCount)/2) * (2*aspectH + self.rowSpace) - 2*aspectH/2 - self.rowSpace/2;
+                }
+                
+                if ((indexPath.row + 1) == (self.rowCount)/2) {
+                    
+                    model.ty = - 2*aspectH/2 - self.rowSpace/2;
+                }
+                
+                if ((indexPath.row + 1) > (self.rowCount)/2) {
+                    
+                    model.ty = ((indexPath.row + 1) - (self.rowCount)/2) * (2*aspectH + self.rowSpace) - 2*aspectH/2 - self.rowSpace/2;
+                }
+            } else {
+                
+                if ((indexPath.row + 1) < (self.rowCount + 1)/2) {
+                    
+                    model.ty = ((indexPath.row + 1) - (self.rowCount + 1)/2) * (2*aspectH + self.rowSpace);
+                }
+                
+                if ((indexPath.row + 1) == (self.rowCount + 1)/2) {
+                    
+                }
+                
+                if ((indexPath.row + 1) > (self.rowCount + 1)/2) {
+                    
+                    model.ty = ((indexPath.row + 1) - (self.rowCount + 1)/2) * (2*aspectH + self.rowSpace);
+                }
+            }
+        }
+        
+        model.yaw = self.yaw;
+        model.pitch = self.pitch;
+        model.sx = aspectW;
+        model.sy = aspectH;
+        model.sz = self.sz;
+        model.tz = self.tz;
+        model.rx = self.rx;
+        model.ry = self.ry;
+        model.rz = self.rz;
+        
+        [model updateWithMVP:mvp];
         
         // 回调
         if ([self.delegate respondsToSelector:@selector(collection:configureModelViewMatrixForModel:atIndexPath:)]) {
@@ -236,30 +319,6 @@
         }
     }
     
-}
-
-- (void)updateTempMatrix:(UVIndexPath *) indexPath {
-    
-    if (indexPath.column == 0) {
-        
-        if (indexPath.row == 0) {
-            
-            _tempMatrix = GLKMatrix4Translate(_tempMatrix,
-                                              -(self.columnCount-1)-self.columnSpace*(/** 变量 **/(self.columnCount-1)/2),
-                                              +(self.rowCount-1)+self.rowSpace*(/** 变量 **/(self.rowCount-1)/2),
-                                              0.0f);
-        } else {
-            
-            _tempMatrix = GLKMatrix4Translate(_tempMatrix,
-                                              -(self.columnCount-1)*2-self.columnSpace*(/** 变量 **/(self.columnCount-1)),
-                                              -2-self.rowSpace,
-                                              0.0f);
-        }
-        
-    } else {
-        
-        _tempMatrix = GLKMatrix4Translate(_tempMatrix, 2+self.columnSpace, 0, 0.0f);
-    }
 }
 
 - (void)draw {

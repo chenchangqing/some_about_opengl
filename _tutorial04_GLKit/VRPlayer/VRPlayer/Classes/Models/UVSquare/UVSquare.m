@@ -111,8 +111,8 @@ static const GLfloat g_vertex_buffer_data[] = {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-- (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix andModelViewMatrix:(GLKMatrix4)modelViewMatrix {
-    [super updateWithProjectionMatrix:projectionMatrix andModelViewMatrix:modelViewMatrix];
+- (void)updateWithMVP: (GLKMatrix4)mvp {
+    [super updateWithMVP:mvp];
     
 }
 
@@ -122,7 +122,7 @@ static const GLfloat g_vertex_buffer_data[] = {
     glBindVertexArrayOES(_vertexArray);
     
     glUseProgram(_program);
-    glUniformMatrix4fv(_uniformMVP, 1, 0, GLKMatrix4Multiply(super.projectionMatrix, super.modelViewMatrix).m);
+    glUniformMatrix4fv(_uniformMVP, 1, 0, self.mvp.m);
     glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 

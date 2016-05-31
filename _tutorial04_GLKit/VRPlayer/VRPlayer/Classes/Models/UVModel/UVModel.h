@@ -48,13 +48,12 @@
 // 背景图
 @property (nonatomic, strong) UIColor *backgroundColor;
 
-@property (nonatomic, assign) GLKMatrix4 projectionMatrix;
-@property (nonatomic, assign) GLKMatrix4 modelViewMatrix;
+@property (nonatomic, assign) GLKMatrix4 mvp;
 
 @property (nonatomic, weak) id <UVModelDelegate> delegate;
 
 - (void)setup;
-- (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix andModelViewMatrix:(GLKMatrix4)modelViewMatrix;
+- (void)updateWithMVP: (GLKMatrix4)mvp;
 - (void)draw;
 - (void)free;
 

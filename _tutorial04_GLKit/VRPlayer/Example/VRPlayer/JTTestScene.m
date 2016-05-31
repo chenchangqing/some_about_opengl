@@ -23,8 +23,17 @@
     self = [super init];
     if (self) {
         
-//        self.pitch = 0.0f;
-//        self.yaw = -15.0f;
+        self.yaw = 0.0f;
+        self.pitch = 0.0f;
+        self.sx = 1.0f;
+        self.sy = 9.0f/16.0f;
+        self.sz = 1.0f;
+        self.tx = 0.0f;
+        self.ty = 0.0f;
+        self.tz = 0.0f;
+        self.rx = 0.0f;
+        self.ry = 0.0f;
+        self.rz = 0.0f;
     }
     return self;
 }
@@ -38,10 +47,10 @@
     grid.yaw = 0.0f;
     grid.pitch = 0.0f;
     grid.sx = 1.0f;
-    grid.sy = 9.0f/16.0f;
+    grid.sy = 1.0f;
     grid.sz = 1.0f;
     grid.tx = 0.0f;
-    grid.ty = 0.3f;
+    grid.ty = 0.0f;
     grid.tz = 0.0f;
     grid.rx = 0.0f;
     grid.ry = 0.0f;
@@ -51,10 +60,9 @@
     toolbar = [[UVCollection alloc] init];
     toolbar.delegate = self;
     toolbar.dataSource = self;
-    toolbar.delegate = self;
     toolbar.yaw = 0.0f;
-    toolbar.pitch = -30.0f;
-    toolbar.sx = 1.2f;
+    toolbar.pitch = -45.0f;
+    toolbar.sx = 1.0f;
     toolbar.sy = 1.0f/6.0f;
     toolbar.sz = 1.0f;
     toolbar.tx = 0.0f;
@@ -101,7 +109,7 @@
     
     if (collection == grid) {
         
-        return 12.0f;
+        return 150.0f;
     }
     if (collection == toolbar) {
         
@@ -117,7 +125,7 @@
     
     if (model == toolbar) {
         
-        model.modelViewMatrix = GLKMatrix4Translate(model.modelViewMatrix, 0.0f, 0.0f, -1.0f);
+//        model.mvp = GLKMatrix4Translate(model.mvp, 0.0f, 0.0f, -1.0f);
     }
 }
 
@@ -132,22 +140,22 @@
 
 - (float)horizontalMargin:(UVCollection *)collection {
     
-    return 0.2f;
+    return 0.025f;
 }
 
 - (float)verticalMargin:(UVCollection *)collection {
     
-    return 0.2f;
+    return 0.025f;
 }
 
 - (float)rowSpace:(UVCollection *)collection {
     
-    return 0.3f;
+    return 0.025f;
 }
 
 - (float)columnSpace:(UVCollection *)collection {
     
-    return 0.3f;
+    return 0.025f;
 }
 
 

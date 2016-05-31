@@ -141,7 +141,7 @@
     glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    [_scenes.lastObject updateWithProjectionMatrix:[self projectionMatrix] andModelViewMatrix:GLKMatrix4Identity];
+    [_scenes.lastObject updateWithMVP:GLKMatrix4Multiply([self projectionMatrix], GLKMatrix4Identity)];
     [_scenes.lastObject draw];
 }
 
@@ -154,6 +154,7 @@
     GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(78.0f), aspect, 0.01f, 1000.0f);
     
     return projectionMatrix;
+//    return GLKMatrix4Identity;
 }
 
 /**
