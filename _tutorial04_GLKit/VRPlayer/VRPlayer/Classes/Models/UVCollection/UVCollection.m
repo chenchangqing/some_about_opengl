@@ -202,8 +202,8 @@
     
 }
 
-- (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix {
-    [super updateWithProjectionMatrix:projectionMatrix];
+- (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix andModelViewMatrix:(GLKMatrix4)modelViewMatrix {
+    [super updateWithProjectionMatrix:projectionMatrix andModelViewMatrix:modelViewMatrix];
     
     float aspectW = ( 1/(self.horizontalMargin*2 + self.columnCount*2 + self.columnSpace * (self.columnCount - 1) ) / ( 1/(self.columnCount*2)) );
     float originW = 1.0f / self.columnCount;
@@ -224,7 +224,7 @@
         
         UVSquare * model = [[self.models objectAtIndex:indexPath.row] objectAtIndex:indexPath.column];
         
-        [model updateWithProjectionMatrix:projectionMatrix];
+        [model updateWithProjectionMatrix:projectionMatrix andModelViewMatrix:modelViewMatrix];
         [self updateTempMatrix:indexPath];
         
         model.modelViewMatrix = GLKMatrix4Multiply(model.modelViewMatrix, _tempMatrix);

@@ -54,7 +54,7 @@
 @property (nonatomic, weak) id <UVModelDelegate> delegate;
 
 - (void)setup;
-- (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix;
+- (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix andModelViewMatrix:(GLKMatrix4)modelViewMatrix;
 - (void)draw;
 - (void)free;
 

@@ -24,7 +24,7 @@
     if (self) {
         
         self.pitch = 0.0f;
-        self.yaw = -70.0f;
+        self.yaw = -25.0f;
     }
     return self;
 }

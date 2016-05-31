@@ -56,7 +56,7 @@
     
 }
 
-- (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix {
+- (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix andModelViewMatrix:(GLKMatrix4)modelViewMatrix {
     
     /**
      *  投影矩阵
@@ -90,6 +90,9 @@
      *  观察矩阵 x 模型矩阵
      */
     _modelViewMatrix = GLKMatrix4Multiply(viewMatrix, modelMatrix);
+    
+    // 附加
+    _modelViewMatrix = GLKMatrix4Multiply(_modelViewMatrix, modelViewMatrix);
     
 //    _degree++;
     

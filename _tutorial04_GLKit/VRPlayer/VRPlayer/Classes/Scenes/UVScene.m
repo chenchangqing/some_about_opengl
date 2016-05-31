@@ -42,12 +42,12 @@
     }
 }
 
-- (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix {
-    [super updateWithProjectionMatrix:projectionMatrix];
+- (void)updateWithProjectionMatrix: (GLKMatrix4)projectionMatrix andModelViewMatrix:(GLKMatrix4)modelViewMatrix {
+    [super updateWithProjectionMatrix:projectionMatrix andModelViewMatrix:modelViewMatrix];
     
     for (UVModel *model in _models) {
         
-        [model updateWithProjectionMatrix:projectionMatrix];
+        [model updateWithProjectionMatrix:projectionMatrix andModelViewMatrix:self.modelViewMatrix];
     }
     
 }
