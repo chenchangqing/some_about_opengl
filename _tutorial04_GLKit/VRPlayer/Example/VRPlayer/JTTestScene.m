@@ -23,8 +23,8 @@
     self = [super init];
     if (self) {
         
-        self.pitch = 0.0f;
-        self.yaw = -25.0f;
+//        self.pitch = 0.0f;
+//        self.yaw = -15.0f;
     }
     return self;
 }

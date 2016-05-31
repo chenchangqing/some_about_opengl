@@ -94,7 +94,7 @@
     // 附加
     _modelViewMatrix = GLKMatrix4Multiply(_modelViewMatrix, modelViewMatrix);
     
-//    _degree++;
+    _degree++;
     
     if (_degree >= 360) {
         
