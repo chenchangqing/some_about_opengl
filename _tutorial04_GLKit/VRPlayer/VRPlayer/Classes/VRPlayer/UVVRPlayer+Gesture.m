@@ -45,7 +45,6 @@ static char kVelocityValue;
     switch (panGesture.state) {
         case UIGestureRecognizerStateEnded: {
             
-            self.velocityValue = NSStringFromCGPoint(CGPointZero);
             break;
         }
         case UIGestureRecognizerStateBegan: {
