@@ -112,7 +112,7 @@
 
 #pragma mark - 手势处理
 
-- (void) panGesture:(UIPanGestureRecognizer *) panGesture {
+- (void)panGesture:(UIPanGestureRecognizer *) panGesture {
     
     CGPoint currentPoint = [panGesture locationInView:panGesture.view];
     CGPoint velocity = [panGesture velocityInView:panGesture.view];
