@@ -10,7 +10,6 @@
 
 @interface UVCollection() {
     
-    GLKMatrix4 _tempMatrix;
 }
 
 @property (nonatomic, assign) float rowCount;
@@ -34,8 +33,6 @@
     
     self = [super init];
     if (self) {
-        
-        _tempMatrix = GLKMatrix4Identity;
         
         _rowCount = 3.0f;
         _columnCount = 4.0f;
