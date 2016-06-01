@@ -57,31 +57,38 @@
 
 - (void)updateWithMVP: (GLKMatrix4)mvp {
     
-    //构建平移到z=0的矩阵
-    GLKMatrix4 mtr = GLKMatrix4MakeTranslation(0, 0, 1);
     //缩放
     GLKMatrix4 m = GLKMatrix4Identity;
     m = GLKMatrix4Scale(m, self.sx, self.sy, self.sz);
-    m = GLKMatrix4Multiply(m, mtr);
-    //自身旋转矩阵
+    
+    //旋转
     GLKMatrix4 m0 = GLKMatrix4Identity;
     m0 = GLKMatrix4Rotate(m0, GLKMathDegreesToRadians(self.rz), 0, 0, 1);
     m0 = GLKMatrix4Rotate(m0, GLKMathDegreesToRadians(self.rx), 1, 0, 0);
     m0 = GLKMatrix4Rotate(m0, GLKMathDegreesToRadians(self.ry), 0, 1, 0);
     m = GLKMatrix4Multiply(m0, m);
-    //移回到z处
-    mtr = GLKMatrix4MakeTranslation(self.tx, self.ty, -1+self.tz);
+    
+    //平移
+    GLKMatrix4 mtr = GLKMatrix4MakeTranslation(self.tx, self.ty, self.tz);
     m = GLKMatrix4Multiply(mtr, m);
+    
     //转到空间yaw、pitch处
+    mtr = GLKMatrix4MakeTranslation(0, 0, -1);
+    m = GLKMatrix4Multiply(mtr, m);
+    
     GLKMatrix4 m1 = GLKMatrix4Identity;
     m1 = GLKMatrix4Rotate(m1, GLKMathDegreesToRadians(self.yaw + _degree), 0, 1, 0);
     m1 = GLKMatrix4Rotate(m1, GLKMathDegreesToRadians(self.pitch), 1, 0, 0);
     m1 = GLKMatrix4Multiply(m1, m);
+    
+    mtr = GLKMatrix4MakeTranslation(0, 0, 1);
+    m1 = GLKMatrix4Multiply(mtr, m1);
+    
     //附加相机矩阵
     m1 = GLKMatrix4Multiply(mvp, m1);
     self.mvp = m1;
     
-//    _degree++;
+    _degree++;
     
     if (_degree >= 360) {
         

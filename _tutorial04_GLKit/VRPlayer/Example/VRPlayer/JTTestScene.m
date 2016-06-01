@@ -30,7 +30,7 @@
         self.sz = 1.0f;
         self.tx = 0.0f;
         self.ty = 0.0f;
-        self.tz = 0.0f;
+        self.tz = -1.0f;
         self.rx = 0.0f;
         self.ry = 0.0f;
         self.rz = 0.0f;
