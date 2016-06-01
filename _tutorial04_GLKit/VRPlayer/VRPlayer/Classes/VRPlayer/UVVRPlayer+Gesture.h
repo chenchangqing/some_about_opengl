@@ -12,6 +12,7 @@
 @interface UVVRPlayer(Gesture)
 
 @property (nonatomic,copy) NSString *previousPoint;
+@property (nonatomic,copy) NSString *velocityValue;
 
 - (void)setupGesture;
 

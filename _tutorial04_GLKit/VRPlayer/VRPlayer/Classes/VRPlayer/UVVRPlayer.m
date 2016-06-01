@@ -115,6 +115,11 @@
     glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
+    //手指滑动，改变yaw、pitch值
+    if (!CGPointEqualToPoint(CGPointFromString(self.velocityValue), CGPointZero)) {
+        [self simulateDecreaseEffect];
+    }
+    
     GLKMatrix4 mv = GLKMatrix4Identity;
     
     //转到空间yaw、pitch处
@@ -142,6 +147,22 @@
             _degree = _degree % 360;
         }
     }
+}
+
+/**
+ *  滑动动画处理
+ */
+-(void)simulateDecreaseEffect{
+    
+    CGPoint velocityPoint = CGPointFromString(self.velocityValue);
+    self.velocityValue = NSStringFromCGPoint(CGPointMake(0.9 * velocityPoint.x, 0.9 * velocityPoint.y));
+    velocityPoint = CGPointFromString(self.velocityValue);
+    CGPoint nextPoint = CGPointMake(0.01 * velocityPoint.x, 0.01 * velocityPoint.y);
+    
+    if (fabs(nextPoint.x) < 0.1 && fabs(nextPoint.y) < 0.1) {
+        self.velocityValue = NSStringFromCGPoint(CGPointZero);
+    }
+    [self moveToPointX:nextPoint.x andPointY:nextPoint.y];
 }
 
 /**

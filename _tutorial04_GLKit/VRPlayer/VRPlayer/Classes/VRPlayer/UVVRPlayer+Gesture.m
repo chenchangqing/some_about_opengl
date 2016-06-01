@@ -11,8 +11,11 @@
 #import <objc/runtime.h>
 
 static char kPreviousPoint;
+static char kVelocityValue;
 
 @implementation UVVRPlayer(Gesture)
+
+#pragma mark - get/set
 
 -(void)setPreviousPoint:(NSString *)previousPoint {
     
@@ -23,6 +26,18 @@ static char kPreviousPoint;
     
     return objc_getAssociatedObject(self, &kPreviousPoint);
 }
+
+-(void)setVelocityValue:(NSString *)velocityValue {
+    
+    objc_setAssociatedObject(self, &kVelocityValue, velocityValue, OBJC_ASSOCIATION_COPY);
+}
+
+-(NSString *)velocityValue {
+    
+    return objc_getAssociatedObject(self, &kVelocityValue);
+}
+
+#pragma mark - setup
 
 - (void)setupGesture {
     
@@ -41,10 +56,12 @@ static char kPreviousPoint;
     switch (panGesture.state) {
         case UIGestureRecognizerStateEnded: {
             
+            self.velocityValue = NSStringFromCGPoint([panGesture velocityInView:panGesture.view]);
             break;
         }
         case UIGestureRecognizerStateBegan: {
             
+            self.velocityValue = NSStringFromCGPoint(CGPointZero);
             self.previousPoint = NSStringFromCGPoint(currentPoint);
             break;
         }
