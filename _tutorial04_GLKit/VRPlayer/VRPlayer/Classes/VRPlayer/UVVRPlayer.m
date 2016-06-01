@@ -12,7 +12,11 @@
 #import "UVShellLoader.h"
 #import "UVModel.h"
 
+#define isAnimation 1
+
 @interface UVVRPlayer()<GLKViewDelegate> {
+    
+    int _degree;
     
 }
 
@@ -141,8 +145,33 @@
     glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    [_scenes.lastObject updateWithMVP:GLKMatrix4Multiply([self projectionMatrix], GLKMatrix4Identity)];
+    GLKMatrix4 mv = GLKMatrix4Identity;
+    
+    //转到空间yaw、pitch处
+    GLKMatrix4 mtr = GLKMatrix4MakeTranslation(0, 0, -1);
+    mv = GLKMatrix4Multiply(mtr, mv);
+    
+    GLKMatrix4 m1 = GLKMatrix4Identity;
+    m1 = GLKMatrix4Rotate(m1, GLKMathDegreesToRadians(self.yaw + _degree), 0, 1, 0);
+    m1 = GLKMatrix4Rotate(m1, GLKMathDegreesToRadians(self.pitch), 1, 0, 0);
+    
+    mv = GLKMatrix4Multiply(m1, mv);
+    
+    mtr = GLKMatrix4MakeTranslation(0, 0, 1);
+    mv = GLKMatrix4Multiply(mtr, mv);
+    
+    [_scenes.lastObject updateWithMVP:GLKMatrix4Multiply([self projectionMatrix], mv)];
     [_scenes.lastObject draw];
+    
+    if (isAnimation) {
+        
+        _degree++;
+        
+        if (_degree >= 360) {
+            
+            _degree = _degree % 360;
+        }
+    }
 }
 
 /**

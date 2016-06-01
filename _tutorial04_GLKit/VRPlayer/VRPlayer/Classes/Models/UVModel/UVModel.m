@@ -11,8 +11,6 @@
 
 @interface UVModel() {
     
-    int _degree;
-    
 }
 
 @end
@@ -77,7 +75,7 @@
     m = GLKMatrix4Multiply(mtr, m);
     
     GLKMatrix4 m1 = GLKMatrix4Identity;
-    m1 = GLKMatrix4Rotate(m1, GLKMathDegreesToRadians(self.yaw + _degree), 0, 1, 0);
+    m1 = GLKMatrix4Rotate(m1, GLKMathDegreesToRadians(self.yaw), 0, 1, 0);
     m1 = GLKMatrix4Rotate(m1, GLKMathDegreesToRadians(self.pitch), 1, 0, 0);
     m1 = GLKMatrix4Multiply(m1, m);
     
@@ -87,13 +85,6 @@
     //附加相机矩阵
     m1 = GLKMatrix4Multiply(mvp, m1);
     self.mvp = m1;
-    
-//    _degree++;
-    
-    if (_degree >= 360) {
-        
-        _degree = _degree % 360;
-    }
     
     if ([self.delegate respondsToSelector:@selector(configureModelViewMatrixForModel:)]) {
         
