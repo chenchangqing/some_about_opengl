@@ -17,16 +17,6 @@ static char kVelocityValue;
 
 #pragma mark - get/set
 
--(void)setPreviousPoint:(NSString *)previousPoint {
-    
-    objc_setAssociatedObject(self, &kPreviousPoint, previousPoint, OBJC_ASSOCIATION_COPY);
-}
-
--(NSString *)previousPoint {
-    
-    return objc_getAssociatedObject(self, &kPreviousPoint);
-}
-
 -(void)setVelocityValue:(NSString *)velocityValue {
     
     objc_setAssociatedObject(self, &kVelocityValue, velocityValue, OBJC_ASSOCIATION_COPY);
@@ -51,26 +41,22 @@ static char kVelocityValue;
 - (void)panGesture:(UIPanGestureRecognizer *) panGesture {
     
     CGPoint currentPoint = [panGesture locationInView:panGesture.view];
-    CGPoint velocity = [panGesture velocityInView:panGesture.view];
     
     switch (panGesture.state) {
         case UIGestureRecognizerStateEnded: {
             
-            self.velocityValue = NSStringFromCGPoint([panGesture velocityInView:panGesture.view]);
+            self.velocityValue = NSStringFromCGPoint(CGPointZero);
             break;
         }
         case UIGestureRecognizerStateBegan: {
             
             self.velocityValue = NSStringFromCGPoint(CGPointZero);
-            self.previousPoint = NSStringFromCGPoint(currentPoint);
             break;
         }
         case UIGestureRecognizerStateChanged: {
             
             // 改变 yaw、pitch
-            [self moveToPointX:currentPoint.x - CGPointFromString(self.previousPoint).x andPointY:currentPoint.y - CGPointFromString(self.previousPoint).y];
-            
-            self.previousPoint = NSStringFromCGPoint(currentPoint);
+            self.velocityValue = NSStringFromCGPoint([panGesture velocityInView:panGesture.view]);
             break;
         }
         default:
