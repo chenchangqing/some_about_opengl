@@ -151,12 +151,10 @@
     
     pointX *= 0.005;
     pointY *= 0.005;
-    NSLog(@"pointX%f",pointX);
-    NSLog(@"pointY:%f",pointY);
+    
     float newYaw = GLKMathDegreesToRadians(self.yaw) - pointX;
     float newPitch = GLKMathDegreesToRadians(self.pitch) - pointY;
-    NSLog(@"newYaw%f",newYaw);
-    NSLog(@"newPitch:%f",newPitch);
+    
     //限制pitch在-90到90之间
     if(newPitch > M_PI_2) {
         
