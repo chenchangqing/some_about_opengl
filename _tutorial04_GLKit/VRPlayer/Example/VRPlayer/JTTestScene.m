@@ -50,7 +50,7 @@
     grid.sy = 1.0f;
     grid.sz = 1.0f;
     grid.tx = 0.0f;
-    grid.ty = 0.3f;
+    grid.ty = 0.15f;
     grid.tz = 0.0f;
     grid.rx = 0.0f;
     grid.ry = 0.0f;
@@ -61,12 +61,12 @@
     toolbar.delegate = self;
     toolbar.dataSource = self;
     toolbar.yaw = 0.0f;
-    toolbar.pitch = -45.0f;
+    toolbar.pitch = -85.0f;
     toolbar.sx = 1.0f;
     toolbar.sy = 1.0f/6.0f;
     toolbar.sz = 1.0f;
     toolbar.tx = 0.0f;
-    toolbar.ty = 0.0f;
+    toolbar.ty = 1.5f;
     toolbar.tz = 0.0f;
     toolbar.rx = 0.0f;
     toolbar.ry = 0.0f;

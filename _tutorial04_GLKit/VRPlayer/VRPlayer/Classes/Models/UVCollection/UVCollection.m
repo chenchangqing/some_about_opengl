@@ -212,6 +212,9 @@
         
         UVSquare * model = [[self.models objectAtIndex:indexPath.row] objectAtIndex:indexPath.column];
         
+        model.tx = 0.0f;
+        model.ty = 0.0f;
+        
         if ((int)self.columnCount%2 == 0) {
             
             if ((indexPath.column + 1) < (self.columnCount)/2) {
