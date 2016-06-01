@@ -12,7 +12,7 @@
 #import "UVShellLoader.h"
 #import "UVModel.h"
 
-#define isAnimation 1
+#define isAnimation 0
 
 @interface UVVRPlayer()<GLKViewDelegate> {
     
