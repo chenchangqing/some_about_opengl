@@ -26,4 +26,9 @@
  */
 - (GLKMatrix4)projectionMatrix;
 
+/**
+ *  改变yaw、pitch
+ */
+- (void)moveToPointX:(CGFloat)pointX andPointY:(CGFloat)pointY;
+
 @end

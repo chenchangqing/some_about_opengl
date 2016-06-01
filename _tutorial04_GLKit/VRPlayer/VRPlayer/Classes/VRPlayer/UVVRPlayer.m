@@ -11,6 +11,7 @@
 #import <OpenGLES/ES2/glext.h>
 #import "UVShellLoader.h"
 #import "UVModel.h"
+#import "UVVRPlayer+Gesture.h"
 
 #define isAnimation 0
 
@@ -23,7 +24,6 @@
 @property (weak, nonatomic) GLKView *glkView;
 @property (strong, nonatomic) CADisplayLink* displayLink;
 @property (strong, nonatomic) EAGLContext *glkcontext;
-@property (nonatomic,assign) CGPoint previousPoint;
 @property (nonatomic,assign) float yaw;
 @property (nonatomic,assign) float pitch;
 
@@ -67,10 +67,6 @@
     _glkView.delegate = self;
     _glkView.enableSetNeedsDisplay = NO;
     
-    // 增加滑动手势
-    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)];
-    [self addGestureRecognizer:panGesture];
-    
     // Add GLKView Constraints
     _glkView.translatesAutoresizingMaskIntoConstraints = NO;
     NSDictionary *viewsDictionary = @{@"tglkView":_glkView};
@@ -83,6 +79,9 @@
     
     // 准备场景s
     [self prepareScenes];
+    
+    // 手势处理
+    [self setupGesture];
 }
 
 - (void)prepareScenes {
@@ -108,35 +107,6 @@
     _glkcontext = nil;
     _displayLink.paused = YES;
     _displayLink = nil;
-}
-
-#pragma mark - 手势处理
-
-- (void)panGesture:(UIPanGestureRecognizer *) panGesture {
-    
-    CGPoint currentPoint = [panGesture locationInView:panGesture.view];
-    CGPoint velocity = [panGesture velocityInView:panGesture.view];
-    
-    switch (panGesture.state) {
-        case UIGestureRecognizerStateEnded: {
-            
-            break;
-        }
-        case UIGestureRecognizerStateBegan: {
-            
-            _previousPoint = currentPoint;
-            break;
-        }
-        case UIGestureRecognizerStateChanged: {
-            
-            // 改变 yaw、pitch
-            
-            _previousPoint = currentPoint;
-            break;
-        }
-        default:
-            break;
-    }
 }
 
 #pragma mark - GLKViewDelegate
@@ -172,6 +142,33 @@
             _degree = _degree % 360;
         }
     }
+}
+
+/**
+ *  改变yaw、pitch
+ */
+- (void)moveToPointX:(CGFloat)pointX andPointY:(CGFloat)pointY {
+    
+    pointX *= 0.005;
+    pointY *= 0.005;
+    NSLog(@"pointX%f",pointX);
+    NSLog(@"pointY:%f",pointY);
+    float newYaw = GLKMathDegreesToRadians(self.yaw) - pointX;
+    float newPitch = GLKMathDegreesToRadians(self.pitch) - pointY;
+    NSLog(@"newYaw%f",newYaw);
+    NSLog(@"newPitch:%f",newPitch);
+    //限制pitch在-90到90之间
+    if(newPitch > M_PI_2) {
+        
+        newPitch = M_PI_2;
+    }else if(newPitch < -M_PI_2) {
+        
+        newPitch = -M_PI_2;
+    }
+    
+    self.yaw = GLKMathRadiansToDegrees(newYaw);
+    self.pitch = GLKMathRadiansToDegrees(newPitch);
+    
 }
 
 /**
