@@ -88,7 +88,7 @@
     m1 = GLKMatrix4Multiply(mvp, m1);
     self.mvp = m1;
     
-    _degree++;
+//    _degree++;
     
     if (_degree >= 360) {
         
