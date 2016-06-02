@@ -10,7 +10,6 @@
 #import "UVVRPlayer.h"
 #import <objc/runtime.h>
 
-static char kPreviousPoint;
 static char kVelocityValue;
 
 @implementation UVVRPlayer(Gesture)
