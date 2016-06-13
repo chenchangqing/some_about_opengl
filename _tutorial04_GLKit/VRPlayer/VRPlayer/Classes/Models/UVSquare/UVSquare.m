@@ -10,6 +10,7 @@
 #import "UVShellLoader.h"
 #import <OpenGLES/ES2/glext.h>
 #import "UIColor+HEX.h"
+#import "MacroDefinition.h"
 
 /**
  *  顶点数据
@@ -48,29 +49,6 @@ static const GLushort g_element_buffer_data[] = {
 
 @implementation UVSquare
 
-- (void)setBackgroundColor:(UIColor *)backgroundColor {
-    
-    super.backgroundColor = backgroundColor;
-    
-    GLfloat red = ((NSNumber *)[super.backgroundColor.RGBDictionary objectForKey:@"R"]).floatValue;
-    GLfloat green = ((NSNumber *)[super.backgroundColor.RGBDictionary objectForKey:@"G"]).floatValue;
-    GLfloat blue = ((NSNumber *)[super.backgroundColor.RGBDictionary objectForKey:@"B"]).floatValue;
-    GLfloat alpha = ((NSNumber *)[super.backgroundColor.RGBDictionary objectForKey:@"A"]).floatValue;
-    
-    // NSLog(@"R:%f,G:%f,B:%f,A:%f",red,green,blue,alpha);
-    
-    GLfloat rgba[4] = {
-        red,green,blue,alpha
-    };
-    
-    g_color_buffer_data = (float*) malloc(sizeof(float) * 24);
-    for (int i=0; i<24; i++) {
-        
-        g_color_buffer_data[i] = rgba[i%4];
-    }
-    
-}
-
 - (void)setup {
     [super setup];
     
@@ -82,6 +60,21 @@ static const GLushort g_element_buffer_data[] = {
                 @[@{@"index":[NSNumber numberWithUnsignedInt:_positionAttrib],@"name":@"position"},
                   @{@"index":[NSNumber numberWithUnsignedInt:_colorAttrib],@"name":@"color"}]];
     _mvpUniform = glGetUniformLocation(_program, "modelViewProjectionMatrix");
+    
+    GLfloat red = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"R"]).floatValue;
+    GLfloat green = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"G"]).floatValue;
+    GLfloat blue = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"B"]).floatValue;
+    GLfloat alpha = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"A"]).floatValue;
+    
+    GLfloat rgba[4] = {
+        red,green,blue,alpha
+    };
+    
+    g_color_buffer_data = (float*) malloc(sizeof(float) * 24);
+    for (int i=0; i<24; i++) {
+        
+        g_color_buffer_data[i] = rgba[i%4];
+    }
     
     glGenVertexArraysOES(1, &_vertexArray);
     glBindVertexArrayOES(_vertexArray);

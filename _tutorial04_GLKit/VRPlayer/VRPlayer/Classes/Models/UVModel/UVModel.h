@@ -45,9 +45,6 @@
 @property (nonatomic, assign) float ry;
 @property (nonatomic, assign) float rz;
 
-// 背景图
-@property (nonatomic, strong) UIColor *backgroundColor;
-
 @property (nonatomic, assign) GLKMatrix4 mvp;
 
 @property (nonatomic, weak) id <UVModelDelegate> delegate;
