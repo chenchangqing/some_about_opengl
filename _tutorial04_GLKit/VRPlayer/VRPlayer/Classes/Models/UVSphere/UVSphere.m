@@ -55,6 +55,18 @@
     [self setupSphereData];
 }
 
+- (void)setupVertexCount:(int *)count vertexData:(GLfloat **)data {
+    
+}
+
+- (void)setupColorCount:(int *)count colorData:(GLfloat **)data {
+    
+}
+
+- (void)setupElementCount:(int *)count elementData:(GLfloat **)data {
+    
+}
+
 - (void)setupSphereData {
     int segW = 48;// 宽度分块数目
     int segH = 48;// 高度分块数目

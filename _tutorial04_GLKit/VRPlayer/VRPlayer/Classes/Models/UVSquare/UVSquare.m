@@ -7,8 +7,6 @@
 //
 
 #import "UVSquare.h"
-#import "UVShellLoader.h"
-#import <OpenGLES/ES2/glext.h>
 #import "UIColor+HEX.h"
 #import "MacroDefinition.h"
 
@@ -29,37 +27,28 @@ static const GLushort g_element_buffer_data[] = {
 
 @interface UVSquare() {
     
-    GLfloat *g_color_buffer_data;
 }
-
-@property (nonatomic, assign) GLuint program;
-
-@property (nonatomic, assign) GLuint vertexArray;
-
-@property (nonatomic, assign) GLuint positionBuffer;
-@property (nonatomic, assign) GLuint colorBuffer;
-@property (nonatomic, assign) GLuint elementsBuffer;
-
-@property (nonatomic, assign) GLuint positionAttrib;
-@property (nonatomic, assign) GLuint colorAttrib;
-
-@property (nonatomic, assign) GLint  mvpUniform;
 
 @end
 
 @implementation UVSquare
 
 - (void)setup {
+    
     [super setup];
     
-    _mvpUniform     = 0;
-    _colorAttrib    = 0;
-    _positionAttrib   = 1;
+}
+
+- (void)setupVertexCount:(int *)count vertexData:(GLfloat **)data {
     
-    _program = [UVShellLoader loadSphereShadersWithVertexShaderString:@"SquareShader" fragmentShaderString:@"SquareShader" andAttribLocations:
-                @[@{@"index":[NSNumber numberWithUnsignedInt:_positionAttrib],@"name":@"position"},
-                  @{@"index":[NSNumber numberWithUnsignedInt:_colorAttrib],@"name":@"color"}]];
-    _mvpUniform = glGetUniformLocation(_program, "modelViewProjectionMatrix");
+    *count = 12;
+    
+    *data = g_vertex_buffer_data;
+}
+
+- (void)setupColorCount:(int *)count colorData:(GLfloat **)data {
+    
+    *count = 24;
     
     GLfloat red = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"R"]).floatValue;
     GLfloat green = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"G"]).floatValue;
@@ -70,35 +59,20 @@ static const GLushort g_element_buffer_data[] = {
         red,green,blue,alpha
     };
     
-    g_color_buffer_data = (float*) malloc(sizeof(float) * 24);
+    GLfloat *tdata = (float*) malloc(sizeof(float) * 24);
     for (int i=0; i<24; i++) {
         
-        g_color_buffer_data[i] = rgba[i%4];
+        tdata[i] = rgba[i%4];
     }
     
-    glGenVertexArraysOES(1, &_vertexArray);
-    glBindVertexArrayOES(_vertexArray);
+    *data = tdata;
+}
+
+- (void)setupElementCount:(int *)count elementData:(GLfloat **)data {
     
-    glGenBuffers(1, &_positionBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, _positionBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(_positionAttrib);
-    glVertexAttribPointer(_positionAttrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    *count = 6;
     
-    glGenBuffers(1, &_colorBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer);
-    glBufferData(GL_ARRAY_BUFFER, 24 * sizeof(GLfloat), g_color_buffer_data, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(_colorAttrib);
-    glVertexAttribPointer(_colorAttrib, 4, GL_FLOAT, GL_FALSE, 0, 0);
-    
-    glGenBuffers(1, &_elementsBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementsBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(g_element_buffer_data), g_element_buffer_data, GL_STATIC_DRAW);
-    
-    glBindVertexArrayOES(0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    
+    *data = g_element_buffer_data;
 }
 
 - (void)updateWithMVP: (GLKMatrix4)mvp {
@@ -108,26 +82,10 @@ static const GLushort g_element_buffer_data[] = {
 
 - (void)draw {
     [super draw];
-    
-    glBindVertexArrayOES(_vertexArray);
-    
-    glUseProgram(_program);
-    glUniformMatrix4fv(_mvpUniform, 1, 0, self.mvp.m);
-    glDrawElements(GL_TRIANGLES, sizeof(g_element_buffer_data), GL_UNSIGNED_SHORT, 0);
 }
 
 - (void)free {
     [super free];
-    
-    glDeleteBuffers(1, &_positionBuffer);
-    glDeleteBuffers(1, &_colorBuffer);
-    glDeleteBuffers(1, &_elementsBuffer);
-    glDeleteVertexArraysOES(1, &_vertexArray);
-    
-    if (_program) {
-        glDeleteProgram(_program);
-        _program = 0;
-    }
 }
 
 @end

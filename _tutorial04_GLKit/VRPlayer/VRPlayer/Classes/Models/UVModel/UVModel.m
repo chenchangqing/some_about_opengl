@@ -7,10 +7,27 @@
 //
 
 #import "UVModel.h"
+#import "UVShellLoader.h"
 
-@interface UVModel() {
+@interface UVModel()  {
     
+    GLfloat *g_vertex_buffer_data;
+    GLfloat *g_color_buffer_data;
+    GLfloat *g_element_buffer_data;
 }
+
+@property (nonatomic, assign) GLuint program;
+
+@property (nonatomic, assign) GLuint vertexArray;
+
+@property (nonatomic, assign) GLuint positionBuffer;
+@property (nonatomic, assign) GLuint colorBuffer;
+@property (nonatomic, assign) GLuint elementsBuffer;
+
+@property (nonatomic, assign) GLuint positionAttrib;
+@property (nonatomic, assign) GLuint colorAttrib;
+
+@property (nonatomic, assign) GLint  mvpUniform;
 
 @end
 
@@ -48,6 +65,57 @@
 
 - (void)setup {
     
+    _mvpUniform     = 0;
+    _colorAttrib    = 0;
+    _positionAttrib   = 1;
+    
+    _program = [UVShellLoader loadSphereShadersWithVertexShaderString:@"SquareShader" fragmentShaderString:@"SquareShader" andAttribLocations:
+                @[@{@"index":[NSNumber numberWithUnsignedInt:_positionAttrib],@"name":@"position"},
+                  @{@"index":[NSNumber numberWithUnsignedInt:_colorAttrib],@"name":@"color"}]];
+    _mvpUniform = glGetUniformLocation(_program, "modelViewProjectionMatrix");
+    
+    int vertex_count = 0;
+    int color_count = 0;
+    int element_count = 0;
+    
+    [self setupVertexCount:&vertex_count vertexData:&g_vertex_buffer_data];
+    [self setupColorCount:&color_count colorData:&g_color_buffer_data];
+    [self setupElementCount:&element_count elementData:&g_element_buffer_data];
+    
+    glGenVertexArraysOES(1, &_vertexArray);
+    glBindVertexArrayOES(_vertexArray);
+    
+    glGenBuffers(1, &_positionBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, _positionBuffer);
+    glBufferData(GL_ARRAY_BUFFER, vertex_count * sizeof(GLfloat), g_vertex_buffer_data, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(_positionAttrib);
+    glVertexAttribPointer(_positionAttrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    
+    glGenBuffers(1, &_colorBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer);
+    glBufferData(GL_ARRAY_BUFFER, color_count * sizeof(GLfloat), g_color_buffer_data, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(_colorAttrib);
+    glVertexAttribPointer(_colorAttrib, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    
+    glGenBuffers(1, &_elementsBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementsBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, element_count * sizeof(GLushort), g_element_buffer_data, GL_STATIC_DRAW);
+    
+    glBindVertexArrayOES(0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+- (void)setupVertexCount:(int *)count vertexData:(GLfloat **)data {
+    NSAssert(NO, @"请提供顶点数据");
+}
+
+- (void)setupColorCount:(int *)count colorData:(GLfloat **)data {
+    NSAssert(NO, @"请提供颜色数据");
+}
+
+- (void)setupElementCount:(int *)count elementData:(GLfloat **)data {
+    NSAssert(NO, @"请提供索引数据");
 }
 
 - (void)updateWithMVP: (GLKMatrix4)mvp {
@@ -91,10 +159,28 @@
 
 - (void)draw {
     
+    glBindVertexArrayOES(_vertexArray);
+    
+    glUseProgram(_program);
+    glUniformMatrix4fv(_mvpUniform, 1, 0, self.mvp.m);
+    
+    if (g_element_buffer_data) {
+        
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+    }
 }
 
 - (void)free {
     
+    glDeleteBuffers(1, &_positionBuffer);
+    glDeleteBuffers(1, &_colorBuffer);
+    glDeleteBuffers(1, &_elementsBuffer);
+    glDeleteVertexArraysOES(1, &_vertexArray);
+    
+    if (_program) {
+        glDeleteProgram(_program);
+        _program = 0;
+    }
 }
 
 @end

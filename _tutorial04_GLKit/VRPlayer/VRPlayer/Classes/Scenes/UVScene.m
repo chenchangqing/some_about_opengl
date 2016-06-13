@@ -42,6 +42,18 @@
     }
 }
 
+- (void)setupVertexCount:(int *)count vertexData:(GLfloat **)data {
+    
+}
+
+- (void)setupColorCount:(int *)count colorData:(GLfloat **)data {
+    
+}
+
+- (void)setupElementCount:(int *)count elementData:(GLfloat **)data {
+    
+}
+
 - (void)updateWithMVP: (GLKMatrix4)mvp {
     [super updateWithMVP:mvp];
     
