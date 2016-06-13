@@ -26,8 +26,10 @@
 @property (nonatomic, assign) GLuint texCoordAttrib;
 
 @property (nonatomic, assign) GLint  mvpUniform;
-@property (nonatomic, assign) GLint  sampleUniform;
+@property (nonatomic, assign) GLint  samplerUniform;
+
 @property (nonatomic, strong) GLKTextureInfo *textureInfo;
+
 @property (nonatomic,assign) GLsizei triangleCount;
 
 @end
@@ -45,7 +47,7 @@
                 @[@{@"index":[NSNumber numberWithUnsignedInt:_positionAttrib],@"name":@"a_position"},
                   @{@"index":[NSNumber numberWithUnsignedInt:_texCoordAttrib],@"name":@"a_textureCoord"}]];
     _mvpUniform = glGetUniformLocation(_program, "modelViewProjectionMatrix");
-    _sampleUniform = glGetUniformLocation(_program, "imageSampler");
+    _samplerUniform = glGetUniformLocation(_program, "imageSampler");
     
     NSString *imgPath = [[NSBundle mainBundle] pathForResource:@"Frameworks/VRPlayer.framework/VRPlayer.bundle/ribing" ofType:@"jpg"];
     _textureInfo =  [GLKTextureLoader textureWithContentsOfFile:imgPath options:nil error:nil];
@@ -155,7 +157,7 @@
     
     glUseProgram(_program);
     glUniformMatrix4fv(_mvpUniform, 1, 0, self.mvp.m);
-    glUniform1i(_sampleUniform, 0);
+    glUniform1i(_samplerUniform, 0);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
     glDrawElements(GL_TRIANGLES, self.triangleCount, GL_UNSIGNED_SHORT, 0);
