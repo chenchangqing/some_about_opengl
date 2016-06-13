@@ -39,10 +39,10 @@ static const GLushort g_element_buffer_data[] = {
 @property (nonatomic, assign) GLuint colorBuffer;
 @property (nonatomic, assign) GLuint elementsBuffer;
 
-@property (nonatomic, assign) GLuint attribVertex;
-@property (nonatomic, assign) GLuint attribColor;
+@property (nonatomic, assign) GLuint positionAttrib;
+@property (nonatomic, assign) GLuint colorAttrib;
 
-@property (nonatomic, assign) GLint  uniformMVP;
+@property (nonatomic, assign) GLint  mvpUniform;
 
 @end
 
@@ -74,14 +74,14 @@ static const GLushort g_element_buffer_data[] = {
 - (void)setup {
     [super setup];
     
-    _uniformMVP     = 0;
-    _attribColor    = 0;
-    _attribVertex   = 1;
+    _mvpUniform     = 0;
+    _colorAttrib    = 0;
+    _positionAttrib   = 1;
     
     _program = [UVShellLoader loadSphereShadersWithVertexShaderString:@"SquareShader" fragmentShaderString:@"SquareShader" andAttribLocations:
-                @[@{@"index":[NSNumber numberWithUnsignedInt:_attribVertex],@"name":@"position"},
-                  @{@"index":[NSNumber numberWithUnsignedInt:_attribColor],@"name":@"color"}]];
-    _uniformMVP = glGetUniformLocation(_program, "modelViewProjectionMatrix");
+                @[@{@"index":[NSNumber numberWithUnsignedInt:_positionAttrib],@"name":@"position"},
+                  @{@"index":[NSNumber numberWithUnsignedInt:_colorAttrib],@"name":@"color"}]];
+    _mvpUniform = glGetUniformLocation(_program, "modelViewProjectionMatrix");
     
     glGenVertexArraysOES(1, &_vertexArray);
     glBindVertexArrayOES(_vertexArray);
@@ -89,14 +89,14 @@ static const GLushort g_element_buffer_data[] = {
     glGenBuffers(1, &_positionBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, _positionBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(_attribVertex);
-    glVertexAttribPointer(_attribVertex, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glEnableVertexAttribArray(_positionAttrib);
+    glVertexAttribPointer(_positionAttrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
     
     glGenBuffers(1, &_colorBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer);
     glBufferData(GL_ARRAY_BUFFER, 24 * sizeof(GLfloat), g_color_buffer_data, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(_attribColor);
-    glVertexAttribPointer(_attribColor, 4, GL_FLOAT, GL_FALSE, 0, 0);
+    glEnableVertexAttribArray(_colorAttrib);
+    glVertexAttribPointer(_colorAttrib, 4, GL_FLOAT, GL_FALSE, 0, 0);
     
     glGenBuffers(1, &_elementsBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementsBuffer);
@@ -119,7 +119,7 @@ static const GLushort g_element_buffer_data[] = {
     glBindVertexArrayOES(_vertexArray);
     
     glUseProgram(_program);
-    glUniformMatrix4fv(_uniformMVP, 1, 0, self.mvp.m);
+    glUniformMatrix4fv(_mvpUniform, 1, 0, self.mvp.m);
     glDrawElements(GL_TRIANGLES, sizeof(g_element_buffer_data), GL_UNSIGNED_SHORT, 0);
 }
 
