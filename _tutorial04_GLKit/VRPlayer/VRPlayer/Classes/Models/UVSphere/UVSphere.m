@@ -88,7 +88,7 @@
         for (int i = 0; i < segW1; i++) {
             double ui = 1.0 * i / segW;
             texcoords[kk++] = (float) ui;
-            texcoords[kk++] = 1 - (float) vj;//跟android相比，纹理v坐标上下颠倒，因为坐标系问题
+            texcoords[kk++] = (float) vj;//跟android相比，纹理v坐标上下颠倒，因为坐标系问题
         }
     }
     
