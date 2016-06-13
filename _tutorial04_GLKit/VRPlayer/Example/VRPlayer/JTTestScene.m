@@ -12,12 +12,14 @@
 
 @property (nonatomic, strong) UVCollection *grid;
 @property (nonatomic, strong) UVCollection *toolbar;
+@property (nonatomic, strong) UVSphere *sphere;
 
 @end
 
 @implementation JTTestScene
 @synthesize grid;
 @synthesize toolbar;
+@synthesize sphere;
 
 - (instancetype)init {
     self = [super init];
@@ -26,11 +28,11 @@
         self.yaw = 0.0f;
         self.pitch = 0.0f;
         self.sx = 1.0f;
-        self.sy = 9.0f/16.0f;
+        self.sy = 1.0f;
         self.sz = 1.0f;
         self.tx = 0.0f;
         self.ty = 0.0f;
-        self.tz = -1.0f;
+        self.tz = 0.0f;
         self.rx = 0.0f;
         self.ry = 0.0f;
         self.rz = 0.0f;
@@ -41,17 +43,33 @@
 - (void)prepareModels {
     [super prepareModels];
     
+    sphere = [[UVSphere alloc] init];
+    
+    sphere.yaw = 0.0f;
+    sphere.pitch = 0.0f;
+    sphere.sx = 1.0f;
+    sphere.sy = 1.0f;
+    sphere.sz = 1.0f;
+    sphere.tx = 0.0f;
+    sphere.ty = 0.0f;
+    sphere.tz = 0.0f;
+    sphere.rx = 0.0f;
+    sphere.ry = 0.0f;
+    sphere.rz = 0.0f;
+    
+    [super.models addObject:sphere];
+    
     grid = [[UVCollection alloc] init];
     grid.delegate = self;
     grid.dataSource = self;
     grid.yaw = 0.0f;
     grid.pitch = 0.0f;
     grid.sx = 1.0f;
-    grid.sy = 1.0f;
+    grid.sy = 9.0f/16.0f;
     grid.sz = 1.0f;
     grid.tx = 0.0f;
-    grid.ty = 0.15f;
-    grid.tz = 0.0f;
+    grid.ty = 0.0f;
+    grid.tz = -1.0f;
     grid.rx = 0.0f;
     grid.ry = 0.0f;
     grid.rz = 0.0f;
@@ -61,14 +79,14 @@
     toolbar.delegate = self;
     toolbar.dataSource = self;
     toolbar.yaw = 0.0f;
-    toolbar.pitch = -85.0f;
-    toolbar.sx = 1.0f;
-    toolbar.sy = 1.0f/6.0f;
+    toolbar.pitch = 0.0f;
+    toolbar.sx = 0.8f;
+    toolbar.sy = 0.8f/6.0f;
     toolbar.sz = 1.0f;
     toolbar.tx = 0.0f;
-    toolbar.ty = 1.5f;
-    toolbar.tz = 0.0f;
-    toolbar.rx = 0.0f;
+    toolbar.ty = 0.0f;
+    toolbar.tz = -1.0f;
+    toolbar.rx = -85.0f;
     toolbar.ry = 0.0f;
     toolbar.rz = 0.0f;
     [super.models addObject:toolbar];

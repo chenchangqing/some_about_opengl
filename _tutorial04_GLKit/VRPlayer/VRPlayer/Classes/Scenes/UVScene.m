@@ -57,10 +57,7 @@
     
     for (UVModel *model in _models) {
         
-        if ([model isKindOfClass:[UVSquare class]]) {
-            
-            [(UVSquare *)model draw];
-        }
+        [model draw];
     }
 }
 

@@ -123,7 +123,7 @@
     GLKMatrix4 mv = GLKMatrix4Identity;
     
     //转到空间yaw、pitch处
-    GLKMatrix4 mtr = GLKMatrix4MakeTranslation(0, 0, -1);
+    GLKMatrix4 mtr = GLKMatrix4MakeTranslation(0, 0, 0);
     mv = GLKMatrix4Multiply(mtr, mv);
     
     GLKMatrix4 m1 = GLKMatrix4Identity;
@@ -132,7 +132,7 @@
     
     mv = GLKMatrix4Multiply(m1, mv);
     
-    mtr = GLKMatrix4MakeTranslation(0, 0, 1);
+    mtr = GLKMatrix4MakeTranslation(0, 0, 0);
     mv = GLKMatrix4Multiply(mtr, mv);
     
     [_scenes.lastObject updateWithMVP:GLKMatrix4Multiply([self projectionMatrix], mv)];
@@ -196,7 +196,7 @@
 - (GLKMatrix4)projectionMatrix {
     
     float aspect = fabs(CGRectGetWidth([UIScreen mainScreen].bounds) / CGRectGetHeight([UIScreen mainScreen].bounds));
-    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(78.0f), aspect, 0.01f, 1000.0f);
+    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(100.0f), aspect, 0.01f, 1000.0f);
     
     return projectionMatrix;
 //    return GLKMatrix4Identity;

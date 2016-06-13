@@ -14,6 +14,7 @@
 #import "UVSquare.h"
 #import "UVScene.h"
 #import "UVCollection.h"
+#import "UVSphere.h"
 #import "MacroDefinition.h"
 #import "UIColor+HEX.h"
 
