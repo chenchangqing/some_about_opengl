@@ -28,7 +28,7 @@ static const GLushort g_element_buffer_data[] = {
 
 @interface UVSquare() {
     
-    GLfloat g_color_buffer_data[24];
+    GLfloat *g_color_buffer_data;
 }
 
 @property (nonatomic, assign) GLuint program;
@@ -63,6 +63,7 @@ static const GLushort g_element_buffer_data[] = {
         red,green,blue,alpha
     };
     
+    g_color_buffer_data = (float*) malloc(sizeof(float) * 24);
     for (int i=0; i<24; i++) {
         
         g_color_buffer_data[i] = rgba[i%4];
@@ -93,7 +94,7 @@ static const GLushort g_element_buffer_data[] = {
     
     glGenBuffers(1, &_colorBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 24 * sizeof(GLfloat), g_color_buffer_data, GL_STATIC_DRAW);
     glEnableVertexAttribArray(_attribColor);
     glVertexAttribPointer(_attribColor, 4, GL_FLOAT, GL_FALSE, 0, 0);
     
