@@ -59,37 +59,37 @@
     
     [super.models addObject:sphere];
     
-    grid = [[UVCollection alloc] init];
-    grid.delegate = self;
-    grid.dataSource = self;
-    grid.yaw = 0.0f;
-    grid.pitch = 0.0f;
-    grid.sx = 1.0f;
-    grid.sy = 9.0f/16.0f;
-    grid.sz = 1.0f;
-    grid.tx = 0.0f;
-    grid.ty = 0.0f;
-    grid.tz = -1.0f;
-    grid.rx = 0.0f;
-    grid.ry = 0.0f;
-    grid.rz = 0.0f;
-    [super.models addObject:grid];
-    
-    toolbar = [[UVCollection alloc] init];
-    toolbar.delegate = self;
-    toolbar.dataSource = self;
-    toolbar.yaw = 0.0f;
-    toolbar.pitch = 0.0f;
-    toolbar.sx = 0.8f;
-    toolbar.sy = 0.8f/6.0f;
-    toolbar.sz = 1.0f;
-    toolbar.tx = 0.0f;
-    toolbar.ty = 0.0f;
-    toolbar.tz = -1.0f;
-    toolbar.rx = -85.0f;
-    toolbar.ry = 0.0f;
-    toolbar.rz = 0.0f;
-    [super.models addObject:toolbar];
+//    grid = [[UVCollection alloc] init];
+//    grid.delegate = self;
+//    grid.dataSource = self;
+//    grid.yaw = 0.0f;
+//    grid.pitch = 0.0f;
+//    grid.sx = 1.0f;
+//    grid.sy = 9.0f/16.0f;
+//    grid.sz = 1.0f;
+//    grid.tx = 0.0f;
+//    grid.ty = 0.0f;
+//    grid.tz = -1.0f;
+//    grid.rx = 0.0f;
+//    grid.ry = 0.0f;
+//    grid.rz = 0.0f;
+//    [super.models addObject:grid];
+//    
+//    toolbar = [[UVCollection alloc] init];
+//    toolbar.delegate = self;
+//    toolbar.dataSource = self;
+//    toolbar.yaw = 0.0f;
+//    toolbar.pitch = 0.0f;
+//    toolbar.sx = 0.8f;
+//    toolbar.sy = 0.8f/6.0f;
+//    toolbar.sz = 1.0f;
+//    toolbar.tx = 0.0f;
+//    toolbar.ty = 0.0f;
+//    toolbar.tz = -1.0f;
+//    toolbar.rx = -85.0f;
+//    toolbar.ry = 0.0f;
+//    toolbar.rz = 0.0f;
+//    [super.models addObject:toolbar];
     
 }
 
