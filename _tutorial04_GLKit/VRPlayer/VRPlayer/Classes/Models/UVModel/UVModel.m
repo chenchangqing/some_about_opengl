@@ -60,6 +60,11 @@
         
         _backgroundColor = RandColor;
         
+        _mvpUniform     = 0;
+        _positionAttrib = 1;
+        _colorAttrib    = 2;
+        _texCoordAttrib = 3;
+        
         [self setup];
     }
     return self;
@@ -72,10 +77,6 @@
 
 - (void)setup {
     
-    _mvpUniform     = 0;
-    _positionAttrib   = 1;
-    _colorAttrib    = 2;
-    
     _programIndex = [UVShellLoader loadSphereShadersWithVertexShaderString:@"UVModelShader" fragmentShaderString:@"UVModelShader" callback:^(GLuint programIndex){
                       
           glBindAttribLocation(programIndex, _positionAttrib, kAPositionName.UTF8String);
@@ -86,8 +87,6 @@
     _samplerUniform = glGetUniformLocation(_programIndex, kUBGSamplerName.UTF8String);
     
     [self updateTextureInfo:&_texCoordIndex];
-    
-    element_count = 0;
     
     glGenVertexArraysOES(1, &_vertexArrayIndex);
     glBindVertexArrayOES(_vertexArrayIndex);
@@ -104,6 +103,15 @@
 
 - (void)setupPositionBuffer:(GLuint*)buffer positonAttrib:(GLuint)attrib {
     NSAssert(NO, @"请提供顶点数据");
+}
+- (void)setupTextureBuffer:(GLuint*)buffer textureAttrib:(GLuint)attrib {
+    NSAssert(NO, @"请提供纹理数据");
+}
+- (void)setupElementBuffer:(GLuint*)buffer elementCount:(GLsizei *)count {
+    NSAssert(NO, @"请提供索引数据");
+}
+- (void)updateTextureInfo:(GLuint*)textureIndex {
+    NSAssert(NO, @"请提供纹理数据2");
 }
 - (void)setupColorBuffer:(GLuint*)buffer colorAttrib:(GLuint)attrib {
     
@@ -127,15 +135,6 @@
     glBufferData(GL_ARRAY_BUFFER, element_count*4 * sizeof(GLfloat), g_color_buffer_data, GL_STATIC_DRAW);
     glEnableVertexAttribArray(attrib);
     glVertexAttribPointer(attrib, 4, GL_FLOAT, GL_FALSE, 0, 0);
-}
-- (void)setupTextureBuffer:(GLuint*)buffer textureAttrib:(GLuint)attrib {
-    NSAssert(NO, @"请提供纹理数据");
-}
-- (void)setupElementBuffer:(GLuint*)buffer elementCount:(GLsizei *)count {
-    NSAssert(NO, @"请提供索引数据");
-}
-- (void)updateTextureInfo:(GLuint*)textureIndex {
-    NSAssert(NO, @"请提供纹理数据2");
 }
 
 - (void)updateWithMVP: (GLKMatrix4)mvp {
