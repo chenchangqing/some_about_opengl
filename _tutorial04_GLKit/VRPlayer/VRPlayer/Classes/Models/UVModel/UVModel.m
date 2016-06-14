@@ -57,6 +57,8 @@
         _rx = 0.0f;
         _ry = 0.0f;
         _rz = 0.0f;
+        
+        [self setup];
     }
     return self;
 }

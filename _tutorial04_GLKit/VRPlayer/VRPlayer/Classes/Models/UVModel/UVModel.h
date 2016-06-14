@@ -54,7 +54,6 @@
 
 @property (nonatomic, weak) id <UVModelDelegate> delegate;
 
-- (void)setup;
 - (void)updateWithMVP: (GLKMatrix4)mvp;
 - (void)draw;
 - (void)free;

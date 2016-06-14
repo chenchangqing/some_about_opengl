@@ -105,7 +105,14 @@
                 }
                 break;
             }
-            [rowArray addObject:[[UVSquare alloc] init]];
+            
+            UVSquare *model = [[UVSquare alloc] init];
+            [rowArray addObject:model];
+            
+            if ([self.delegate respondsToSelector:@selector(collection:configureModel:atIndexPath:)]) {
+                
+                [self.delegate collection:self configureModel:model atIndexPath:[UVIndexPath indexPathForRow:row andColumn:column]];
+            }
             
         }
         
@@ -180,23 +187,6 @@
         _columnSpace = [self.delegate columnSpace:self];
     }
     return _columnSpace;
-}
-
-- (void)setup {
-    [super setup];
-    
-    for (UVIndexPath *indexPath in self.indexPaths) {
-        
-        UVSquare * model = [[self.models objectAtIndex:indexPath.row] objectAtIndex:indexPath.column];
-        
-        if ([self.delegate respondsToSelector:@selector(collection:configureModel:atIndexPath:)]) {
-            
-            [self.delegate collection:self configureModel:model atIndexPath:indexPath];
-        }
-        
-        [model setup];
-    }
-    
 }
 
 - (void)updateWithMVP: (GLKMatrix4)mvp {

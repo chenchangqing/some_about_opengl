@@ -23,7 +23,6 @@
         
         _models = [NSMutableArray arrayWithCapacity:0];
         [self prepareModels];
-        [self setup];
     }
     
     return self;
@@ -31,15 +30,6 @@
 
 - (void)prepareModels {
     
-}
-
-- (void)setup {
-    [super setup];
-    
-    for (UVModel *model in _models) {
-        
-        [model setup];
-    }
 }
 
 - (void)setupPositionBuffer:(GLuint*)buffer positonAttrib:(GLuint)attrib {

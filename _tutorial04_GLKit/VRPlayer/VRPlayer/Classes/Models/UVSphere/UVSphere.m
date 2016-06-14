@@ -16,10 +16,6 @@
 
 @implementation UVSphere
 
-- (void)setup {
-    [super setup];
-}
-
 - (void)setupPositionBuffer:(GLuint*)buffer positonAttrib:(GLuint)attrib {
     
     int segW = 48;// 宽度分块数目

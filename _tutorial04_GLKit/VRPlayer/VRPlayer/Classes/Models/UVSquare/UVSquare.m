@@ -39,12 +39,6 @@ static const GLushort g_element_buffer_data[] = {
 
 @implementation UVSquare
 
-- (void)setup {
-    
-    [super setup];
-    
-}
-
 - (void)setupPositionBuffer:(GLuint*)buffer positonAttrib:(GLuint)attrib {
     
     glGenBuffers(1, buffer);
