@@ -10,7 +10,7 @@
 
 @implementation UVShellLoader
 
-+ (GLuint)loadSphereShadersWithVertexShaderString:(NSString*)vertexShaderString fragmentShaderString:(NSString*)fragmentShaderString andAttribLocations:(NSArray*)locations
++ (GLuint)loadSphereShadersWithVertexShaderString:(NSString*)vertexShaderString fragmentShaderString:(NSString*)fragmentShaderString callback:(BindAttribLocationBlock)block
 {
     GLuint vertShader, fragShader;
     NSString *vertShaderPathname, *fragShaderPathname;
@@ -40,11 +40,7 @@
     glAttachShader(program, fragShader);
     
     // Bind attribute locations. This needs to be done prior to linking.
-    for (NSDictionary *dict in locations) {
-        GLuint index = [dict[@"index"] unsignedIntValue];
-        NSString *name = dict[@"name"];
-        glBindAttribLocation(program, index, name.UTF8String);
-    }
+    block(program);
     
     // Link the program.
     if (![self linkProgram:program]) {

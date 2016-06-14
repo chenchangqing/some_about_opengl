@@ -14,9 +14,9 @@
     GLsizei element_count;
 }
 
-@property (nonatomic, assign) GLuint program;
+@property (nonatomic, assign) GLuint programIndex;
 
-@property (nonatomic, assign) GLuint vertexArray;
+@property (nonatomic, assign) GLuint vertexArrayIndex;
 
 @property (nonatomic, assign) GLuint positionBuffer;
 @property (nonatomic, assign) GLuint colorBuffer;
@@ -67,10 +67,12 @@
     _colorAttrib    = 0;
     _positionAttrib   = 1;
     
-    _program = [UVShellLoader loadSphereShadersWithVertexShaderString:@"SquareShader" fragmentShaderString:@"SquareShader" andAttribLocations:
-                @[@{@"index":[NSNumber numberWithUnsignedInt:_positionAttrib],@"name":@"position"},
-                  @{@"index":[NSNumber numberWithUnsignedInt:_colorAttrib],@"name":@"color"}]];
-    _mvpUniform = glGetUniformLocation(_program, "modelViewProjectionMatrix");
+    _programIndex = [UVShellLoader loadSphereShadersWithVertexShaderString:@"UVModelShader" fragmentShaderString:@"UVModelShader" callback:^(GLuint programIndex){
+                      
+          glBindAttribLocation(programIndex, _positionAttrib, kAPositionName.UTF8String);
+          glBindAttribLocation(programIndex, _colorAttrib, kAColorName.UTF8String);
+    }];
+    _mvpUniform = glGetUniformLocation(_programIndex, kUMVPName.UTF8String);
     
     GLfloat *g_position_buffer_data;
     GLfloat *g_color_buffer_data;
@@ -84,8 +86,8 @@
     [self setupColorCount:&color_count colorData:&g_color_buffer_data];
     [self setupElementCount:&element_count elementData:&g_element_buffer_data];
     
-    glGenVertexArraysOES(1, &_vertexArray);
-    glBindVertexArrayOES(_vertexArray);
+    glGenVertexArraysOES(1, &_vertexArrayIndex);
+    glBindVertexArrayOES(_vertexArrayIndex);
     
     glGenBuffers(1, &_positionBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, _positionBuffer);
@@ -161,9 +163,9 @@
 
 - (void)draw {
     
-    glBindVertexArrayOES(_vertexArray);
+    glBindVertexArrayOES(_vertexArrayIndex);
     
-    glUseProgram(_program);
+    glUseProgram(_programIndex);
     glUniformMatrix4fv(_mvpUniform, 1, 0, self.mvp.m);
     
     if (element_count != 0) {
@@ -177,11 +179,11 @@
     glDeleteBuffers(1, &_positionBuffer);
     glDeleteBuffers(1, &_colorBuffer);
     glDeleteBuffers(1, &_elementsBuffer);
-    glDeleteVertexArraysOES(1, &_vertexArray);
+    glDeleteVertexArraysOES(1, &_vertexArrayIndex);
     
-    if (_program) {
-        glDeleteProgram(_program);
-        _program = 0;
+    if (_programIndex) {
+        glDeleteProgram(_programIndex);
+        _programIndex = 0;
     }
 }
 

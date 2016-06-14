@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <GLKit/GLKit.h>
 
+typedef void(^BindAttribLocationBlock)(GLuint programIndex);
+
 @interface UVShellLoader : NSObject
-/**
- *  locations: 一个由包含健为index,name的字典组成的数组
- */
-+ (GLuint)loadSphereShadersWithVertexShaderString:(NSString*)vertexShaderString fragmentShaderString:(NSString*)fragmentShaderString andAttribLocations:(NSArray*)locations;
+
++ (GLuint)loadSphereShadersWithVertexShaderString:(NSString*)vertexShaderString fragmentShaderString:(NSString*)fragmentShaderString callback:(BindAttribLocationBlock)block;
 
 @end

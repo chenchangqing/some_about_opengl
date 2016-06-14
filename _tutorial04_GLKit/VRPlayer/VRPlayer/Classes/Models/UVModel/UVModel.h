@@ -5,10 +5,15 @@
 //  Created by green on 16/5/22.
 //
 //
-
 #import <Foundation/Foundation.h>
 #import <OpenGLES/ES2/glext.h>
 #import <GLKit/GLKit.h>
+
+#define kAPositionName @"a_position"
+#define kAColorName @"a_color"
+#define kATextureCoordName @"a_textureCoord"
+#define kUMVPName @"u_mvp"
+#define kUBGSamplerName @"u_BGSampler"
 
 @class UVModel;
 /**

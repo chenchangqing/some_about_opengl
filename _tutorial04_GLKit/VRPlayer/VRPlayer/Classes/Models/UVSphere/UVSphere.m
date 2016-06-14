@@ -14,9 +14,9 @@
     
 }
 
-@property (nonatomic, assign) GLuint program;
+@property (nonatomic, assign) GLuint programIndex;
 
-@property (nonatomic, assign) GLuint vertexArray;
+@property (nonatomic, assign) GLuint vertexArrayIndex;
 
 @property (nonatomic, assign) GLuint positionBuffer;
 @property (nonatomic, assign) GLuint texCoordBuffer;
@@ -43,11 +43,13 @@
     _positionAttrib   = 0;
     _texCoordAttrib   = 1;
     
-    _program = [UVShellLoader loadSphereShadersWithVertexShaderString:@"SphereShader" fragmentShaderString:@"SphereShader" andAttribLocations:
-                @[@{@"index":[NSNumber numberWithUnsignedInt:_positionAttrib],@"name":@"a_position"},
-                  @{@"index":[NSNumber numberWithUnsignedInt:_texCoordAttrib],@"name":@"a_textureCoord"}]];
-    _mvpUniform = glGetUniformLocation(_program, "modelViewProjectionMatrix");
-    _samplerUniform = glGetUniformLocation(_program, "imageSampler");
+    _programIndex = [UVShellLoader loadSphereShadersWithVertexShaderString:@"UVModelShader" fragmentShaderString:@"UVModelShader" callback:^(GLuint programIndex){
+                      
+          glBindAttribLocation(programIndex, _positionAttrib, kAPositionName.UTF8String);
+          glBindAttribLocation(programIndex, _texCoordAttrib, kATextureCoordName.UTF8String);
+    }];
+    _mvpUniform = glGetUniformLocation(_programIndex, kUMVPName.UTF8String);
+    _samplerUniform = glGetUniformLocation(_programIndex, kUBGSamplerName.UTF8String);
     
     NSString *imgPath = [[NSBundle mainBundle] pathForResource:@"Frameworks/VRPlayer.framework/VRPlayer.bundle/ribing" ofType:@"jpg"];
     _textureInfo =  [GLKTextureLoader textureWithContentsOfFile:imgPath options:nil error:nil];
@@ -128,8 +130,8 @@
         }
     }
     
-    glGenVertexArraysOES(1, &_vertexArray);
-    glBindVertexArrayOES(_vertexArray);
+    glGenVertexArraysOES(1, &_vertexArrayIndex);
+    glBindVertexArrayOES(_vertexArrayIndex);
     
     glGenBuffers(1, &_positionBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, _positionBuffer);
@@ -165,9 +167,9 @@
 - (void)draw {
     [super draw];
     
-    glBindVertexArrayOES(_vertexArray);
+    glBindVertexArrayOES(_vertexArrayIndex);
     
-    glUseProgram(_program);
+    glUseProgram(_programIndex);
     glUniformMatrix4fv(_mvpUniform, 1, 0, self.mvp.m);
     glUniform1i(_samplerUniform, 0);
     glActiveTexture(GL_TEXTURE0);
@@ -181,11 +183,11 @@
     glDeleteBuffers(1, &_positionBuffer);
     glDeleteBuffers(1, &_texCoordBuffer);
     glDeleteBuffers(1, &_elementsBuffer);
-    glDeleteVertexArraysOES(1, &_vertexArray);
+    glDeleteVertexArraysOES(1, &_vertexArrayIndex);
     
-    if (_program) {
-        glDeleteProgram(_program);
-        _program = 0;
+    if (_programIndex) {
+        glDeleteProgram(_programIndex);
+        _programIndex = 0;
     }
 }
 
