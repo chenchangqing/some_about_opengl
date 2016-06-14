@@ -13,7 +13,7 @@
 /**
  *  顶点数据
  */
-static const GLfloat g_vertex_buffer_data[] = {
+static const GLfloat g_position_buffer_data[] = {
     -1.0f, -1.0f, 0.0f,
     1.0f, -1.0f, 0.0f,
     1.0f,  1.0f, 0.0f,
@@ -43,7 +43,7 @@ static const GLushort g_element_buffer_data[] = {
     
     *count = 12;
     
-    *data = g_vertex_buffer_data;
+    *data = g_position_buffer_data;
 }
 
 - (void)setupColorCount:(int *)count colorData:(GLfloat **)data {

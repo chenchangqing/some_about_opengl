@@ -11,9 +11,7 @@
 
 @interface UVModel()  {
     
-    GLfloat *g_vertex_buffer_data;
-    GLfloat *g_color_buffer_data;
-    GLfloat *g_element_buffer_data;
+    GLsizei element_count;
 }
 
 @property (nonatomic, assign) GLuint program;
@@ -74,11 +72,15 @@
                   @{@"index":[NSNumber numberWithUnsignedInt:_colorAttrib],@"name":@"color"}]];
     _mvpUniform = glGetUniformLocation(_program, "modelViewProjectionMatrix");
     
-    int vertex_count = 0;
-    int color_count = 0;
-    int element_count = 0;
+    GLfloat *g_position_buffer_data;
+    GLfloat *g_color_buffer_data;
+    GLfloat *g_element_buffer_data;
     
-    [self setupVertexCount:&vertex_count vertexData:&g_vertex_buffer_data];
+    GLsizei vertex_count = 0;
+    GLsizei color_count = 0;
+    element_count = 0;
+    
+    [self setupVertexCount:&vertex_count vertexData:&g_position_buffer_data];
     [self setupColorCount:&color_count colorData:&g_color_buffer_data];
     [self setupElementCount:&element_count elementData:&g_element_buffer_data];
     
@@ -87,7 +89,7 @@
     
     glGenBuffers(1, &_positionBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, _positionBuffer);
-    glBufferData(GL_ARRAY_BUFFER, vertex_count * sizeof(GLfloat), g_vertex_buffer_data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertex_count * sizeof(GLfloat), g_position_buffer_data, GL_STATIC_DRAW);
     glEnableVertexAttribArray(_positionAttrib);
     glVertexAttribPointer(_positionAttrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
     
@@ -164,9 +166,9 @@
     glUseProgram(_program);
     glUniformMatrix4fv(_mvpUniform, 1, 0, self.mvp.m);
     
-    if (g_element_buffer_data) {
+    if (element_count != 0) {
         
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+        glDrawElements(GL_TRIANGLES, element_count, GL_UNSIGNED_SHORT, 0);
     }
 }
 
