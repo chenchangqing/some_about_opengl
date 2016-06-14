@@ -7,14 +7,17 @@
 //
 
 attribute vec4 a_position;
+attribute vec4 a_color;
 attribute vec2 a_textureCoord;
 
-varying lowp vec2 v_texCoord;
+varying lowp vec2 v_textureCoord;
+varying lowp vec4 v_color;
 
-uniform mat4 modelViewProjectionMatrix;
+uniform mat4 u_mvp;
 
 void main()
 {
-    v_texCoord = a_textureCoord;
-    gl_Position = modelViewProjectionMatrix * a_position;
+    v_textureCoord = a_textureCoord;
+    v_color = a_color;
+    gl_Position = u_mvp * a_position;
 }
