@@ -63,10 +63,10 @@ static const GLushort g_element_buffer_data[] = {
     
     *count = 6;
 }
-- (void)updateTextureInfo:(GLKTextureInfo *)textureInfo {
+- (void)updateTextureInfo:(GLuint*)textureIndex {
     
-    NSString *imgPath = [[NSBundle mainBundle] pathForResource:@"Frameworks/VRPlayer.framework/VRPlayer.bundle/ribing" ofType:@"jpg"];
-    textureInfo =  [GLKTextureLoader textureWithContentsOfFile:imgPath options:nil error:nil];
+    NSString *imgPath = [[NSBundle mainBundle] pathForResource:@"Frameworks/VRPlayer.framework/VRPlayer.bundle/earth" ofType:@"png"];
+    *textureIndex =  [GLKTextureLoader textureWithContentsOfFile:imgPath options:nil error:nil].name;
 }
 
 - (void)updateWithMVP: (GLKMatrix4)mvp {

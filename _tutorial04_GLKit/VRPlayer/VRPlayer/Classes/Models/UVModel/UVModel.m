@@ -17,8 +17,8 @@
 }
 
 @property (nonatomic, assign) GLuint programIndex;
-
 @property (nonatomic, assign) GLuint vertexArrayIndex;
+@property (nonatomic, assign) GLuint texCoordIndex;
 
 @property (nonatomic, assign) GLuint positionBuffer;
 @property (nonatomic, assign) GLuint colorBuffer;
@@ -31,8 +31,6 @@
 
 @property (nonatomic, assign) GLint  mvpUniform;
 @property (nonatomic, assign) GLint  samplerUniform;
-
-@property (nonatomic, strong) GLKTextureInfo *textureInfo;
 
 @end
 
@@ -87,8 +85,7 @@
     _mvpUniform = glGetUniformLocation(_programIndex, kUMVPName.UTF8String);
     _samplerUniform = glGetUniformLocation(_programIndex, kUBGSamplerName.UTF8String);
     
-    NSString *imgPath = [[NSBundle mainBundle] pathForResource:@"Frameworks/VRPlayer.framework/VRPlayer.bundle/ribing" ofType:@"jpg"];
-    _textureInfo =  [GLKTextureLoader textureWithContentsOfFile:imgPath options:nil error:nil];
+    [self updateTextureInfo:&_texCoordIndex];
     
     element_count = 0;
     
@@ -137,7 +134,7 @@
 - (void)setupElementBuffer:(GLuint*)buffer elementCount:(GLsizei *)count {
     NSAssert(NO, @"请提供索引数据");
 }
-- (void)updateTextureInfo:(GLKTextureInfo *)textureInfo {
+- (void)updateTextureInfo:(GLuint*)textureIndex {
     NSAssert(NO, @"请提供纹理数据2");
 }
 
@@ -188,7 +185,7 @@
     glUniformMatrix4fv(_mvpUniform, 1, 0, self.mvp.m);
     glUniform1i(_samplerUniform, 0);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
+    glBindTexture(GL_TEXTURE_2D, _texCoordIndex);
     
     if (element_count != 0) {
         

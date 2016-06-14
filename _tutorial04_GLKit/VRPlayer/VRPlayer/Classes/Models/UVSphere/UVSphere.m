@@ -112,10 +112,10 @@
     
     *count = triangleCount;
 }
-- (void)updateTextureInfo:(GLKTextureInfo *)textureInfo {
+- (void)updateTextureInfo:(GLuint*)textureIndex {
     
     NSString *imgPath = [[NSBundle mainBundle] pathForResource:@"Frameworks/VRPlayer.framework/VRPlayer.bundle/ribing" ofType:@"jpg"];
-    textureInfo =  [GLKTextureLoader textureWithContentsOfFile:imgPath options:nil error:nil];
+    *textureIndex =  [GLKTextureLoader textureWithContentsOfFile:imgPath options:nil error:nil].name;
 }
 
 - (void)updateWithMVP: (GLKMatrix4)mvp {

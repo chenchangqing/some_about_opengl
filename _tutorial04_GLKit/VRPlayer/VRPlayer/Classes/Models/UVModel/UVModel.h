@@ -64,6 +64,6 @@
 - (void)setupTextureBuffer:(GLuint*)buffer textureAttrib:(GLuint)attrib;
 - (void)setupElementBuffer:(GLuint*)buffer elementCount:(GLsizei *)count;
 
-- (void)updateTextureInfo:(GLKTextureInfo *)textureInfo;
+- (void)updateTextureInfo:(GLuint*)textureIndex;
 
 @end
