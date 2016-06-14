@@ -20,12 +20,17 @@
 
 @property (nonatomic, assign) GLuint positionBuffer;
 @property (nonatomic, assign) GLuint colorBuffer;
+@property (nonatomic, assign) GLuint texCoordBuffer;
 @property (nonatomic, assign) GLuint elementsBuffer;
 
 @property (nonatomic, assign) GLuint positionAttrib;
 @property (nonatomic, assign) GLuint colorAttrib;
+@property (nonatomic, assign) GLuint texCoordAttrib;
 
 @property (nonatomic, assign) GLint  mvpUniform;
+@property (nonatomic, assign) GLint  samplerUniform;
+
+@property (nonatomic, strong) GLKTextureInfo *textureInfo;
 
 @end
 
@@ -64,62 +69,50 @@
 - (void)setup {
     
     _mvpUniform     = 0;
-    _colorAttrib    = 0;
+    _colorAttrib    = 2;
     _positionAttrib   = 1;
     
     _programIndex = [UVShellLoader loadSphereShadersWithVertexShaderString:@"UVModelShader" fragmentShaderString:@"UVModelShader" callback:^(GLuint programIndex){
                       
           glBindAttribLocation(programIndex, _positionAttrib, kAPositionName.UTF8String);
           glBindAttribLocation(programIndex, _colorAttrib, kAColorName.UTF8String);
+          glBindAttribLocation(programIndex, _texCoordAttrib, kATextureCoordName.UTF8String);
     }];
     _mvpUniform = glGetUniformLocation(_programIndex, kUMVPName.UTF8String);
+    _samplerUniform = glGetUniformLocation(_programIndex, kUBGSamplerName.UTF8String);
     
-    GLfloat *g_position_buffer_data;
-    GLfloat *g_color_buffer_data;
-    GLfloat *g_element_buffer_data;
+    NSString *imgPath = [[NSBundle mainBundle] pathForResource:@"Frameworks/VRPlayer.framework/VRPlayer.bundle/ribing" ofType:@"jpg"];
+    _textureInfo =  [GLKTextureLoader textureWithContentsOfFile:imgPath options:nil error:nil];
     
-    GLsizei vertex_count = 0;
-    GLsizei color_count = 0;
     element_count = 0;
-    
-    [self setupVertexCount:&vertex_count vertexData:&g_position_buffer_data];
-    [self setupColorCount:&color_count colorData:&g_color_buffer_data];
-    [self setupElementCount:&element_count elementData:&g_element_buffer_data];
     
     glGenVertexArraysOES(1, &_vertexArrayIndex);
     glBindVertexArrayOES(_vertexArrayIndex);
     
-    glGenBuffers(1, &_positionBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, _positionBuffer);
-    glBufferData(GL_ARRAY_BUFFER, vertex_count * sizeof(GLfloat), g_position_buffer_data, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(_positionAttrib);
-    glVertexAttribPointer(_positionAttrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    
-    glGenBuffers(1, &_colorBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer);
-    glBufferData(GL_ARRAY_BUFFER, color_count * sizeof(GLfloat), g_color_buffer_data, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(_colorAttrib);
-    glVertexAttribPointer(_colorAttrib, 4, GL_FLOAT, GL_FALSE, 0, 0);
-    
-    glGenBuffers(1, &_elementsBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementsBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, element_count * sizeof(GLushort), g_element_buffer_data, GL_STATIC_DRAW);
+    [self setupPositionBuffer:&_positionBuffer positonAttrib:_positionAttrib];
+    [self setupColorBuffer:&_colorBuffer colorAttrib:_colorAttrib];
+    [self setupTextureBuffer:&_texCoordBuffer textureAttrib:_texCoordAttrib];
+    [self setupElementBuffer:&_elementsBuffer elementCount:&element_count];
     
     glBindVertexArrayOES(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-- (void)setupVertexCount:(int *)count vertexData:(GLfloat **)data {
+- (void)setupPositionBuffer:(GLuint*)buffer positonAttrib:(GLuint)attrib {
     NSAssert(NO, @"请提供顶点数据");
 }
-
-- (void)setupColorCount:(int *)count colorData:(GLfloat **)data {
+- (void)setupColorBuffer:(GLuint*)buffer colorAttrib:(GLuint)attrib {
     NSAssert(NO, @"请提供颜色数据");
 }
-
-- (void)setupElementCount:(int *)count elementData:(GLfloat **)data {
+- (void)setupTextureBuffer:(GLuint*)buffer textureAttrib:(GLuint)attrib {
+    NSAssert(NO, @"请提供纹理数据");
+}
+- (void)setupElementBuffer:(GLuint*)buffer elementCount:(GLsizei *)count {
     NSAssert(NO, @"请提供索引数据");
+}
+- (void)updateTextureInfo:(GLKTextureInfo *)textureInfo {
+    NSAssert(NO, @"请提供纹理数据2");
 }
 
 - (void)updateWithMVP: (GLKMatrix4)mvp {
@@ -167,6 +160,9 @@
     
     glUseProgram(_programIndex);
     glUniformMatrix4fv(_mvpUniform, 1, 0, self.mvp.m);
+//    glUniform1i(_samplerUniform, 0);
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
     
     if (element_count != 0) {
         
@@ -178,6 +174,7 @@
     
     glDeleteBuffers(1, &_positionBuffer);
     glDeleteBuffers(1, &_colorBuffer);
+    glDeleteBuffers(1, &_texCoordBuffer);
     glDeleteBuffers(1, &_elementsBuffer);
     glDeleteVertexArraysOES(1, &_vertexArrayIndex);
     

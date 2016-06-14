@@ -7,30 +7,10 @@
 //
 
 #import "UVSphere.h"
-#import "UVShellLoader.h"
-#import <OpenGLES/ES2/glext.h>
 
 @interface UVSphere() {
     
 }
-
-@property (nonatomic, assign) GLuint programIndex;
-
-@property (nonatomic, assign) GLuint vertexArrayIndex;
-
-@property (nonatomic, assign) GLuint positionBuffer;
-@property (nonatomic, assign) GLuint texCoordBuffer;
-@property (nonatomic, assign) GLuint elementsBuffer;
-
-@property (nonatomic, assign) GLuint positionAttrib;
-@property (nonatomic, assign) GLuint texCoordAttrib;
-
-@property (nonatomic, assign) GLint  mvpUniform;
-@property (nonatomic, assign) GLint  samplerUniform;
-
-@property (nonatomic, strong) GLKTextureInfo *textureInfo;
-
-@property (nonatomic,assign) GLsizei triangleCount;
 
 @end
 
@@ -38,46 +18,19 @@
 
 - (void)setup {
     [super setup];
-    
-    _mvpUniform       = 0;
-    _positionAttrib   = 0;
-    _texCoordAttrib   = 1;
-    
-    _programIndex = [UVShellLoader loadSphereShadersWithVertexShaderString:@"UVModelShader" fragmentShaderString:@"UVModelShader" callback:^(GLuint programIndex){
-                      
-          glBindAttribLocation(programIndex, _positionAttrib, kAPositionName.UTF8String);
-          glBindAttribLocation(programIndex, _texCoordAttrib, kATextureCoordName.UTF8String);
-    }];
-    _mvpUniform = glGetUniformLocation(_programIndex, kUMVPName.UTF8String);
-    _samplerUniform = glGetUniformLocation(_programIndex, kUBGSamplerName.UTF8String);
-    
-    NSString *imgPath = [[NSBundle mainBundle] pathForResource:@"Frameworks/VRPlayer.framework/VRPlayer.bundle/ribing" ofType:@"jpg"];
-    _textureInfo =  [GLKTextureLoader textureWithContentsOfFile:imgPath options:nil error:nil];
-    
-    [self setupSphereData];
 }
 
-- (void)setupVertexCount:(int *)count vertexData:(GLfloat **)data {
+- (void)setupPositionBuffer:(GLuint*)buffer positonAttrib:(GLuint)attrib {
     
-}
-
-- (void)setupColorCount:(int *)count colorData:(GLfloat **)data {
-    
-}
-
-- (void)setupElementCount:(int *)count elementData:(GLfloat **)data {
-    
-}
-
-- (void)setupSphereData {
     int segW = 48;// 宽度分块数目
     int segH = 48;// 高度分块数目
     int segW1 = segW + 1;// 宽度分块顶点数目
     int segH1 = segH + 1;// 高度分块顶点数目
+    
     // 顶点坐标
     int vertexSize = 3;//一个点x/y/z三个坐标
     int vertexCount = segW1 * segH1 * vertexSize;
-    float *vertices = (float*) malloc(sizeof(float) * vertexCount);
+    float *g_position_buffer_data = (float*) malloc(sizeof(float) * vertexCount);
     int kk = 0;
     for (int j = 0; j < segH1; j++) {
         double vj = 1.0 * j / segH;
@@ -90,28 +43,86 @@
             float zz = (float) (cos(deltP) * cosdeltT);
             float xx = (float) (sin(deltP) * cosdeltT);
             float yy = (float) sindeltT;
-            vertices[kk++] = xx;
-            vertices[kk++] = yy;
-            vertices[kk++] = zz;
+            g_position_buffer_data[kk++] = xx;
+            g_position_buffer_data[kk++] = yy;
+            g_position_buffer_data[kk++] = zz;
         }
     }
+    
+    glGenBuffers(1, buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, *buffer);
+    glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(GLfloat), g_position_buffer_data, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(attrib);
+    glVertexAttribPointer(attrib, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
+}
+- (void)setupColorBuffer:(GLuint*)buffer colorAttrib:(GLuint)attrib {
+    
+    GLfloat red = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"R"]).floatValue;
+    GLfloat green = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"G"]).floatValue;
+    GLfloat blue = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"B"]).floatValue;
+    GLfloat alpha = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"A"]).floatValue;
+    
+    GLfloat rgba[4] = {
+        red,green,blue,alpha
+    };
+    
+    int segW = 48;// 宽度分块数目
+    int segH = 48;// 高度分块数目
+    int segW1 = segW + 1;// 宽度分块顶点数目
+    int segH1 = segH + 1;// 高度分块顶点数目
+    
+    // 纹理坐标
+    int textureCount = segW1 * segH1 * 4;
+    float *g_color_buffer_data = (float*) malloc(sizeof(float) *textureCount);
+    
+    for (int i=0; i<textureCount; i++) {
+        
+        g_color_buffer_data[i] = rgba[i%4];
+    }
+    
+    glGenBuffers(1, buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, *buffer);
+    glBufferData(GL_ARRAY_BUFFER, textureCount * sizeof(GLfloat), g_color_buffer_data, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(attrib);
+    glVertexAttribPointer(attrib, 4, GL_FLOAT, GL_FALSE, 0, 0);
+}
+- (void)setupTextureBuffer:(GLuint*)buffer textureAttrib:(GLuint)attrib {
+    
+    int segW = 48;// 宽度分块数目
+    int segH = 48;// 高度分块数目
+    int segW1 = segW + 1;// 宽度分块顶点数目
+    int segH1 = segH + 1;// 高度分块顶点数目
+    
     // 纹理坐标
     int textureCount = segW1 * segH1 * 2;
-    float *texcoords = (float*) malloc(sizeof(float) *textureCount);
-    kk = 0;
+    float *g_texture_buffer_data = (float*) malloc(sizeof(float) *textureCount);
+    int kk = 0;
     for (int j = 0; j < segH1; j++) {
         double vj = 1.0 * j / segH;
         for (int i = 0; i < segW1; i++) {
             double ui = 1.0 * i / segW;
-            texcoords[kk++] = (float) ui;
-            texcoords[kk++] = (float) vj;//跟android相比，纹理v坐标上下颠倒，因为坐标系问题
+            g_texture_buffer_data[kk++] = (float) ui;
+            g_texture_buffer_data[kk++] = (float) vj;//跟android相比，纹理v坐标上下颠倒，因为坐标系问题
         }
     }
     
+    glGenBuffers(1, buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, *buffer);
+    glBufferData(GL_ARRAY_BUFFER, textureCount * sizeof(GLfloat), g_texture_buffer_data, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(attrib);
+    glVertexAttribPointer(attrib, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, NULL);
+}
+- (void)setupElementBuffer:(GLuint*)buffer elementCount:(GLsizei *)count {
+    
+    int segW = 48;// 宽度分块数目
+    int segH = 48;// 高度分块数目
+    int segW1 = segW + 1;// 宽度分块顶点数目
+    int segH1 = segH + 1;// 高度分块顶点数目
+    
     // 三角形编号
-    self.triangleCount = segW * segH * 2 * 3;//三角形总数目
-    unsigned short *indices = (unsigned short *) malloc(sizeof(unsigned short) * self.triangleCount);
-    kk = 0;
+    int triangleCount = segW * segH * 2 * 3;//三角形总数目
+    unsigned short *g_element_buffer_data = (unsigned short *) malloc(sizeof(unsigned short) * triangleCount);
+    int kk = 0;
     for (int j = 0; j < segH; j++) {
         int m = j * segW1;
         int n = m + segW1;
@@ -120,43 +131,26 @@
             int h1 = h0 + 1;
             int h3 = i + n;
             int h2 = h3 + 1;
-            indices[kk++] = (short) h0;
-            indices[kk++] = (short) h2;
-            indices[kk++] = (short) h1;
+            g_element_buffer_data[kk++] = (short) h0;
+            g_element_buffer_data[kk++] = (short) h2;
+            g_element_buffer_data[kk++] = (short) h1;
             
-            indices[kk++] = (short) h0;
-            indices[kk++] = (short) h3;
-            indices[kk++] = (short) h2;
+            g_element_buffer_data[kk++] = (short) h0;
+            g_element_buffer_data[kk++] = (short) h3;
+            g_element_buffer_data[kk++] = (short) h2;
         }
     }
     
-    glGenVertexArraysOES(1, &_vertexArrayIndex);
-    glBindVertexArrayOES(_vertexArrayIndex);
+    glGenBuffers(1, buffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *buffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, triangleCount * sizeof(GLushort), g_element_buffer_data, GL_STATIC_DRAW);
     
-    glGenBuffers(1, &_positionBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, _positionBuffer);
-    glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(_positionAttrib);
-    glVertexAttribPointer(_positionAttrib, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, NULL);
+    *count = triangleCount;
+}
+- (void)updateTextureInfo:(GLKTextureInfo *)textureInfo {
     
-    glGenBuffers(1, &_texCoordBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, _texCoordBuffer);
-    glBufferData(GL_ARRAY_BUFFER, textureCount * sizeof(GLfloat), texcoords, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(_texCoordAttrib);
-    glVertexAttribPointer(_texCoordAttrib, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, NULL);
-    
-    glGenBuffers(1, &_elementsBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementsBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, self.triangleCount * sizeof(GLushort), indices, GL_STATIC_DRAW);
-    
-    glBindVertexArrayOES(0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    
-    //释放
-    free(vertices);
-    free(texcoords);
-    free(indices);
+    NSString *imgPath = [[NSBundle mainBundle] pathForResource:@"Frameworks/VRPlayer.framework/VRPlayer.bundle/ribing" ofType:@"jpg"];
+    textureInfo =  [GLKTextureLoader textureWithContentsOfFile:imgPath options:nil error:nil];
 }
 
 - (void)updateWithMVP: (GLKMatrix4)mvp {
@@ -166,29 +160,10 @@
 
 - (void)draw {
     [super draw];
-    
-    glBindVertexArrayOES(_vertexArrayIndex);
-    
-    glUseProgram(_programIndex);
-    glUniformMatrix4fv(_mvpUniform, 1, 0, self.mvp.m);
-    glUniform1i(_samplerUniform, 0);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
-    glDrawElements(GL_TRIANGLES, self.triangleCount, GL_UNSIGNED_SHORT, 0);
 }
 
 - (void)free {
     [super free];
-    
-    glDeleteBuffers(1, &_positionBuffer);
-    glDeleteBuffers(1, &_texCoordBuffer);
-    glDeleteBuffers(1, &_elementsBuffer);
-    glDeleteVertexArraysOES(1, &_vertexArrayIndex);
-    
-    if (_programIndex) {
-        glDeleteProgram(_programIndex);
-        _programIndex = 0;
-    }
 }
 
 @end

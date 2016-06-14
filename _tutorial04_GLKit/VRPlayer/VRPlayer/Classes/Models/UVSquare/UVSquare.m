@@ -19,6 +19,12 @@ static const GLfloat g_position_buffer_data[] = {
     1.0f,  1.0f, 0.0f,
     -1.0f,  1.0f, 0.0f
 };
+static const GLfloat g_texture_buffer_data[] = {
+   0.0f, 0.0f,
+    1.0f, 0.0f,
+    1.0f,  1.0f,
+    -0.0f, 1.0f
+};
 
 static const GLushort g_element_buffer_data[] = {
     0,1,2,
@@ -39,16 +45,17 @@ static const GLushort g_element_buffer_data[] = {
     
 }
 
-- (void)setupVertexCount:(int *)count vertexData:(GLfloat **)data {
+- (void)setupPositionBuffer:(GLuint*)buffer positonAttrib:(GLuint)attrib {
     
-    *count = 12;
-    
-    *data = g_position_buffer_data;
+    glGenBuffers(1, buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, *buffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(g_position_buffer_data), g_position_buffer_data, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(attrib);
+    glVertexAttribPointer(attrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
 }
-
-- (void)setupColorCount:(int *)count colorData:(GLfloat **)data {
+- (void)setupColorBuffer:(GLuint*)buffer colorAttrib:(GLuint)attrib {
     
-    *count = 24;
+    GLfloat *g_color_buffer_data = (float*) malloc(sizeof(float) * 24);
     
     GLfloat red = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"R"]).floatValue;
     GLfloat green = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"G"]).floatValue;
@@ -58,21 +65,37 @@ static const GLushort g_element_buffer_data[] = {
     GLfloat rgba[4] = {
         red,green,blue,alpha
     };
-    
-    GLfloat *tdata = (float*) malloc(sizeof(float) * 24);
     for (int i=0; i<24; i++) {
         
-        tdata[i] = rgba[i%4];
+        g_color_buffer_data[i] = rgba[i%4];
     }
     
-    *data = tdata;
+    glGenBuffers(1, buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, *buffer);
+    glBufferData(GL_ARRAY_BUFFER, 24 * sizeof(GLfloat), g_color_buffer_data, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(attrib);
+    glVertexAttribPointer(attrib, 4, GL_FLOAT, GL_FALSE, 0, 0);
 }
-
-- (void)setupElementCount:(int *)count elementData:(GLfloat **)data {
+- (void)setupTextureBuffer:(GLuint*)buffer textureAttrib:(GLuint)attrib {
+    
+    glGenBuffers(1, buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, *buffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(g_texture_buffer_data), g_texture_buffer_data, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(attrib);
+    glVertexAttribPointer(attrib, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, NULL);
+}
+- (void)setupElementBuffer:(GLuint*)buffer elementCount:(GLsizei *)count {
+    
+    glGenBuffers(1, buffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *buffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(GLushort), g_element_buffer_data, GL_STATIC_DRAW);
     
     *count = 6;
+}
+- (void)updateTextureInfo:(GLKTextureInfo *)textureInfo {
     
-    *data = g_element_buffer_data;
+    NSString *imgPath = [[NSBundle mainBundle] pathForResource:@"Frameworks/VRPlayer.framework/VRPlayer.bundle/ribing" ofType:@"jpg"];
+    textureInfo =  [GLKTextureLoader textureWithContentsOfFile:imgPath options:nil error:nil];
 }
 
 - (void)updateWithMVP: (GLKMatrix4)mvp {

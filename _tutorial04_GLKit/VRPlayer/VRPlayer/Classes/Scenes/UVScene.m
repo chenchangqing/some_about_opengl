@@ -42,15 +42,19 @@
     }
 }
 
-- (void)setupVertexCount:(int *)count vertexData:(GLfloat **)data {
+- (void)setupPositionBuffer:(GLuint*)buffer positonAttrib:(GLuint)attrib {
     
 }
-
-- (void)setupColorCount:(int *)count colorData:(GLfloat **)data {
+- (void)setupColorBuffer:(GLuint*)buffer colorAttrib:(GLuint)attrib {
     
 }
-
-- (void)setupElementCount:(int *)count elementData:(GLfloat **)data {
+- (void)setupTextureBuffer:(GLuint*)buffer textureAttrib:(GLuint)attrib {
+    
+}
+- (void)setupElementBuffer:(GLuint*)buffer elementCount:(GLsizei *)count {
+    
+}
+- (void)updateTextureInfo:(GLKTextureInfo *)textureInfo {
     
 }
 

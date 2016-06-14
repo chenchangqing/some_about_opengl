@@ -59,8 +59,11 @@
 - (void)draw;
 - (void)free;
 
-- (void)setupVertexCount:(int *)count vertexData:(GLfloat **)data;
-- (void)setupColorCount:(int *)count colorData:(GLfloat **)data;
-- (void)setupElementCount:(int *)count elementData:(GLfloat **)data;
+- (void)setupPositionBuffer:(GLuint*)buffer positonAttrib:(GLuint)attrib;
+- (void)setupColorBuffer:(GLuint*)buffer colorAttrib:(GLuint)attrib;
+- (void)setupTextureBuffer:(GLuint*)buffer textureAttrib:(GLuint)attrib;
+- (void)setupElementBuffer:(GLuint*)buffer elementCount:(GLsizei *)count;
+
+- (void)updateTextureInfo:(GLKTextureInfo *)textureInfo;
 
 @end
