@@ -51,37 +51,6 @@
     glEnableVertexAttribArray(attrib);
     glVertexAttribPointer(attrib, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
 }
-- (void)setupColorBuffer:(GLuint*)buffer colorAttrib:(GLuint)attrib {
-    
-    GLfloat red = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"R"]).floatValue;
-    GLfloat green = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"G"]).floatValue;
-    GLfloat blue = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"B"]).floatValue;
-    GLfloat alpha = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"A"]).floatValue;
-    
-    GLfloat rgba[4] = {
-        red,green,blue,alpha
-    };
-    
-    int segW = 48;// 宽度分块数目
-    int segH = 48;// 高度分块数目
-    int segW1 = segW + 1;// 宽度分块顶点数目
-    int segH1 = segH + 1;// 高度分块顶点数目
-    
-    // 纹理坐标
-    int textureCount = segW1 * segH1 * 4;
-    float *g_color_buffer_data = (float*) malloc(sizeof(float) *textureCount);
-    
-    for (int i=0; i<textureCount; i++) {
-        
-        g_color_buffer_data[i] = rgba[i%4];
-    }
-    
-    glGenBuffers(1, buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, *buffer);
-    glBufferData(GL_ARRAY_BUFFER, textureCount * sizeof(GLfloat), g_color_buffer_data, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(attrib);
-    glVertexAttribPointer(attrib, 4, GL_FLOAT, GL_FALSE, 0, 0);
-}
 - (void)setupTextureBuffer:(GLuint*)buffer textureAttrib:(GLuint)attrib {
     
     int segW = 48;// 宽度分块数目

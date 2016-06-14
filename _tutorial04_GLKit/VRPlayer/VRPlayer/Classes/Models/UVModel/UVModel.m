@@ -8,6 +8,8 @@
 
 #import "UVModel.h"
 #import "UVShellLoader.h"
+#import "MacroDefinition.h"
+#import "UIColor+HEX.h"
 
 @interface UVModel()  {
     
@@ -58,6 +60,8 @@
         _ry = 0.0f;
         _rz = 0.0f;
         
+        _backgroundColor = RandColor;
+        
         [self setup];
     }
     return self;
@@ -71,8 +75,8 @@
 - (void)setup {
     
     _mvpUniform     = 0;
-    _colorAttrib    = 2;
     _positionAttrib   = 1;
+    _colorAttrib    = 2;
     
     _programIndex = [UVShellLoader loadSphereShadersWithVertexShaderString:@"UVModelShader" fragmentShaderString:@"UVModelShader" callback:^(GLuint programIndex){
                       
@@ -92,9 +96,9 @@
     glBindVertexArrayOES(_vertexArrayIndex);
     
     [self setupPositionBuffer:&_positionBuffer positonAttrib:_positionAttrib];
-    [self setupColorBuffer:&_colorBuffer colorAttrib:_colorAttrib];
     [self setupTextureBuffer:&_texCoordBuffer textureAttrib:_texCoordAttrib];
     [self setupElementBuffer:&_elementsBuffer elementCount:&element_count];
+    [self setupColorBuffer:&_colorBuffer colorAttrib:_colorAttrib];
     
     glBindVertexArrayOES(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -105,7 +109,27 @@
     NSAssert(NO, @"请提供顶点数据");
 }
 - (void)setupColorBuffer:(GLuint*)buffer colorAttrib:(GLuint)attrib {
-    NSAssert(NO, @"请提供颜色数据");
+    
+    GLfloat *g_color_buffer_data = (float*) malloc(sizeof(float) * element_count*4);
+    
+    GLfloat red = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"R"]).floatValue;
+    GLfloat green = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"G"]).floatValue;
+    GLfloat blue = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"B"]).floatValue;
+    GLfloat alpha = ((NSNumber *)[RandColor.RGBDictionary objectForKey:@"A"]).floatValue;
+    
+    GLfloat rgba[4] = {
+        red,green,blue,alpha
+    };
+    for (int i=0; i<element_count*4; i++) {
+        
+        g_color_buffer_data[i] = rgba[i%4];
+    }
+    
+    glGenBuffers(1, buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, *buffer);
+    glBufferData(GL_ARRAY_BUFFER, element_count*4 * sizeof(GLfloat), g_color_buffer_data, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(attrib);
+    glVertexAttribPointer(attrib, 4, GL_FLOAT, GL_FALSE, 0, 0);
 }
 - (void)setupTextureBuffer:(GLuint*)buffer textureAttrib:(GLuint)attrib {
     NSAssert(NO, @"请提供纹理数据");
@@ -162,9 +186,9 @@
     
     glUseProgram(_programIndex);
     glUniformMatrix4fv(_mvpUniform, 1, 0, self.mvp.m);
-//    glUniform1i(_samplerUniform, 0);
-//    glActiveTexture(GL_TEXTURE0);
-//    glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
+    glUniform1i(_samplerUniform, 0);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, self.textureInfo.name);
     
     if (element_count != 0) {
         

@@ -50,6 +50,8 @@
 @property (nonatomic, assign) float ry;
 @property (nonatomic, assign) float rz;
 
+@property (nonatomic, strong) UIColor *backgroundColor;
+
 @property (nonatomic, assign) GLKMatrix4 mvp;
 
 @property (nonatomic, weak) id <UVModelDelegate> delegate;
@@ -59,7 +61,6 @@
 - (void)free;
 
 - (void)setupPositionBuffer:(GLuint*)buffer positonAttrib:(GLuint)attrib;
-- (void)setupColorBuffer:(GLuint*)buffer colorAttrib:(GLuint)attrib;
 - (void)setupTextureBuffer:(GLuint*)buffer textureAttrib:(GLuint)attrib;
 - (void)setupElementBuffer:(GLuint*)buffer elementCount:(GLsizei *)count;
 
