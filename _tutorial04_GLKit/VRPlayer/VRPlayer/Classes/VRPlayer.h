@@ -18,6 +18,4 @@
 #import "MacroDefinition.h"
 #import "UIColor+HEX.h"
 
-#import "UVPlayerController.h"
-
 #endif /* VRPlayer_h */
