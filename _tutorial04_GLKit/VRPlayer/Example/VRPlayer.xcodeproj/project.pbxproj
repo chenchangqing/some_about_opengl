@@ -14,7 +14,6 @@
 		6003F598195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F596195388D20070C39A /* InfoPlist.strings */; };
 		6003F59A195388D20070C39A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F599195388D20070C39A /* main.m */; };
 		6003F59E195388D20070C39A /* JTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* JTAppDelegate.m */; };
-		6003F5A7195388D20070C39A /* JTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* JTViewController.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
 		6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F5AF195388D20070C39A /* XCTest.framework */; };
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
@@ -22,13 +21,14 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		85496498ACA3C257C9E663AE /* Pods_VRPlayer_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAF8D69F96C71A2629BB56EC /* Pods_VRPlayer_Example.framework */; };
-		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
-		E645E9811CF35F5F0096E1AC /* JTTestVRPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E645E9801CF35F5F0096E1AC /* JTTestVRPlayer.m */; };
-		E645E9841CF364EB0096E1AC /* JTTestScene2.m in Sources */ = {isa = PBXBuildFile; fileRef = E645E9831CF364EB0096E1AC /* JTTestScene2.m */; };
 		E67651A01CF0F41D00EDE9FA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E676519D1CF0F41D00EDE9FA /* Default-568h@2x.png */; };
 		E67651A11CF0F41D00EDE9FA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E676519E1CF0F41D00EDE9FA /* Default.png */; };
 		E67651A21CF0F41D00EDE9FA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E676519F1CF0F41D00EDE9FA /* Default@2x.png */; };
-		E6F190771CF2130500ACC660 /* JTTestScene.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F190761CF2130500ACC660 /* JTTestScene.m */; };
+		E6C461C61D15575D00B5A0D9 /* JTTestScene.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C461C11D15575D00B5A0D9 /* JTTestScene.m */; };
+		E6C461C71D15575D00B5A0D9 /* JTTestVRPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C461C31D15575D00B5A0D9 /* JTTestVRPlayer.m */; };
+		E6C461C81D15575D00B5A0D9 /* JTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C461C51D15575D00B5A0D9 /* JTViewController.m */; };
+		E6C461CA1D1557C100B5A0D9 /* VRMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6C461C91D1557C100B5A0D9 /* VRMain.storyboard */; };
+		E6C461CC1D1557CB00B5A0D9 /* VIDEOMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6C461CB1D1557CB00B5A0D9 /* VIDEOMain.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,8 +54,6 @@
 		6003F59B195388D20070C39A /* VRPlayer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VRPlayer-Prefix.pch"; sourceTree = "<group>"; };
 		6003F59C195388D20070C39A /* JTAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTAppDelegate.h; sourceTree = "<group>"; };
 		6003F59D195388D20070C39A /* JTAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JTAppDelegate.m; sourceTree = "<group>"; };
-		6003F5A5195388D20070C39A /* JTViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTViewController.h; sourceTree = "<group>"; };
-		6003F5A6195388D20070C39A /* JTViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JTViewController.m; sourceTree = "<group>"; };
 		6003F5A8195388D20070C39A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6003F5AE195388D20070C39A /* VRPlayer_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VRPlayer_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -64,20 +62,21 @@
 		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		6D0A9F1481CCD81870F60639 /* Pods_VRPlayer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VRPlayer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		8F38D93B9E9A34D58BA49F00 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		AC6CAEF52B33C9A689E59012 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		BAF8D69F96C71A2629BB56EC /* Pods_VRPlayer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VRPlayer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E527F7244559135EBA91F336 /* Pods-VRPlayer_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VRPlayer_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-VRPlayer_Example/Pods-VRPlayer_Example.release.xcconfig"; sourceTree = "<group>"; };
-		E645E97F1CF35F5F0096E1AC /* JTTestVRPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTTestVRPlayer.h; sourceTree = "<group>"; };
-		E645E9801CF35F5F0096E1AC /* JTTestVRPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTTestVRPlayer.m; sourceTree = "<group>"; };
-		E645E9821CF364EB0096E1AC /* JTTestScene2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTTestScene2.h; sourceTree = "<group>"; };
-		E645E9831CF364EB0096E1AC /* JTTestScene2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTTestScene2.m; sourceTree = "<group>"; };
 		E676519D1CF0F41D00EDE9FA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		E676519E1CF0F41D00EDE9FA /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		E676519F1CF0F41D00EDE9FA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		E6F190751CF2130500ACC660 /* JTTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTTestScene.h; sourceTree = "<group>"; };
-		E6F190761CF2130500ACC660 /* JTTestScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTTestScene.m; sourceTree = "<group>"; };
+		E6C461C01D15575D00B5A0D9 /* JTTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTTestScene.h; sourceTree = "<group>"; };
+		E6C461C11D15575D00B5A0D9 /* JTTestScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTTestScene.m; sourceTree = "<group>"; };
+		E6C461C21D15575D00B5A0D9 /* JTTestVRPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTTestVRPlayer.h; sourceTree = "<group>"; };
+		E6C461C31D15575D00B5A0D9 /* JTTestVRPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTTestVRPlayer.m; sourceTree = "<group>"; };
+		E6C461C41D15575D00B5A0D9 /* JTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTViewController.h; sourceTree = "<group>"; };
+		E6C461C51D15575D00B5A0D9 /* JTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTViewController.m; sourceTree = "<group>"; };
+		E6C461C91D1557C100B5A0D9 /* VRMain.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = VRMain.storyboard; sourceTree = "<group>"; };
+		E6C461CB1D1557CB00B5A0D9 /* VIDEOMain.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = VIDEOMain.storyboard; sourceTree = "<group>"; };
 		F8620DF4FB43EFEB21B5D5DC /* Pods-VRPlayer_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VRPlayer_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VRPlayer_Example/Pods-VRPlayer_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		FEC4B025F39A2F1754AB398E /* Pods-VRPlayer_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VRPlayer_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VRPlayer_Tests/Pods-VRPlayer_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -145,19 +144,12 @@
 		6003F593195388D20070C39A /* Example for VRPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				E6C461BE1D15575D00B5A0D9 /* Video */,
+				E6C461BF1D15575D00B5A0D9 /* VR */,
 				6003F59C195388D20070C39A /* JTAppDelegate.h */,
 				6003F59D195388D20070C39A /* JTAppDelegate.m */,
-				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
-				6003F5A5195388D20070C39A /* JTViewController.h */,
-				6003F5A6195388D20070C39A /* JTViewController.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
-				E6F190751CF2130500ACC660 /* JTTestScene.h */,
-				E6F190761CF2130500ACC660 /* JTTestScene.m */,
-				E645E9821CF364EB0096E1AC /* JTTestScene2.h */,
-				E645E9831CF364EB0096E1AC /* JTTestScene2.m */,
-				E645E97F1CF35F5F0096E1AC /* JTTestVRPlayer.h */,
-				E645E9801CF35F5F0096E1AC /* JTTestVRPlayer.m */,
 			);
 			name = "Example for VRPlayer";
 			path = VRPlayer;
@@ -215,6 +207,28 @@
 				FEC4B025F39A2F1754AB398E /* Pods-VRPlayer_Tests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		E6C461BE1D15575D00B5A0D9 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				E6C461CB1D1557CB00B5A0D9 /* VIDEOMain.storyboard */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
+		E6C461BF1D15575D00B5A0D9 /* VR */ = {
+			isa = PBXGroup;
+			children = (
+				E6C461C91D1557C100B5A0D9 /* VRMain.storyboard */,
+				E6C461C01D15575D00B5A0D9 /* JTTestScene.h */,
+				E6C461C11D15575D00B5A0D9 /* JTTestScene.m */,
+				E6C461C21D15575D00B5A0D9 /* JTTestVRPlayer.h */,
+				E6C461C31D15575D00B5A0D9 /* JTTestVRPlayer.m */,
+				E6C461C41D15575D00B5A0D9 /* JTViewController.h */,
+				E6C461C51D15575D00B5A0D9 /* JTViewController.m */,
+			);
+			path = VR;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,11 +315,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E67651A21CF0F41D00EDE9FA /* Default@2x.png in Resources */,
-				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				E67651A01CF0F41D00EDE9FA /* Default-568h@2x.png in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 				E67651A11CF0F41D00EDE9FA /* Default.png in Resources */,
+				E6C461CA1D1557C100B5A0D9 /* VRMain.storyboard in Resources */,
+				E6C461CC1D1557CB00B5A0D9 /* VIDEOMain.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,12 +432,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E645E9811CF35F5F0096E1AC /* JTTestVRPlayer.m in Sources */,
-				E6F190771CF2130500ACC660 /* JTTestScene.m in Sources */,
 				6003F59E195388D20070C39A /* JTAppDelegate.m in Sources */,
-				6003F5A7195388D20070C39A /* JTViewController.m in Sources */,
+				E6C461C81D15575D00B5A0D9 /* JTViewController.m in Sources */,
+				E6C461C61D15575D00B5A0D9 /* JTTestScene.m in Sources */,
+				E6C461C71D15575D00B5A0D9 /* JTTestVRPlayer.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
-				E645E9841CF364EB0096E1AC /* JTTestScene2.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,6 +560,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VRPlayer/VRPlayer-Prefix.pch";
 				INFOPLIST_FILE = "VRPlayer/VRPlayer-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -562,6 +577,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VRPlayer/VRPlayer-Prefix.pch";
 				INFOPLIST_FILE = "VRPlayer/VRPlayer-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";

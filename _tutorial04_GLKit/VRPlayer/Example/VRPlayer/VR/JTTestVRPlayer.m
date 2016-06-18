@@ -8,7 +8,6 @@
 
 #import "JTTestVRPlayer.h"
 #import "JTTestScene.h"
-#import "JTTestScene2.h"
 
 @implementation JTTestVRPlayer
 
