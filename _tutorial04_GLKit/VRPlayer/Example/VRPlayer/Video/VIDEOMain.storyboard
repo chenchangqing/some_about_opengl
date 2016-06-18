@@ -3,13 +3,12 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Player View Controller-->
         <scene sceneID="wQg-tq-qST">
             <objects>
-                <viewController id="whP-gf-Uak" customClass="JTViewController" sceneMemberID="viewController">
+                <viewController id="whP-gf-Uak" customClass="JTPlayerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uEw-UM-LJ8"/>
                         <viewControllerLayoutGuide type="bottom" id="Mvr-aV-6Um"/>
@@ -17,24 +16,9 @@
                     <view key="view" contentMode="scaleToFill" id="TpU-gO-2f1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kdF-wV-CfU" customClass="JTTestVRPlayer">
-                                <rect key="frame" x="4" y="8" width="312" height="552"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="Mvr-aV-6Um" firstAttribute="top" secondItem="kdF-wV-CfU" secondAttribute="bottom" constant="8" id="4g5-6X-dMj"/>
-                            <constraint firstItem="kdF-wV-CfU" firstAttribute="top" secondItem="TpU-gO-2f1" secondAttribute="topMargin" constant="8" id="Z8a-K1-fln"/>
-                            <constraint firstItem="kdF-wV-CfU" firstAttribute="leading" secondItem="TpU-gO-2f1" secondAttribute="leadingMargin" constant="-12" id="nfV-Pn-dpQ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="kdF-wV-CfU" secondAttribute="trailing" constant="-12" id="yA2-cQ-zg0"/>
-                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <connections>
-                        <outlet property="player" destination="kdF-wV-CfU" id="p8p-Ha-uH8"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tc2-Qw-aMS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
