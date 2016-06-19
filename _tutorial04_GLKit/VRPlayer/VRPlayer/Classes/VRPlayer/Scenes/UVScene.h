@@ -16,9 +16,4 @@
 
 @property(nonatomic,strong) NSMutableArray *models;
 
-/**
- *  准备模型
- */
-- (void)prepareModels;
-
 @end

@@ -22,14 +22,9 @@
     if (self) {
         
         _models = [NSMutableArray arrayWithCapacity:0];
-        [self prepareModels];
     }
     
     return self;
-}
-
-- (void)prepareModels {
-    
 }
 
 - (void)buildProgram {

@@ -27,6 +27,8 @@
 @property (nonatomic,assign) float yaw;
 @property (nonatomic,assign) float pitch;
 
+@property (strong, nonatomic) NSMutableArray *scenes;
+
 @end
 
 @implementation UVVRPlayer
@@ -77,18 +79,51 @@
     _displayLink = [CADisplayLink displayLinkWithTarget:_glkView selector:@selector(display)];
     [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     
-    // 准备场景s
-    [self prepareScenes];
+    [EAGLContext setCurrentContext:_glkcontext];
+    glEnable(GL_DEPTH_TEST);
     
     // 手势处理
     [self setupGesture];
 }
 
-- (void)prepareScenes {
+- (void)setDataSource:(id<UVVRPlayerDataSource>)dataSource {
     
-    [EAGLContext setCurrentContext:_glkcontext];
-    glEnable(GL_DEPTH_TEST);
+    _dataSource = dataSource;
     
+    [self reloadData];
+}
+
+- (void)reloadData {
+    
+    for (UVScene *scene in _scenes) {
+        
+        [scene free];
+    }
+    
+    [_scenes removeAllObjects];
+    
+    if (self.dataSource) {
+        
+        if ([self.dataSource respondsToSelector:@selector(numberOfScenesInVRPlayer:)]) {
+            
+            NSInteger numberOfScenes = [self.dataSource numberOfScenesInVRPlayer:self];
+            
+            for(int i=0;i<numberOfScenes;i++) {
+                
+                UVScene *scene = [self.dataSource vrplayer:self sceneAtIndex:i];
+                
+                NSInteger numberOfModels = [self.dataSource vrplayer:self numberOfModelsInScene:i];
+                
+                for(int j=0;j<numberOfModels;j++) {
+                    
+                    UVModel *model = [self.dataSource vrplayer:self modelForSceneAtIndex:[NSIndexPath indexPathForRow:j inSection:i]];
+                    [scene.models addObject:model];
+                }
+                
+                [_scenes addObject:scene];
+            }
+        }
+    }
 }
 
 - (void)dealloc
@@ -135,8 +170,8 @@
     mtr = GLKMatrix4MakeTranslation(0, 0, 0);
     mv = GLKMatrix4Multiply(mtr, mv);
     
-    [_scenes.lastObject updateWithMVP:GLKMatrix4Multiply([self projectionMatrix], mv)];
-    [_scenes.lastObject draw];
+    [self.scenes.lastObject updateWithMVP:GLKMatrix4Multiply([self projectionMatrix], mv)];
+    [self.scenes.lastObject draw];
     
     if (isAnimation) {
         

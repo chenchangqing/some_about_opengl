@@ -9,21 +9,29 @@
 #import <Foundation/Foundation.h>
 #import "UVScene.h"
 
+@class UVVRPlayer;
+
+@protocol UVVRPlayerDataSource<NSObject>
+
+@required
+
+- (NSInteger)numberOfScenesInVRPlayer:(UVVRPlayer *)vrplayer;
+
+- (NSInteger)vrplayer:(UVVRPlayer *)vrplayer numberOfModelsInScene:(NSInteger)sceneIndex;
+
+- (UVScene *)vrplayer:(UVVRPlayer *)vrplayer sceneAtIndex:(NSInteger)sceneIndex;
+
+- (UVModel *)vrplayer:(UVVRPlayer *)vrplayer modelForSceneAtIndex:(NSIndexPath *)indexPath;
+
+@end
+
 /**
  *  VR模式视图
  */
 @interface UVVRPlayer : UIView
 
-@property(nonatomic,strong) NSMutableArray *scenes;
+@property (nonatomic, weak) id <UVVRPlayerDataSource> dataSource;
 
-/**
- *  准备场景
- */
-- (void)prepareScenes;
-
-/**
- *  投影矩阵
- */
-- (GLKMatrix4)projectionMatrix;
+- (void)reloadData;
 
 @end

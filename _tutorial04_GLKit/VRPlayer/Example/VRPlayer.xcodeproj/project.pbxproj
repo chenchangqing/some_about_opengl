@@ -24,8 +24,6 @@
 		E67651A01CF0F41D00EDE9FA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E676519D1CF0F41D00EDE9FA /* Default-568h@2x.png */; };
 		E67651A11CF0F41D00EDE9FA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E676519E1CF0F41D00EDE9FA /* Default.png */; };
 		E67651A21CF0F41D00EDE9FA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E676519F1CF0F41D00EDE9FA /* Default@2x.png */; };
-		E6C461C61D15575D00B5A0D9 /* JTTestScene.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C461C11D15575D00B5A0D9 /* JTTestScene.m */; };
-		E6C461C71D15575D00B5A0D9 /* JTTestVRPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C461C31D15575D00B5A0D9 /* JTTestVRPlayer.m */; };
 		E6C461C81D15575D00B5A0D9 /* JTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C461C51D15575D00B5A0D9 /* JTViewController.m */; };
 		E6C461CA1D1557C100B5A0D9 /* VRMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6C461C91D1557C100B5A0D9 /* VRMain.storyboard */; };
 /* End PBXBuildFile section */
@@ -68,10 +66,6 @@
 		E676519D1CF0F41D00EDE9FA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		E676519E1CF0F41D00EDE9FA /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		E676519F1CF0F41D00EDE9FA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		E6C461C01D15575D00B5A0D9 /* JTTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTTestScene.h; sourceTree = "<group>"; };
-		E6C461C11D15575D00B5A0D9 /* JTTestScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTTestScene.m; sourceTree = "<group>"; };
-		E6C461C21D15575D00B5A0D9 /* JTTestVRPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTTestVRPlayer.h; sourceTree = "<group>"; };
-		E6C461C31D15575D00B5A0D9 /* JTTestVRPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTTestVRPlayer.m; sourceTree = "<group>"; };
 		E6C461C41D15575D00B5A0D9 /* JTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTViewController.h; sourceTree = "<group>"; };
 		E6C461C51D15575D00B5A0D9 /* JTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTViewController.m; sourceTree = "<group>"; };
 		E6C461C91D1557C100B5A0D9 /* VRMain.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = VRMain.storyboard; sourceTree = "<group>"; };
@@ -210,10 +204,6 @@
 			isa = PBXGroup;
 			children = (
 				E6C461C91D1557C100B5A0D9 /* VRMain.storyboard */,
-				E6C461C01D15575D00B5A0D9 /* JTTestScene.h */,
-				E6C461C11D15575D00B5A0D9 /* JTTestScene.m */,
-				E6C461C21D15575D00B5A0D9 /* JTTestVRPlayer.h */,
-				E6C461C31D15575D00B5A0D9 /* JTTestVRPlayer.m */,
 				E6C461C41D15575D00B5A0D9 /* JTViewController.h */,
 				E6C461C51D15575D00B5A0D9 /* JTViewController.m */,
 			);
@@ -422,8 +412,6 @@
 			files = (
 				6003F59E195388D20070C39A /* JTAppDelegate.m in Sources */,
 				E6C461C81D15575D00B5A0D9 /* JTViewController.m in Sources */,
-				E6C461C61D15575D00B5A0D9 /* JTTestScene.m in Sources */,
-				E6C461C71D15575D00B5A0D9 /* JTTestVRPlayer.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
