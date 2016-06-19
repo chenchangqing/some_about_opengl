@@ -8,12 +8,26 @@
 #import <Foundation/Foundation.h>
 #import <OpenGLES/ES2/glext.h>
 #import <GLKit/GLKit.h>
+#import "OpenGLProgram.h"
 
 #define kAPositionName @"a_position"
 #define kAColorName @"a_color"
 #define kATextureCoordName @"a_textureCoord"
 #define kUMVPName @"u_mvp"
 #define kUBGSamplerName @"u_BGSampler"
+
+enum {
+    ATTRIBUTE_POSITION,
+    ATTRIBUTE_COLOR,
+    ATTRIBUTE_TEXCOORD,
+    NUM_ATTRIBUTES
+};
+
+enum {
+    UNIFORM_MVP,
+    UNIFORM_SAMPLER,
+    NUM_UNIFORMS
+};
 
 @class UVModel;
 /**
@@ -29,7 +43,11 @@
 /**
  *  模型超类
  */
-@interface UVModel : NSObject
+@interface UVModel : NSObject {
+    
+    GLint uniforms[NUM_UNIFORMS];
+    GLint attributes[NUM_ATTRIBUTES];
+}
 
 // 逆时针公转
 @property (nonatomic, assign) float yaw;
@@ -52,6 +70,7 @@
 
 @property (nonatomic, strong) UIColor *backgroundColor;
 
+@property (strong, nonatomic) OpenGLProgram *program;
 @property (nonatomic, assign) GLKMatrix4 mvp;
 
 @property (nonatomic, weak) id <UVModelDelegate> delegate;
@@ -59,6 +78,8 @@
 - (void)updateWithMVP: (GLKMatrix4)mvp;
 - (void)draw;
 - (void)free;
+
+- (void)buildProgram;
 
 - (void)setupPositionBuffer:(GLuint*)buffer positonAttrib:(GLuint)attrib;
 - (void)setupTextureBuffer:(GLuint*)buffer textureAttrib:(GLuint)attrib;

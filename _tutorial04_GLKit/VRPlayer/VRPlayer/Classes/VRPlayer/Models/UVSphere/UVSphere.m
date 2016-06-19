@@ -7,6 +7,7 @@
 //
 
 #import "UVSphere.h"
+#import "OpenGLProgram.h"
 
 @interface UVSphere() {
     
@@ -15,6 +16,24 @@
 @end
 
 @implementation UVSphere
+
+- (void)buildProgram {
+    
+    self.program = [[OpenGLProgram alloc] initWithVertexFilepath:@"UVSphere" fragmentShaderFilename:@"UVSphere"];
+    
+    [self.program addAttribute:kAPositionName];
+    [self.program addAttribute:kAColorName];
+    [self.program addAttribute:kATextureCoordName];
+    
+    attributes[ATTRIBUTE_POSITION] = [self.program attributeIndex:kAPositionName];
+    attributes[ATTRIBUTE_COLOR] = [self.program attributeIndex:kAColorName];
+    attributes[ATTRIBUTE_TEXCOORD] = [self.program attributeIndex:kATextureCoordName];
+    
+    [self.program link];
+    
+    uniforms[UNIFORM_MVP] = [self.program uniformIndex:kUMVPName];
+    uniforms[UNIFORM_SAMPLER] = [self.program uniformIndex:kUBGSamplerName];
+}
 
 - (void)setupPositionBuffer:(GLuint*)buffer positonAttrib:(GLuint)attrib {
     

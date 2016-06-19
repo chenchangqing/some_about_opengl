@@ -32,6 +32,10 @@
     
 }
 
+- (void)buildProgram {
+    
+}
+
 - (void)setupPositionBuffer:(GLuint*)buffer positonAttrib:(GLuint)attrib {
     
 }

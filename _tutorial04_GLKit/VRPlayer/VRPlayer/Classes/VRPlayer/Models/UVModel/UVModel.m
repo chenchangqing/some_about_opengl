@@ -16,21 +16,13 @@
     GLsizei element_count;
 }
 
-@property (nonatomic, assign) GLuint programIndex;
-@property (nonatomic, assign) GLuint vertexArrayIndex;
+@property (nonatomic, assign) GLuint vertexArrayID;
 @property (nonatomic, assign) GLuint texCoordIndex;
 
 @property (nonatomic, assign) GLuint positionBuffer;
 @property (nonatomic, assign) GLuint colorBuffer;
 @property (nonatomic, assign) GLuint texCoordBuffer;
 @property (nonatomic, assign) GLuint elementsBuffer;
-
-@property (nonatomic, assign) GLuint positionAttrib;
-@property (nonatomic, assign) GLuint colorAttrib;
-@property (nonatomic, assign) GLuint texCoordAttrib;
-
-@property (nonatomic, assign) GLint  mvpUniform;
-@property (nonatomic, assign) GLint  samplerUniform;
 
 @end
 
@@ -60,11 +52,6 @@
         
         _backgroundColor = RandColor;
         
-        _mvpUniform     = 0;
-        _positionAttrib = 1;
-        _colorAttrib    = 2;
-        _texCoordAttrib = 3;
-        
         [self setup];
     }
     return self;
@@ -77,28 +64,27 @@
 
 - (void)setup {
     
-    _programIndex = [UVShellLoader loadSphereShadersWithVertexShaderString:@"UVModelShader" fragmentShaderString:@"UVModelShader" callback:^(GLuint programIndex){
-                      
-          glBindAttribLocation(programIndex, _positionAttrib, kAPositionName.UTF8String);
-          glBindAttribLocation(programIndex, _colorAttrib, kAColorName.UTF8String);
-          glBindAttribLocation(programIndex, _texCoordAttrib, kATextureCoordName.UTF8String);
-    }];
-    _mvpUniform = glGetUniformLocation(_programIndex, kUMVPName.UTF8String);
-    _samplerUniform = glGetUniformLocation(_programIndex, kUBGSamplerName.UTF8String);
+    [self buildProgram];
+    
+    if (!_program) {
+        return;
+    }
     
     [self updateTextureInfo:&_texCoordIndex];
     
-    glGenVertexArraysOES(1, &_vertexArrayIndex);
-    glBindVertexArrayOES(_vertexArrayIndex);
+    glGenVertexArraysOES(1, &_vertexArrayID);
+    glBindVertexArrayOES(_vertexArrayID);
     
-    [self setupPositionBuffer:&_positionBuffer positonAttrib:_positionAttrib];
-    [self setupTextureBuffer:&_texCoordBuffer textureAttrib:_texCoordAttrib];
+    [self setupPositionBuffer:&_positionBuffer positonAttrib:attributes[ATTRIBUTE_POSITION]];
+    [self setupTextureBuffer:&_texCoordBuffer textureAttrib:attributes[ATTRIBUTE_TEXCOORD]];
     [self setupElementBuffer:&_elementsBuffer elementCount:&element_count];
-    [self setupColorBuffer:&_colorBuffer colorAttrib:_colorAttrib];
+    [self setupColorBuffer:&_colorBuffer colorAttrib:attributes[ATTRIBUTE_COLOR]];
     
-    glBindVertexArrayOES(0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    [_program use];
+}
+
+- (void)buildProgram {
+    NSAssert(NO, @"请提供Program");
 }
 
 - (void)setupPositionBuffer:(GLuint*)buffer positonAttrib:(GLuint)attrib {
@@ -178,11 +164,15 @@
 
 - (void)draw {
     
-    glBindVertexArrayOES(_vertexArrayIndex);
+    if (!_program) {
+        return;
+    }
     
-    glUseProgram(_programIndex);
-    glUniformMatrix4fv(_mvpUniform, 1, 0, self.mvp.m);
-    glUniform1i(_samplerUniform, 0);
+    [_program use];
+    
+    glBindVertexArrayOES(_vertexArrayID);
+    glUniformMatrix4fv(uniforms[UNIFORM_MVP], 1, 0, self.mvp.m);
+    glUniform1i(uniforms[UNIFORM_SAMPLER], 0);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texCoordIndex);
     
@@ -198,12 +188,9 @@
     glDeleteBuffers(1, &_colorBuffer);
     glDeleteBuffers(1, &_texCoordBuffer);
     glDeleteBuffers(1, &_elementsBuffer);
-    glDeleteVertexArraysOES(1, &_vertexArrayIndex);
+    glDeleteVertexArraysOES(1, &_vertexArrayID);
     
-    if (_programIndex) {
-        glDeleteProgram(_programIndex);
-        _programIndex = 0;
-    }
+    _program = nil;
 }
 
 @end

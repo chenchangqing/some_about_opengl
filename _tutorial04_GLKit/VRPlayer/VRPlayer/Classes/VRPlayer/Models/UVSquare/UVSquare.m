@@ -39,6 +39,24 @@ static const GLushort g_element_buffer_data[] = {
 
 @implementation UVSquare
 
+- (void)buildProgram {
+    
+    self.program = [[OpenGLProgram alloc] initWithVertexFilepath:@"UVSquare" fragmentShaderFilename:@"UVSquare"];
+    
+    [self.program addAttribute:kAPositionName];
+    [self.program addAttribute:kAColorName];
+    [self.program addAttribute:kATextureCoordName];
+    
+    attributes[ATTRIBUTE_POSITION] = [self.program attributeIndex:kAPositionName];
+    attributes[ATTRIBUTE_COLOR] = [self.program attributeIndex:kAColorName];
+    attributes[ATTRIBUTE_TEXCOORD] = [self.program attributeIndex:kATextureCoordName];
+    
+    [self.program link];
+    
+    uniforms[UNIFORM_MVP] = [self.program uniformIndex:kUMVPName];
+    uniforms[UNIFORM_SAMPLER] = [self.program uniformIndex:kUBGSamplerName];
+}
+
 - (void)setupPositionBuffer:(GLuint*)buffer positonAttrib:(GLuint)attrib {
     
     glGenBuffers(1, buffer);
